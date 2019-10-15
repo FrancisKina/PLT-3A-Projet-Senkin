@@ -19,7 +19,7 @@ namespace state {
     // Attributes
   private:
     int damage;
-    int range;
+    std::pair<int,int> range;
     std::vector<std::pair<int,int>> area;
     int precision;
     std::vector<std::tuple<EffectId,int,int>> effect;
@@ -28,14 +28,14 @@ namespace state {
     // Operations
   public:
     int getDamage ();
-    int getRange ();
+    std::pair<int,int> getRange ();
     std::vector<std::pair<int,int>> getArea ();
     std::vector<std::tuple<EffectId,int,int>> getEffect ();
     int getCooldown ();
     bool getSpecial ();
     int getPrecision ();
     void setDamage (int newDamage);
-    void setRange (int newRange);
+    void setRange (std::pair<int,int> newRange);
     void setArea (std::vector<std::pair<int,int>> newArea);
     void setEffect (std::vector<std::tuple<EffectId,int,int>> newEffect);
     void setCooldown (int newCD);

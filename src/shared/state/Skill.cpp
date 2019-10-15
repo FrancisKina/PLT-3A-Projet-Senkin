@@ -7,7 +7,7 @@ int Skill::getDamage(){
     return damage;
 }
 
-int Skill::getRange(){
+std::pair<int,int> Skill::getRange(){
     return range;
 }
 

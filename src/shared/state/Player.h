@@ -50,9 +50,9 @@ namespace state {
     void setInitiative (int newInit);
     void setSkillCount (int newSC);
     void addStatus (std::pair<CharStatusId,int> newStatus);
+    void setStatus (std::vector<std::pair<CharStatusId,int>> newStatus);
     void setIa (bool IA);
     // Setters and Getters
-    void setStatus(const std::vector<std::pair<CharStatusId,int>>& status);
   };
 
 };
