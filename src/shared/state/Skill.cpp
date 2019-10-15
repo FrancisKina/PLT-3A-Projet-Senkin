@@ -14,14 +14,19 @@ int Skill::getCooldown(){
     return cooldown;
 }
 
-int Skill::getSpecial(){
+bool Skill::getSpecial(){
     return special;
 }
 
-int Skill::getArea(){
+std::vector<std::pair<int,int>>  Skill::getArea(){
     return area;
 }
 
-int Skill::getEffect(){
+std::vector<std::tuple<CharStatusId,int,int>> Skill::getEffect(){
     return effect;
 }
+
+/*int Skill::getPrecision(){
+ * return precision;
+ * }
+ * */

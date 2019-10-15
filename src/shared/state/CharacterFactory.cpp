@@ -9,60 +9,64 @@ int HP_Knight = 60;
 int MP_Knight = 12;
 int initi_Knight = 7;
 int atk_Knight = 6;
-MovementId MT_Knight = 3;//Monture/riding
+MovementId MT_Knight = RIDING;//Monture
+ClassId class_Knight = KNIGHT;
 
 //Stat dreaming frog/ frog
 int HP_Frog = 45;
 int MP_Frog = 6;
 int initi_Frog = 8;
 int atk_Frog = 8;
-MovementId MT_Frog = 4;//nature
+MovementId MT_Frog = NATURE;
+ClassId class_Frog = FROG;
 
 //Stat Hope arc/ Archer
 int HP_Archer = 30;
 int MP_Archer = 10;
 int initi_Archer = 5;
 int atk_Archer = 5;
-MovementId MT_Archer = 2;//agile
+MovementId MT_Archer = AGILE;
+ClassId class_Archer = ARCHER;
 
 //Stat nain des monts/ Dwarf
 int HP_Dwarf = 45;
 int MP_Dwarf = 6;
 int initi_Dwarf = 3;
 int atk_Dwarf = 6;
-MovementId MT_Dwarf = 1;//normal
+MovementId MT_Dwarf = NORMAL;
+ClassId class_Dwarf = DWARF;
 
 
 Character CharacterFactory::createCharacter(ClassId id){
 	Character chara;
-	if (id=1){	//classe Knight
-		setHpBase(HP_Knight);
-		setMovementBase(MP_Knight);
-		setSkillCountBase(skill_count);
-		setInitiativeBase(initi_Knight);
-		setMovementType(MT_Knight);
-		setAttack(atk_Knight);
-	}else if (id=2){	//classe Frog
-		setHpBase(HP_Frog);
-		setMovementBase(MP_);
-		setSkillCountBase(skill_count);
-		setInitiativeBase(initi_Frog);
-		setMovementType(MT_Frog);
-		setAttack(atk_Frog);
-	}else if (id=3){	//classe Archer
-		setHpBase(HP_Archer);
-		setMovementBase(MP_Archer);
-		setSkillCountBase(skill_count);
-		setInitiativeBase(initi_Archer);
-		setMovementType(MT_Archer);
-		setAttack(atk_Archer);
-	}else if (id=4){	//classe Dwarf
-		setHpBase(HP_);
-		setMovementBase(MP_Dwarf);
-		setSkillCountBase(skill_count);
-		setInitiativeBase(initi_Dwarf);
-		setMovementType(MT_Dwarf);
-		setAttack(atk_Dwarf);
+	if (id==class_Knight){	//classe Knight
+		chara.setHpBase(HP_Knight);
+		chara.setMovementBase(MP_Knight);
+		chara.setSkillCountBase(skill_count);
+		chara.setInitiativeBase(initi_Knight);
+		chara.setMovementType(MT_Knight);
+		//chara.setAttack(atk_Knight);
+	}else if (id==class_Frog){	//classe Frog
+		chara.setHpBase(HP_Frog);
+		chara.setMovementBase(MP_Frog);
+		chara.setSkillCountBase(skill_count);
+		chara.setInitiativeBase(initi_Frog);
+		chara.setMovementType(MT_Frog);
+		//chara.setAttack(atk_Frog);
+	}else if (id==class_Archer){	//classe Archer
+		chara.setHpBase(HP_Archer);
+		chara.setMovementBase(MP_Archer);
+		chara.setSkillCountBase(skill_count);
+		chara.setInitiativeBase(initi_Archer);
+		chara.setMovementType(MT_Archer);
+		//chara.setAttack(atk_Archer);
+	}else if (id==class_Dwarf){	//classe Dwarf
+		chara.setHpBase(HP_Dwarf);
+		chara.setMovementBase(MP_Dwarf);
+		chara.setSkillCountBase(skill_count);
+		chara.setInitiativeBase(initi_Dwarf);
+		chara.setMovementType(MT_Dwarf);
+		//chara.setAttack(atk_Dwarf);
 	}
     return chara;
 }

@@ -11,7 +11,7 @@ int Character::getMovementBase(){
 }
 
 MovementId Character::getMovementType(){
-    return movement_type;
+    return movementType;
 }
 
 int Character::getInitiativeBase(){
@@ -22,22 +22,22 @@ int Character::getSkillCountBase(){
     return skillCountBase;
 }
 
-int Character::setHpBase(int new_hpBase){
+void Character::setHpBase(int new_hpBase){
     hpBase=new_hpBase;
 }
 
-int Character::setMovementBase(int new_movementBase){
+void Character::setMovementBase(int new_movementBase){
     movementBase=new_movementBase;
 }
 
-MovementId Character::setMovementType(MovementId new_movement_type){
-    movement_type=new_movement_type;
+void Character::setMovementType(MovementId new_movement_type){
+    movementType=new_movement_type;
 }
 
-int Character::setInitiativeBase(int new_initiativeBase){
+void Character::setInitiativeBase(int new_initiativeBase){
     initiativeBase=new_initiativeBase;
 }
 
-int Character::setSkillCountBase(int new_skillCountBase){
+void Character::setSkillCountBase(int new_skillCountBase){
     skillCountBase=new_skillCountBase;
 }
