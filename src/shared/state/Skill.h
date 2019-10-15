@@ -8,7 +8,7 @@ namespace state {
   class SkillFactory;
 }
 
-#include "CharStatusId.h"
+#include "EffectId.h"
 #include "SkillFactory.h"
 
 namespace state {
@@ -22,7 +22,7 @@ namespace state {
     int range;
     std::vector<std::pair<int,int>> area;
     int precision;
-    std::vector<std::tuple<CharStatusId,int,int>> effect;
+    std::vector<std::tuple<EffectId,int,int>> effect;
     int cooldown;
     bool special;
     // Operations
@@ -30,10 +30,16 @@ namespace state {
     int getDamage ();
     int getRange ();
     std::vector<std::pair<int,int>> getArea ();
-    std::vector<std::tuple<CharStatusId,int,int>> getEffect ();
+    std::vector<std::tuple<EffectId,int,int>> getEffect ();
     int getCooldown ();
     bool getSpecial ();
     int getPrecision ();
+    void setDamage (int newDamage);
+    void setRange (int newRange);
+    void setArea (std::vector<std::pair<int,int>> newArea);
+    void setEffect (std::vector<std::tuple<EffectId,int,int>> newEffect);
+    void setCooldown (int newCD);
+    void setSpecial (bool isSpecial);
     // Setters and Getters
   };
 

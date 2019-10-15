@@ -3,10 +3,11 @@
 #define __STATE__H
 
 #include "state/DirectionId.h"
-#include "state/CharStatusId.h"
+#include "state/EffectId.h"
 #include "state/SkillId.h"
 #include "state/SkillFactory.h"
 #include "state/Skill.h"
+#include "state/CharStatusId.h"
 #include "state/Player.h"
 #include "state/MovementId.h"
 #include "state/Character.h"
