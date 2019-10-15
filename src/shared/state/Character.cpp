@@ -22,6 +22,10 @@ int Character::getSkillCountBase(){
     return skillCountBase;
 }
 
+int Character::getAttackBase(){
+    return attackBase;
+}
+
 void Character::setHpBase(int new_hpBase){
     hpBase=new_hpBase;
 }
@@ -40,4 +44,8 @@ void Character::setInitiativeBase(int new_initiativeBase){
 
 void Character::setSkillCountBase(int new_skillCountBase){
     skillCountBase=new_skillCountBase;
+}
+
+void Character::setAttackBase(int new_attackBase){
+    attackBase=new_attackBase;
 }

@@ -40,6 +40,7 @@ namespace state {
     void setEffect (std::vector<std::tuple<EffectId,int,int>> newEffect);
     void setCooldown (int newCD);
     void setSpecial (bool isSpecial);
+    void setPrecision (int newPrecision);
     // Setters and Getters
   };
 
