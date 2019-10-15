@@ -1,4 +1,5 @@
 #include "Skill.h"
+#include <tuple>
 
 using namespace state;
 
@@ -26,7 +27,7 @@ std::vector<std::tuple<CharStatusId,int,int>> Skill::getEffect(){
     return effect;
 }
 
-/*int Skill::getPrecision(){
- * return precision;
- * }
- * */
+int Skill::getPrecision(){
+	return precision;
+}
+

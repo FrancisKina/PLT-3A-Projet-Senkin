@@ -22,6 +22,7 @@ namespace state {
     int skillCountBase;
     int initiativeBase;
     MovementId movementType;
+    int attackBase;
     // Operations
   public:
     int getHpBase ();
@@ -29,11 +30,13 @@ namespace state {
     int getSkillCountBase ();
     int getInitiativeBase ();
     MovementId getMovementType ();
+    int getAttackBase ();
     void setHpBase (int newHp);
     void setMovementBase (int newMove);
     void setSkillCountBase (int newSC);
     void setInitiativeBase (int newInit);
     void setMovementType (MovementId newId);
+    void setAttackBase (int newAttack);
     // Setters and Getters
   };
 

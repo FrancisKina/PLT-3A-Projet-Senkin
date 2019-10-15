@@ -3,7 +3,6 @@
 #define STATE__SKILL__H
 
 #include <vector>
-#include <tuple>
 
 namespace state {
   class SkillFactory;
