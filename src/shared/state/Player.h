@@ -18,22 +18,22 @@ namespace state {
   class Player {
     // Associations
     // Attributes
-  private:
-    bool Ia;
   protected:
     int x;
     int y;
-    int PlayerId;
+    DirectionId direction;
+    int playerId;
     int hp;
     int movement;
     int initiative;
     int skillCount;
     std::vector<std::pair<CharStatusId,int>> status;
+    bool ia;
     // Operations
   public:
     int getX ();
     int getY ();
-    DirectionId getDirectionId ();
+    DirectionId getDirection ();
     int getPlayerId ();
     int getHp ();
     int getMovement ();
@@ -43,14 +43,14 @@ namespace state {
     bool getIa ();
     void setX (int newX);
     void setY (int newY);
-    void setDirectionId (DirectionId id);
+    void setDirection (DirectionId id);
     void setPlayerId (int newId);
     void setHp (int newHp);
     void setMovement (int newMove);
     void setInitiative (int newInit);
     void setSkillCount (int newSC);
     void addStatus (std::pair<CharStatusId,int> newStatus);
-    bool setIa (bool IA);
+    void setIa (bool IA);
     // Setters and Getters
     void setStatus(const std::vector<std::pair<CharStatusId,int>>& status);
   };
