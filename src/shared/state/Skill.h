@@ -3,6 +3,7 @@
 #define STATE__SKILL__H
 
 #include <vector>
+#include <tuple>
 
 namespace state {
   class SkillFactory;
@@ -33,6 +34,7 @@ namespace state {
     std::vector<std::tuple<CharStatusId,int,int>> getEffect ();
     int getCooldown ();
     bool getSpecial ();
+    int getPrecision ();
     // Setters and Getters
   };
 
