@@ -31,3 +31,31 @@ int Skill::getPrecision(){
 	return precision;
 }
 
+
+void Skill::setDamage(int newDamage){
+    damage = newDamage;
+}
+
+void Skill::setRange(std::pair<int,int> newRange){
+    range = newRange;
+}
+
+void Skill::setCooldown(int newCooldown){
+    cooldown = newCooldown;
+}
+
+void Skill::setSpecial(bool isSpecial){
+    special = isSpecial;
+}
+
+void Skill::setArea(std::vector<std::pair<int,int>> newArea){
+    area = newArea;
+}
+
+void Skill::setEffect(std::vector<std::tuple<EffectId,int,int>> newEffect){
+    effect = newEffect;
+}
+
+void Skill::setPrecision(int newPrecision){
+	precision = newPrecision;
+}
