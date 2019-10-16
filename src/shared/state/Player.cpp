@@ -35,6 +35,7 @@ int Player::getSkillCount(){
     return skillCount;
 }
 
+
 std::vector<std::pair<CharStatusId,int>> Player::getStatus(){
 	return status;
 }
