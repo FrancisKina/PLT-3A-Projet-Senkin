@@ -6,13 +6,13 @@
 
 namespace state {
   class Player;
-  class Observable;
   class Cursor;
+  class Observable;
 }
 
 #include "Player.h"
-#include "Observable.h"
 #include "Cursor.h"
+#include "Observable.h"
 #include "FieldStatusId.h"
 #include "FieldTypeId.h"
 
@@ -28,6 +28,7 @@ namespace state {
     std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> grid;
     std::vector<Player> players;
     int round;
+    Cursor mycursor;
     // Operations
   public:
     std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> getGrid ();

@@ -15,8 +15,8 @@
 #include "state/CharacterFactory.h"
 #include "state/FieldTypeId.h"
 #include "state/FieldStatusId.h"
+#include "state/Cursor.h"
 #include "state/IObserver.h"
 #include "state/Observable.h"
-#include "state/Cursor.h"
 #include "state/State.h"
 #endif
