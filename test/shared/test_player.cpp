@@ -48,9 +48,12 @@ BOOST_AUTO_TEST_CASE(TestPlayer)
 	BOOST_CHECK_EQUAL(p.getIa(), 0);
 	p.setIa(1);
 	BOOST_CHECK_EQUAL(p.getIa(), 1);
-	/*
-	BOOST_CHECK_EQUAL(p.getStatus(), 0);
-	p.setStatus({{BURNED,7},{POISONED,7}});
-	BOOST_CHECK_EQUAL(p.getStatus(), {{BURNED,7},{POISONED,7}});
-	*/
+	
+	std::vector<std::pair<CharStatusId,int>> testStatus = {{BURNED,7},{POISONED,7}};
+	p.setStatus(testStatus);
+	for(size_t i=0; i<testStatus.size();i++){
+		BOOST_CHECK_EQUAL(p.getStatus()[i].first, testStatus[i].first);
+		BOOST_CHECK_EQUAL(p.getStatus()[i].second, testStatus[i].second);
+	}
+	
 }

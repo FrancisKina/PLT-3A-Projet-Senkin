@@ -85,6 +85,10 @@ void Player::addStatus (std::pair<CharStatusId,int> newStatus){
 	}
 }
 
+void Player::setStatus(std::vector<std::pair<CharStatusId,int>> newStatus){
+	status = newStatus;
+}
+
 void Player::setIa (bool IA){
 	ia = IA;
 }
