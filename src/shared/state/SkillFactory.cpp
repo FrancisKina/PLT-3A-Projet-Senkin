@@ -5,28 +5,29 @@ using namespace state;
 
 //Stat FRAPPE
 int damage_FRAPPE=5;
-std::pair<int,int> range_FRAPPE=make_pair(1,1);
-std::vector<std::pair<int,int>> area_FRAPPE=<<0;0>>;
+std::pair<int,int> range_FRAPPE=std::make_pair(1,1);
+std::vector<std::pair<int,int>> area_FRAPPE={std::make_pair(0,0)};
 int precision_FRAPPE=90;
 std::vector<std::tuple<EffectId,int,int>> effect_FRAPPE;
 int cooldown_FRAPPE=NULL;
 bool special_FRAPPE=0;//attaque physique
 /*
 //Stat SAUTPIQUE
-int damage_SAUTPIQUE=10;
-std::pair<int,int> range_SAUTPIQUE=;
-std::vector<std::pair<int,int>> area_SAUTPIQUE=<<2;3>>;
+int damage_SAUTPIQUE=8;
+std::pair<int,int> range_SAUTPIQUE=std::make_pair(2,3);
+std::vector<std::pair<int,int>> area_SAUTPIQUE={std::make_pair(0,0)};
 int precision_SAUTPIQUE=30;
-std::vector<std::tuple<EffectId,int,int>> effect_SAUTPIQUE=<<;
-int cooldown_=;
-bool special_=;
-
+std::vector<std::tuple<EffectId,int,int>> effect_SAUTPIQUE
+={std::tuple(,,),};
+int cooldown_=2;
+bool special_=0;
+/*
 //Stat 
 int damage_=;
-std::pair<int,int> range_=;
-std::vector<std::pair<int,int>> area_=<<0;0>>;
+std::pair<int,int> range_=std::make_pair(,);
+std::vector<std::pair<int,int>> area_={std::make_pair(,),};
 int precision_=;
-std::vector<std::tuple<EffectId,int,int>> effect_;
+std::vector<std::tuple<EffectId,int,int>> effect_={std::tuple(,,),};
 int cooldown_=;
 bool special_=;
 
@@ -140,7 +141,7 @@ bool special_=;
 */
 Skill SkillFactory::createSkill(SkillId id){
 	Skill move;
-	if (id==FRAPPE){
+	if (id==SKILL1){
 		move.setDamage(damage_FRAPPE);
 		move.setRange(range_FRAPPE);
 		move.setArea(area_FRAPPE);
