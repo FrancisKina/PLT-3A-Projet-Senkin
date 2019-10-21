@@ -8,6 +8,7 @@ namespace state {
 }
 
 #include "MovementId.h"
+#include "ClassId.h"
 #include "Player.h"
 
 namespace state {
@@ -23,6 +24,7 @@ namespace state {
     int initiativeBase;
     MovementId movementType;
     int attackBase;
+    ClassId classPlayer;
     // Operations
   public:
     int getHpBase ();
@@ -37,7 +39,12 @@ namespace state {
     void setInitiativeBase (int newInit);
     void setMovementType (MovementId newId);
     void setAttackBase (int newAttack);
+    ClassId getClassId ();
+    void setClassId (ClassId new_classId);
+    Character ();
     // Setters and Getters
+    ClassId getClassPlayer() const;
+    void setClassPlayer(ClassId classPlayer);
   };
 
 };

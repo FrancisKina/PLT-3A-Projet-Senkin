@@ -30,10 +30,10 @@ namespace render {
     std::vector<std::unique_ptr<Layer>> layers;
     // Operations
   public:
-    StateLayer (state::State etat);
+    StateLayer (state::State state);
     std::vector<std::unique_ptr<TileSet>>& getTilesets ();
     std::vector<std::unique_ptr<Layer>>& getLayers ();
-    void initLayers ();
+    void initLayers (state::State& state);
     // Setters and Getters
     void setTilesets(const std::vector<std::unique_ptr<TileSet>>& tilesets);
     void setLayers(const std::vector<std::unique_ptr<Layer>>& layers);

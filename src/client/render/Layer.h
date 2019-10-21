@@ -3,11 +3,15 @@
 #define RENDER__LAYER__H
 
 #include <SFML/Graphics.hpp>
-#include <string>
 
 namespace sf {
   class Texture;
   class VertexArray;
+};
+namespace state {
+  class State;
+};
+namespace sf {
   class Drawable;
   class Transformable;
 }
@@ -23,9 +27,10 @@ namespace render {
     sf::VertexArray quads;
     // Operations
   public:
-    bool loadGrid (state::Etat& etatLayer, const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int  height);
-    bool loadCharacters (state::Etat& etatLayer, const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
+    bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int  height);
+    bool loadPersonnage (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    bool loadCurseur (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u titleSIze, unsigned int width, unsigned int height);
     // Setters and Getters
   };
 

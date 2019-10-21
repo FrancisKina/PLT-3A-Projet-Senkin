@@ -7,8 +7,9 @@ namespace render {
 
   enum TileSetID {
     INFOSTILESET     = 1,
-    CHARACTERTILESET     = 2,
-    GRIDTILESET     = 3
+    PERSONNAGETILESET     = 2,
+    GRILLETILESET     = 3,
+    CURSEURTILESET     = 4
   };
 
 };

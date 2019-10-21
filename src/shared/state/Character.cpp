@@ -49,3 +49,21 @@ void Character::setSkillCountBase(int new_skillCountBase){
 void Character::setAttackBase(int new_attackBase){
     attackBase=new_attackBase;
 }
+
+void Character::setClassId(ClassId new_classId){
+    classPlayer=new_classId;
+}
+
+ClassId Character::getClassId(){
+	return classPlayer;
+}
+
+Character::Character(){
+	hpBase=0;
+    movementBase=0;
+    skillCountBase=0;
+    initiativeBase=0;
+    movementType=NORMAL;
+    attackBase=0;
+    classPlayer=DWARF;
+}
