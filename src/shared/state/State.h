@@ -3,6 +3,7 @@
 #define STATE__STATE__H
 
 #include <vector>
+#include <string>
 
 namespace state {
   class Player;
@@ -11,8 +12,8 @@ namespace state {
 }
 
 #include "Player.h"
-#include "Cursor.h"
 #include "Observable.h"
+#include "Cursor.h"
 #include "FieldStatusId.h"
 #include "FieldTypeId.h"
 
@@ -28,16 +29,17 @@ namespace state {
     std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> grid;
     std::vector<Player> players;
     int round;
-    Cursor mycursor;
+    Cursor* cursor;
     // Operations
   public:
-    std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> getGrid ();
+    std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& getGrid ();
     std::vector<Player> getPlayers ();
     int getRound ();
     void setRound (int newRound);
-    void initGrid ();
-    void initPlayers ();
+    bool initGrid (std::string maptxt);
+    void initPlayers (int nbPlayers);
     void initCursor ();
+    Cursor* getCursor ();
     // Setters and Getters
     FieldStatusId getFieldStatusId() const;
     void setFieldStatusId(FieldStatusId fieldStatusId);

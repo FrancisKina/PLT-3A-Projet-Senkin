@@ -13,6 +13,7 @@ namespace state {
     int cursorY;
     // Operations
   public:
+    Cursor ();
     int getCursorX ();
     int getCursorY ();
     void setCursorX (int newX);

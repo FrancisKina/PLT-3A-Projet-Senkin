@@ -2,6 +2,11 @@
 
 using namespace state;
 
+Cursor::Cursor(){
+	cursorX = 0;
+	cursorY = 0;
+}
+
 int Cursor::getCursorX(){
     return cursorX;
 }
