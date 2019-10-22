@@ -28,9 +28,13 @@ BOOST_AUTO_TEST_CASE(TestCharacter)
 	chara.setAttackBase(99);
 	BOOST_CHECK_EQUAL(chara.getAttackBase(), 99);
 
-	BOOST_CHECK_EQUAL(chara.getMovementType(), 0);
-	chara.setMovementType(NORMAL);
-	BOOST_CHECK_EQUAL(chara.getMovementType(), NORMAL);
+	BOOST_CHECK_EQUAL(chara.getMovementType(), 1);
+	chara.setMovementType(AGILE);
+	BOOST_CHECK_EQUAL(chara.getMovementType(), AGILE);
+
+	BOOST_CHECK_EQUAL(chara.getClassId(), 4);
+	chara.setClassId(FROG);
+	BOOST_CHECK_EQUAL(chara.getClassId(), FROG);
 
 }
 

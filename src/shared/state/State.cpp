@@ -16,7 +16,7 @@ std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& 
 	return refGrid;
 }
 
-std::vector<Player> State::getPlayers(){
+std::vector<Player*> State::getPlayers(){
 	return players;
 }
 
@@ -37,6 +37,15 @@ Cursor* State::getCursor(){
 }
 
 void State::initPlayers(int nbPlayers){
+	for (int i=0;i<nbPlayers;i++){
+		players.push_back( new Player());
+		players[i]->setPlayerId(i+1);
+		players[i]->setX(i);
+		players[i]->setY(0);
+		players[i]->setDirection(SOUTH);
+		//players.push_back(&p);
+	}
+
 }
 
 bool State::initGrid(std::string map_txt){

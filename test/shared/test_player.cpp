@@ -2,6 +2,8 @@
 
 #include "../../src/shared/state/Player.h"
 
+#include "../../src/shared/state/SkillFactory.h"
+
 using namespace ::state;
 
 BOOST_AUTO_TEST_CASE(TestPlayer)
@@ -16,7 +18,7 @@ BOOST_AUTO_TEST_CASE(TestPlayer)
 	p.setY(99);
 	BOOST_CHECK_EQUAL(p.getY(), 99);
 	
-	BOOST_CHECK_EQUAL(p.getDirection(), 0);
+	BOOST_CHECK_EQUAL(p.getDirection(), SOUTH);
 	p.setDirection(NORTH);
 	BOOST_CHECK_EQUAL(p.getDirection(), NORTH);
 	BOOST_CHECK_EQUAL(p.getDirection(), static_cast<DirectionId>(1));
@@ -56,5 +58,13 @@ BOOST_AUTO_TEST_CASE(TestPlayer)
 		BOOST_CHECK_EQUAL(p.getStatus()[i].first, testStatus[i].first);
 		BOOST_CHECK_EQUAL(p.getStatus()[i].second, testStatus[i].second);
 	}
+	Skill skill1;
+	Skill skill2;
+	SkillFactory skfa;
+	skill1 = skfa.createSkill(FRAPPE);
+	skill2 = skfa.createSkill(ARC);
+	std::vector<Skill*> testSkills= {&skill1,&skill2};
+	p.setSkills(testSkills);
+	BOOST_CHECK_EQUAL(p.getSkills()[0]->getDamage(),testSkills[0]->getDamage());
 	
 }

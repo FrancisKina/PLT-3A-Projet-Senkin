@@ -59,3 +59,10 @@ void Skill::setEffect(std::vector<std::tuple<EffectId,int,int>> newEffect){
 void Skill::setPrecision(int newPrecision){
 	precision = newPrecision;
 }
+
+SkillId Skill::getSkillId (){
+	return id;
+}
+void Skill::setSkillId (SkillId newSkillId){
+	id=newSkillId;
+}

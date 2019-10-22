@@ -158,6 +158,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_FRAPPE);
 		move.setCooldown(cooldown_FRAPPE);
 		move.setSpecial(special_FRAPPE);
+		move.setSkillId(FRAPPE);
 	}else if (id==SAUT_PIQUE){
 		move.setDamage(damage_SAUTPIQUE);
 		move.setRange(range_SAUTPIQUE);
@@ -166,8 +167,8 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_SAUTPIQUE);
 		move.setCooldown(cooldown_SAUTPIQUE);
 		move.setSpecial(special_SAUTPIQUE);
-	}
-	else if (id==ARC){
+		move.setSkillId(SAUT_PIQUE);
+	}else if (id==ARC){
 		move.setDamage(damage_ARC);
 		move.setRange(range_ARC);
 		move.setArea(area_ARC);
@@ -175,6 +176,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_ARC);
 		move.setCooldown(cooldown_ARC);
 		move.setSpecial(special_ARC);
+		move.setSkillId(ARC);
 	}else if (id==ARC_EN_CIEL){
 		move.setDamage(damage_ARC_EN_CIEL);
 		move.setRange(range_ARC_EN_CIEL);
@@ -183,6 +185,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_ARC_EN_CIEL);
 		move.setCooldown(cooldown_ARC_EN_CIEL);
 		move.setSpecial(special_ARC_EN_CIEL);
+		move.setSkillId(ARC_EN_CIEL);
 	}else if (id==SOIN){
 		move.setDamage(damage_SOIN);
 		move.setRange(range_SOIN);
@@ -191,6 +194,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_SOIN);
 		move.setCooldown(cooldown_SOIN);
 		move.setSpecial(special_SOIN);
+		move.setSkillId(SOIN);
 	}else if (id==SOIN_LEGER){
 		move.setDamage(damage_SOIN_LEGER);
 		move.setRange(range_SOIN_LEGER);
@@ -199,6 +203,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_SOIN_LEGER);
 		move.setCooldown(cooldown_SOIN_LEGER);
 		move.setSpecial(special_SOIN_LEGER);
+		move.setSkillId(SOIN_LEGER);
 	}else if (id==ENTAILLE){
 		move.setDamage(damage_ENTAILLE);
 		move.setRange(range_ENTAILLE);
@@ -207,6 +212,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_ENTAILLE);
 		move.setCooldown(cooldown_ENTAILLE);
 		move.setSpecial(special_ENTAILLE);
+		move.setSkillId(ENTAILLE);
 	}else if (id==TRANCHARGE){
 		move.setDamage(damage_TRANCHARGE);
 		move.setRange(range_TRANCHARGE);
@@ -215,6 +221,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_TRANCHARGE);
 		move.setCooldown(cooldown_TRANCHARGE);
 		move.setSpecial(special_TRANCHARGE);
+		move.setSkillId(TRANCHARGE);
 	}else if (id==PIETINEMENT){
 		move.setDamage(damage_PIETINEMENT);
 		move.setRange(range_PIETINEMENT);
@@ -223,6 +230,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_PIETINEMENT);
 		move.setCooldown(cooldown_PIETINEMENT);
 		move.setSpecial(special_PIETINEMENT);
+		move.setSkillId(PIETINEMENT);
 	}else if (id==FEU_D_ENFER){
 		move.setDamage(damage_FEU_D_ENFER);
 		move.setRange(range_FEU_D_ENFER);
@@ -231,6 +239,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_FEU_D_ENFER);
 		move.setCooldown(cooldown_FEU_D_ENFER);
 		move.setSpecial(special_FEU_D_ENFER);
+		move.setSkillId(FEU_D_ENFER);
 	}else if (id==DOUBLE_LAME){
 		move.setDamage(damage_DOUBLE_LAME);
 		move.setRange(range_DOUBLE_LAME);
@@ -239,6 +248,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_DOUBLE_LAME);
 		move.setCooldown(cooldown_DOUBLE_LAME);
 		move.setSpecial(special_DOUBLE_LAME);
+		move.setSkillId(DOUBLE_LAME);
 	}else if (id==FOUDRE){
 		move.setDamage(damage_FOUDRE);
 		move.setRange(range_FOUDRE);
@@ -247,6 +257,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_FOUDRE);
 		move.setCooldown(cooldown_FOUDRE);
 		move.setSpecial(special_FOUDRE);
+		move.setSkillId(FOUDRE);
 	}else if (id==BOULE_DE_FEU){
 		move.setDamage(damage_BOULE_DE_FEU);
 		move.setRange(range_BOULE_DE_FEU);
@@ -255,6 +266,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_BOULE_DE_FEU);
 		move.setCooldown(cooldown_BOULE_DE_FEU);
 		move.setSpecial(special_BOULE_DE_FEU);
+		move.setSkillId(BOULE_DE_FEU);
 	}else if (id==LANCER_DE_HACHE){
 		move.setDamage(damage_LANCER_DE_HACHE);
 		move.setRange(range_LANCER_DE_HACHE);
@@ -263,6 +275,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_LANCER_DE_HACHE);
 		move.setCooldown(cooldown_LANCER_DE_HACHE);
 		move.setSpecial(special_LANCER_DE_HACHE);
+		move.setSkillId(LANCER_DE_HACHE);
 	}else if (id==COUP_DE_BOULE){
 		move.setDamage(damage_COUP_DE_BOULE);
 		move.setRange(range_COUP_DE_BOULE);
@@ -271,6 +284,7 @@ Skill SkillFactory::createSkill(SkillId id){
 		move.setEffect(effect_COUP_DE_BOULE);
 		move.setCooldown(cooldown_COUP_DE_BOULE);
 		move.setSpecial(special_COUP_DE_BOULE);
+		move.setSkillId(COUP_DE_BOULE);
 	}
 	return move;
 }

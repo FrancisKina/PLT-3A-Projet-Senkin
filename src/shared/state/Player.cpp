@@ -92,7 +92,32 @@ void Player::setStatus(std::vector<std::pair<CharStatusId,int>> newStatus){
 void Player::setIa (bool IA){
 	ia = IA;
 }
-/*
-Character Player::getCharacter () {
-	return class_player;
-}*/
+
+Character* Player::getCharacter () {
+	return classPlayer;
+}
+
+std::vector<Skill*> Player::getSkills (){
+	return skills;
+}
+
+void Player::setSkills (std::vector<Skill*> newSkills){
+	skills=newSkills;
+}
+
+void Player::setSkill (Skill* newSkill){
+	skills.push_back(newSkill);
+}
+
+Player::Player(){
+	x=0;
+    y=0;
+    direction=SOUTH;
+    hp=0;
+    movement=0;
+    initiative=0;
+    skillCount=0;
+    status={};
+    playerId=0;
+    ia=0;
+}

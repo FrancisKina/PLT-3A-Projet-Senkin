@@ -8,6 +8,7 @@ namespace state {
   class SkillFactory;
 }
 
+#include "SkillId.h"
 #include "EffectId.h"
 #include "SkillFactory.h"
 
@@ -25,6 +26,7 @@ namespace state {
     std::vector<std::tuple<EffectId,int,int>> effect;
     int cooldown;
     bool special;
+    SkillId id;
     // Operations
   public:
     int getDamage ();
@@ -41,6 +43,8 @@ namespace state {
     void setCooldown (int newCD);
     void setSpecial (bool isSpecial);
     void setPrecision (int newPrecision);
+    SkillId getSkillId ();
+    void setSkillId (SkillId newSkillId);
     // Setters and Getters
   };
 

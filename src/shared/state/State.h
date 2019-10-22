@@ -11,9 +11,9 @@ namespace state {
   class Observable;
 }
 
-#include "Player.h"
 #include "Observable.h"
 #include "Cursor.h"
+#include "Player.h"
 #include "FieldStatusId.h"
 #include "FieldTypeId.h"
 
@@ -27,13 +27,13 @@ namespace state {
     // Attributes
   private:
     std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> grid;
-    std::vector<Player> players;
+    std::vector<Player*> players;
     int round;
     Cursor* cursor;
     // Operations
   public:
     std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& getGrid ();
-    std::vector<Player> getPlayers ();
+    std::vector<Player*> getPlayers ();
     int getRound ();
     void setRound (int newRound);
     bool initGrid (std::string maptxt);

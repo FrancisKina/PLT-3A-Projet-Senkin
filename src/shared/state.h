@@ -3,8 +3,8 @@
 #define __STATE__H
 
 #include "state/DirectionId.h"
-#include "state/EffectId.h"
 #include "state/SkillId.h"
+#include "state/EffectId.h"
 #include "state/SkillFactory.h"
 #include "state/Skill.h"
 #include "state/CharStatusId.h"
