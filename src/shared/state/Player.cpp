@@ -92,3 +92,7 @@ void Player::setStatus(std::vector<std::pair<CharStatusId,int>> newStatus){
 void Player::setIa (bool IA){
 	ia = IA;
 }
+/*
+Character Player::getCharacter () {
+	return class_player;
+}*/

@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace state {
+  class Character;
   class Skill;
 }
 
@@ -18,6 +19,8 @@ namespace state {
   class Player {
     // Associations
     // Attributes
+  private:
+    Character* classPlayer;
   protected:
     int x;
     int y;
@@ -52,6 +55,7 @@ namespace state {
     void addStatus (std::pair<CharStatusId,int> newStatus);
     void setStatus (std::vector<std::pair<CharStatusId,int>> newStatus);
     void setIa (bool IA);
+    Character* getCharacter ();
     // Setters and Getters
   };
 

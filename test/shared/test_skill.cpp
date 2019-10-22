@@ -24,13 +24,13 @@ BOOST_AUTO_TEST_CASE(TestSkill)
 		BOOST_CHECK_EQUAL(s.getArea()[i].first, testArea[i].first );
 	}
 	
-	std::vector<std::tuple<EffectId,int,int>> testEffect = {{BURN_CHAR,1,90},{HEAL_LOW,2,100},{MOVE_FOE,-1,20}};
+	/*std::vector<std::tuple<EffectId,int,int>> testEffect = {{BURN_CHAR,1,90},{HEAL_LOW,2,100},{MOVE_FOE,-1,20}};
 	s.setEffect(testEffect);
 	for(size_t i=0; i<testArea.size(); i++){
 		BOOST_CHECK_EQUAL(std::get<0>(s.getEffect()[i]), std::get<0>(testEffect[i]));
 		BOOST_CHECK_EQUAL(std::get<1>(s.getEffect()[i]), std::get<1>(testEffect[i]));
 		BOOST_CHECK_EQUAL(std::get<2>(s.getEffect()[i]), std::get<2>(testEffect[i]));
-	}
+	}*/
 	
 	BOOST_CHECK_EQUAL(s.getPrecision(), 0);
 	s.setPrecision(99);
