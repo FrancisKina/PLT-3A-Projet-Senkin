@@ -7,9 +7,15 @@
 
 namespace sf {
   class Texture;
+};
+namespace state {
+  class State;
+  class Character;
 }
 
-#include "TileSetID.h"
+#include "LayerId.h"
+#include "state/State.h"
+#include "state/Character.h"
 
 namespace render {
 
@@ -18,18 +24,17 @@ namespace render {
     // Associations
     // Attributes
   private:
-    TileSetID id;
     int cellWidth;
     int cellHeight;
     std::string imageFile;
+    sf::Texture textureTileset;
     // Operations
   public:
-    TileSet (TileSetID newID);
+    TileSet (state::ClassId newIdClass, LayerId newIdLayer);
     const std::string  getImageFile ();
     int const getCellWidth ();
     int const getCellHeight ();
-    int const getTileSetID ();
-    sf::Texture& getTexture ();
+    sf::Texture&  getTexture ();
     // Setters and Getters
   };
 

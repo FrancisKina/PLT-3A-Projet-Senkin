@@ -2,30 +2,34 @@
 #include "TileSet.h"
 
 using namespace render;
-/*
-TileSet::TileSet(TileSetID newID){
 
-	id=newID;
-
-	if (id == INFOSTILESET){
-		cellWidth=64;
-		cellHeight=64;
-		imageFile="res/mugshots_tileset.png";
-	}
+TileSet::TileSet(state::ClassId newIdClass, LayerId newIdLayer){
+	/**Fonction instantiant la tuile associé au sprite d'un élément du jeu
+	 * **/
+	LayerId id=newIdLayer;
 	
-	else if (id==PERSONNAGETILESET){
+	if (id==LAYERFIELD){
+		//TODO: adjust value and path
 		cellWidth=16;
 		cellHeight=16;
-		imageFile="res/personnage_tileset.png";
-	}
-	
-	else if (id==GRILLETILESET){
+		imageFile="res/terrain_tileset.png";
+	} else if (id==LAYERPLAYER){
+		if (newIdClass==state::KNIGHT){
+			imageFile="res/Char/Chevalier-Kiza.png";
+		} else 
+		if (newIdClass==state::FROG){;
+			imageFile="res/DreamingFrog.png";
+		} else 
+		if (newIdClass==state::ARCHER){
+			imageFile="res/Hope_Arc.png";
+		} else 
+		if (newIdClass==state::DWARF){
+			imageFile="res/NainDesMonts.png";
+		}
 		cellWidth=16;
 		cellHeight=16;
-		imageFile="res/grille_tileset.png";
-	}
-	
-	else if (id==CURSEURTILESET){
+	} else if (id==LAYERCURSOR){
+		//todo: adjust value
 		cellWidth=16;
 		cellHeight=16;
 		imageFile="res/curseur_tileset.png";
@@ -33,11 +37,11 @@ TileSet::TileSet(TileSetID newID){
 	
 	textureTileset.loadFromFile(imageFile);
 }
-
+/*
 const int TileSet::getTileSetID(){
 	return id;
 }
-
+*/
 const int TileSet::getCellWidth(){
 	return cellWidth;
 }
@@ -53,5 +57,6 @@ const std::string  TileSet::getImageFile (){
 sf::Texture& TileSet::getTexture(){
 	sf::Texture & refTexture = textureTileset;
 	return refTexture ;
-}*/
+}
+
 

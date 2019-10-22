@@ -2,8 +2,8 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/TileSetID.h"
-#include "render/TileSet.h"
 #include "render/Layer.h"
+#include "render/LayerId.h"
+#include "render/TileSet.h"
 #include "render/StateLayer.h"
 #endif
