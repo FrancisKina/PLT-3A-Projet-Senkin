@@ -14,10 +14,13 @@ void testSFML() {
 
 // Fin test SFML
 
-#include <state.h>
+#include "state.h"
+#include "render.h"
 
 using namespace std;
 using namespace state;
+using namespace render;
+
 
 int main(int argc,char* argv[])
 {
@@ -25,38 +28,19 @@ int main(int argc,char* argv[])
 		
 		/*	render : Affichage du rendu de la map */
 		if(strcmp(argv[1],"render")==0){
+			
 			//Initialisation de la grille
 			State state_init;
 			state_init.initGrid("res/maptest.txt");
-			std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& grid = state_init.getGrid();
-			std::string tileset = "res/Map/texturetest.png";
 			
-			sf::VertexArray quads(sf::Quads, 4 * grid.size() * grid[0].size());
+			//Initialisation de la liste des différents layers avec texture
+			StateLayer statelayer;
+			statelayer.initLayers(state_init);
+			
+			//Paramétrage puis affichage de la fenêtre
 			int tilesize = 50;
-			int textsize = 20;
+			sf::RenderWindow window(sf::VideoMode(tilesize * state_init.getGrid()[0].size(), tilesize * state_init.getGrid().size()), "Test");
 			
-			for(size_t i=0; i<grid.size(); i++){
-				for(size_t j=0; j<grid[0].size(); j++){
-					sf::Vertex* quad = &quads[(i * grid[0].size()+ j) * 4];
-					
-					
-					//Position des 4 coins du quad
-					quad[0].position = sf::Vector2f(tilesize * j, tilesize * i);
-					quad[1].position = sf::Vector2f(tilesize * (j + 1), tilesize * i);
-					quad[2].position = sf::Vector2f(tilesize * (j + 1), tilesize * (i + 1));
-					quad[3].position = sf::Vector2f(tilesize * j, tilesize * (i + 1));
-					
-					//Position de la texture
-					quad[0].texCoords = sf::Vector2f(textsize * (grid[i][j].first - 1), 0);
-					quad[1].texCoords = sf::Vector2f(textsize * grid[i][j].first, 0);
-					quad[2].texCoords = sf::Vector2f(textsize * grid[i][j].first, textsize);
-					quad[3].texCoords = sf::Vector2f(textsize * (grid[i][j].first - 1), textsize);
-			
-				}
-			}
-			
-			sf::RenderWindow window(sf::VideoMode(tilesize * grid[0].size(), tilesize * grid.size()), "Test");
-			cout << grid[0].size() << "x" << grid.size() << "\n";
 			// on fait tourner la boucle principale
 			while (window.isOpen())
 			{
@@ -71,13 +55,7 @@ int main(int argc,char* argv[])
 				// on dessine le niveau
 				window.clear();
 				
-				sf::RenderStates states;
-				sf::Texture m_tileset;
-				
-				states.texture = &m_tileset;
-				m_tileset.loadFromFile(tileset);
-				window.setFramerateLimit(60);
-				window.draw(quads,states);
+				window.draw(statelayer.getLayers()[0]);//Affichage terrain
 				window.display();
 			}
 		}

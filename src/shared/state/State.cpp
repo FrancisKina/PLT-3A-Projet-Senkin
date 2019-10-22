@@ -43,7 +43,6 @@ void State::initPlayers(int nbPlayers){
 		players[i]->setX(i);
 		players[i]->setY(0);
 		players[i]->setDirection(SOUTH);
-		//players.push_back(&p);
 	}
 
 }

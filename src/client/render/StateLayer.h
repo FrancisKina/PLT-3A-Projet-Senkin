@@ -3,19 +3,18 @@
 #define RENDER__STATELAYER__H
 
 #include <vector>
-#include <memory>
 
-namespace state {
-  class State;
-};
 namespace render {
   class TileSet;
   class Layer;
+};
+namespace state {
+  class State;
 }
 
-#include "state/State.h"
 #include "TileSet.h"
 #include "Layer.h"
+#include "state/State.h"
 
 namespace render {
 
@@ -23,20 +22,18 @@ namespace render {
   class StateLayer {
     // Associations
     // Attributes
-  private:
-    state::State stateLayer;
   protected:
-    std::vector<std::unique_ptr<TileSet>> tilesets;
-    std::vector<std::unique_ptr<Layer>> layers;
+    std::vector<TileSet> tilesets;
+    std::vector<Layer> layers;
     // Operations
   public:
-    StateLayer (state::State state);
-    std::vector<std::unique_ptr<TileSet>>& getTilesets ();
-    std::vector<std::unique_ptr<Layer>>& getLayers ();
+    std::vector<TileSet>& getTilesets ();
+    std::vector<Layer>& getLayers ();
     void initLayers (state::State& state);
+    StateLayer ();
     // Setters and Getters
-    void setTilesets(const std::vector<std::unique_ptr<TileSet>>& tilesets);
-    void setLayers(const std::vector<std::unique_ptr<Layer>>& layers);
+    void setTilesets(const std::vector<TileSet>& tilesets);
+    void setLayers(const std::vector<Layer>& layers);
   };
 
 };

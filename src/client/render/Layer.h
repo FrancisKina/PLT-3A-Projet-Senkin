@@ -31,6 +31,7 @@ namespace render {
     bool loadPersonnage (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
     bool loadCurseur (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u titleSIze, unsigned int width, unsigned int height);
+    sf::VertexArray getQuads ();
     // Setters and Getters
   };
 
