@@ -7,15 +7,9 @@
 
 namespace sf {
   class Texture;
-};
-namespace state {
-  class State;
-  class Character;
 }
 
 #include "LayerId.h"
-#include "state/State.h"
-#include "state/Character.h"
 
 namespace render {
 

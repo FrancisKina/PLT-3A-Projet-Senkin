@@ -41,9 +41,7 @@ int main(int argc,char* argv[])
 			//Paramétrage puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
 			sf::RenderWindow window(sf::VideoMode(tilesize * state_init.getGrid()[0].size(), tilesize * state_init.getGrid().size()), "Test");
-			
-			//std::cout << statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x << "\n";
-			std::cout << state_init.getPlayers()[1]->getX();
+
 			
 			// on fait tourner la boucle principale
 			while (window.isOpen())
