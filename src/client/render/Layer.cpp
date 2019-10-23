@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include <state.h>
+#include <cstdlib>
 
 using namespace render;
 using namespace state;
@@ -55,11 +56,12 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				quad[2].position = sf::Vector2f(tileSize * (state.getPlayers()[i]->getX() + 1) - tileSize/6.66, tileSize * (state.getPlayers()[i]->getY() + 1) - tileSize/10); //Bas droite
 				quad[3].position = sf::Vector2f(tileSize * state.getPlayers()[i]->getX() + tileSize/6.66, tileSize * (state.getPlayers()[i]->getY() + 1) - tileSize/10); //Bas gauche
 				
-				//Position de la texture;			
-				quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1), (3 - 1) * textSize.y);
-				quad[1].texCoords = sf::Vector2f(textSize.x * 2, (3 - 1) * textSize.y);
-				quad[2].texCoords = sf::Vector2f(textSize.x * 2, 3 * textSize.y);
-				quad[3].texCoords = sf::Vector2f(textSize.x * (2 - 1), 3 * textSize.y);
+				//Position de la texture;
+				int classId = rand()%4;		
+				quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
+				quad[1].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
+				quad[2].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
+				quad[3].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
 		}
 
 		return true;

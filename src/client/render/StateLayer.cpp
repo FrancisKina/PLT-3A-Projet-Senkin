@@ -19,7 +19,7 @@ StateLayer::StateLayer(){
 	TileSet tilesetField(LAYERFIELD);
 	tilesets.push_back(tilesetField);
 
-	TileSet tilesetPlayer(LAYERPLAYER, FROG);
+	TileSet tilesetPlayer(LAYERPLAYER);
 	tilesets.push_back(tilesetPlayer);
 
 /*

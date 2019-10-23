@@ -3,7 +3,7 @@
 
 using namespace render;
 
-TileSet::TileSet(LayerId newIdLayer, state::ClassId newIdClass){
+TileSet::TileSet(LayerId newIdLayer){
 	/*Fonction instanciant la tuile associé au sprite d'un élément du jeu*/
 	LayerId id=newIdLayer;
 	
@@ -13,20 +13,9 @@ TileSet::TileSet(LayerId newIdLayer, state::ClassId newIdClass){
 		cellHeight=20;
 		imageFile="res/Map/texturetest.png";
 	} else if (id==LAYERPLAYER){
-		if (newIdClass==state::KNIGHT){
-			imageFile="res/Char/Chevalier-Kiza.png";
-		} else 
-		if (newIdClass==state::FROG){
-			imageFile="res/Char/DreaminFrog.png";
-		} else 
-		if (newIdClass==state::ARCHER){
-			imageFile="res/Char/Hope_Arc.png";
-		} else 
-		if (newIdClass==state::DWARF){
-			imageFile="res/Char/NainDesMonts.png";
-		}
 		cellWidth=24;
 		cellHeight=32;
+		imageFile="res/Char/Characters.png";
 	} else if (id==LAYERCURSOR){
 		//todo: adjust value
 		cellWidth=24;

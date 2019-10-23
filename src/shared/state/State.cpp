@@ -43,7 +43,8 @@ void State::initPlayers(int nbPlayers){
 		players[i]->setPlayerId(i+1);
 		players[i]->setX(rand()%getGrid()[0].size());
 		players[i]->setY(rand()%getGrid().size());
-		players[i]->setDirection(SOUTH);
+		players[i]->setDirection(static_cast<DirectionId>(rand()%4));
+		//players[i]->setClassId(static_cast<ClassId>(rand()%4));
 	}
 
 }

@@ -32,7 +32,7 @@ int main(int argc,char* argv[])
 			//Initialisation de la grille
 			State state_init;
 			state_init.initGrid("res/maptest.txt");
-			state_init.initPlayers(5);
+			state_init.initPlayers(10);
 			
 			//Initialisation de la liste des différents layers avec texture
 			StateLayer statelayer;
