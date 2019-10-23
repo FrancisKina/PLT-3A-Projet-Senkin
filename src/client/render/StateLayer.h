@@ -27,10 +27,11 @@ namespace render {
     std::vector<Layer> layers;
     // Operations
   public:
+    StateLayer ();
     std::vector<TileSet>& getTilesets ();
     std::vector<Layer>& getLayers ();
-    void initLayers (state::State& state);
-    StateLayer ();
+    void initLayers (state::State& state, int tileSize);
+    void displayLayers ();
     // Setters and Getters
     void setTilesets(const std::vector<TileSet>& tilesets);
     void setLayers(const std::vector<Layer>& layers);

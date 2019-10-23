@@ -32,14 +32,18 @@ int main(int argc,char* argv[])
 			//Initialisation de la grille
 			State state_init;
 			state_init.initGrid("res/maptest.txt");
+			state_init.initPlayers(5);
 			
 			//Initialisation de la liste des différents layers avec texture
 			StateLayer statelayer;
-			statelayer.initLayers(state_init);
+			statelayer.initLayers(state_init, 50);
 			
 			//Paramétrage puis affichage de la fenêtre
-			int tilesize = 50;
+			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
 			sf::RenderWindow window(sf::VideoMode(tilesize * state_init.getGrid()[0].size(), tilesize * state_init.getGrid().size()), "Test");
+			
+			//std::cout << statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x << "\n";
+			std::cout << state_init.getPlayers()[1]->getX();
 			
 			// on fait tourner la boucle principale
 			while (window.isOpen())
@@ -56,6 +60,7 @@ int main(int argc,char* argv[])
 				window.clear();
 				
 				window.draw(statelayer.getLayers()[0]);//Affichage terrain
+				window.draw(statelayer.getLayers()[1]);//Affichage terrain
 				window.display();
 			}
 		}

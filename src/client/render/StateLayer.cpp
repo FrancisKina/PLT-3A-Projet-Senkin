@@ -13,18 +13,16 @@ using namespace render;
 using namespace std;
 using namespace state;
 
-/*Creation de la liste contenant chaque type de tuile avec la texture associée*/
+/*Creation de la liste contenant chaque type de tuile avec la texture associée : [0] Field, [1] Players*/
 StateLayer::StateLayer(){
 
-	TileSet tilesetField(FROG,LAYERFIELD);
+	TileSet tilesetField(LAYERFIELD);
 	tilesets.push_back(tilesetField);
-/*	
-	TileSet tilesetField(FROG,LAYERFIELD);
-	tilesets.push_back(tilesetField);
-	
-	TileSet tilesetPlayer(LAYERPLAYER);
-	tilesets.push_back(layerPlayer));
-	
+
+	TileSet tilesetPlayer(LAYERPLAYER, FROG);
+	tilesets.push_back(tilesetPlayer);
+
+/*
 	TileSet tilesetCursor(LAYERCURSOR);
 	tilesets.push_back(layerCursor);
 
@@ -36,15 +34,15 @@ StateLayer::StateLayer(){
 }
 
 /*Creation de la liste contenant tous les layers texturées*/
-void StateLayer::initLayers(state::State& state){	
+void StateLayer::initLayers(state::State& state, int tileSize){	
 	Layer layerField;
-	Layer layerPersonnage;
+	Layer layerPlayer;
 	Layer layerCurseur;
 	Layer layerInfos;
 	
-	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size());
+	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 
-	//surfPersonnage.loadPersonnage(state, tilesets[1]->getTexture(), sf::Vector2u(tilesets[1]->getCellWidth(), tilesets[1]->getCellHeight()), state.getPlayers().size(), 1);
+	layerPlayer.loadPlayer(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 
 	//surfCurseur.loadCurseur(state, tilesets[2]->getTexture(), sf::Vector2u(tilesets[2]->getCellWidth(), tilesets[2]->getCellHeight()), 1, 1);
 	
@@ -64,7 +62,7 @@ void StateLayer::initLayers(state::State& state){
 	}
 	
 	layers.push_back(layerField);
-	//layers.push_back(move(ptr_surfPersonnage));
+	layers.push_back(layerPlayer);
 	//layers.push_back(move(ptr_surfCurseur));
 	//layers.push_back(move(ptr_surfInfos));
 	

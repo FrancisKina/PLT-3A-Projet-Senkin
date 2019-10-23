@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <string.h>
+#include <cstdlib>
 #include "State.h"
 
 using namespace state;
@@ -40,8 +41,8 @@ void State::initPlayers(int nbPlayers){
 	for (int i=0;i<nbPlayers;i++){
 		players.push_back( new Player());
 		players[i]->setPlayerId(i+1);
-		players[i]->setX(i);
-		players[i]->setY(0);
+		players[i]->setX(rand()%getGrid()[0].size());
+		players[i]->setY(rand()%getGrid().size());
 		players[i]->setDirection(SOUTH);
 	}
 

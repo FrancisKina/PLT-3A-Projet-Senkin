@@ -30,7 +30,7 @@ namespace render {
     sf::Texture textureTileset;
     // Operations
   public:
-    TileSet (state::ClassId newIdClass, LayerId newIdLayer);
+    TileSet (LayerId newIdLayer = LAYERFIELD, state::ClassId newIdClass = state::FROG);
     const std::string  getImageFile ();
     int const getCellWidth ();
     int const getCellHeight ();

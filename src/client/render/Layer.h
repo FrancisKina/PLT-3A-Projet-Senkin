@@ -27,8 +27,8 @@ namespace render {
     sf::VertexArray quads;
     // Operations
   public:
-    bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int  height);
-    bool loadPersonnage (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
+    bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int  height, int tileSize);
+    bool loadPlayer (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
     bool loadCurseur (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u titleSIze, unsigned int width, unsigned int height);
     sf::VertexArray getQuads ();
