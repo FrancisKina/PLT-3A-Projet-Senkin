@@ -94,7 +94,11 @@ void Player::setIa (bool IA){
 }
 
 Character* Player::getCharacter () {
-	return classPlayer;
+	return character;
+}
+
+void Player::setCharacter (Character* newcharacter) {
+	character = newcharacter;
 }
 
 std::vector<Skill*> Player::getSkills (){

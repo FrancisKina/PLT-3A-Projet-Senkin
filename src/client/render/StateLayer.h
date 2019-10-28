@@ -31,7 +31,7 @@ namespace render {
     std::vector<TileSet>& getTilesets ();
     std::vector<Layer>& getLayers ();
     void initLayers (state::State& state, int tileSize);
-    void displayLayers ();
+    void displayLayers (state::State& state);
     // Setters and Getters
     void setTilesets(const std::vector<TileSet>& tilesets);
     void setLayers(const std::vector<Layer>& layers);

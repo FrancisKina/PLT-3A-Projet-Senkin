@@ -22,10 +22,9 @@ StateLayer::StateLayer(){
 	TileSet tilesetPlayer(LAYERPLAYER);
 	tilesets.push_back(tilesetPlayer);
 
-/*
 	TileSet tilesetCursor(LAYERCURSOR);
-	tilesets.push_back(layerCursor);
-
+	tilesets.push_back(tilesetCursor);
+/*
 	TileSet tilesetInfos(INFOSTILESET);
 	std::unique_ptr<TileSet> ptr_tilesetInfos (new TileSet(tilesetInfos));
 	tilesets.push_back(move(ptr_tilesetInfos));
@@ -37,14 +36,14 @@ StateLayer::StateLayer(){
 void StateLayer::initLayers(state::State& state, int tileSize){	
 	Layer layerField;
 	Layer layerPlayer;
-	Layer layerCurseur;
+	Layer layerCursor;
 	Layer layerInfos;
 	
 	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 
 	layerPlayer.loadPlayer(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 
-	//surfCurseur.loadCurseur(state, tilesets[2]->getTexture(), sf::Vector2u(tilesets[2]->getCellWidth(), tilesets[2]->getCellHeight()), 1, 1);
+	layerCursor.loadCursor(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), 1, 1, tileSize);
 	
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), 1, 1);
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), state.getPlayers().size(), 1);
@@ -63,7 +62,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	
 	layers.push_back(layerField);
 	layers.push_back(layerPlayer);
-	//layers.push_back(move(ptr_surfCurseur));
+	layers.push_back(layerCursor);
 	//layers.push_back(move(ptr_surfInfos));
 	
 }
@@ -76,4 +75,31 @@ std::vector<TileSet>& StateLayer::getTilesets (){
 std::vector<Layer>& StateLayer::getLayers (){
 	std::vector<Layer>& ref_layers = layers;
 	return ref_layers;
+}
+
+void StateLayer::displayLayers(state::State& state){
+	//Creation puis affichage de la fenêtre
+	int tilesize = getLayers()[0].getQuads()[1].position.x - getLayers()[0].getQuads()[0].position.x;
+	sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
+
+	// on fait tourner la boucle principale
+	while (window.isOpen())
+	{
+		// on gère les évènements
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if(event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		// on dessine le niveau
+		window.clear();
+		
+		window.draw(getLayers()[0]);//Affichage terrain
+		window.draw(getLayers()[1]);//Affichage personnages
+		window.draw(getLayers()[2]);//Affichage curseur
+
+		window.display();
+	}
 }

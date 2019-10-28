@@ -29,8 +29,8 @@ namespace render {
   public:
     bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int  height, int tileSize);
     bool loadPlayer (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
+    bool loadCursor (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSIze, unsigned int width, unsigned int height, int tileSize);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
-    bool loadCurseur (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u titleSIze, unsigned int width, unsigned int height);
     sf::VertexArray getQuads ();
     // Setters and Getters
   };

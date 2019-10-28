@@ -7,8 +7,8 @@ namespace state {
   class Character;
 }
 
-#include "Character.h"
 #include "ClassId.h"
+#include "Character.h"
 
 namespace state {
 
@@ -17,7 +17,7 @@ namespace state {
     // Associations
     // Operations
   public:
-    Character createCharacter (ClassId id);
+    Character* createCharacter (ClassId id);
     // Setters and Getters
   };
 

@@ -47,7 +47,7 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
        	quads.resize(width * height * 4);
        	
         // on remplit le tableau de vertex, avec un quad par tuile
-        for (size_t i = 0; i < width; ++i){
+        for (size_t i = 0; i < width; i++){
               	sf::Vertex* quad = &quads[i * 4];
 				
 				//Position des 4 coins du quad (x, y)
@@ -57,7 +57,7 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				quad[3].position = sf::Vector2f(tileSize * state.getPlayers()[i]->getX() + tileSize/6.66, tileSize * (state.getPlayers()[i]->getY() + 1) - tileSize/10); //Bas gauche
 				
 				//Position de la texture;
-				int classId = rand()%4;		
+				int classId = state.getPlayers()[i]->getCharacter()->getClassId() - 1;		
 				quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
 				quad[1].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
 				quad[2].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
@@ -66,41 +66,35 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 
 		return true;
 }
-/*
-bool Layer::loadCurseur(state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int height){
+
+
+bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
     			
 		texture = textureTileset;
 		
       	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
 	   	quads.setPrimitiveType(sf::Quads);
        	quads.resize(width * height * 4);
+       	
+        // on remplit le tableau de vertex, avec un quad par tuile
+		sf::Vertex* quad = &quads[0];
 		
-	  	// on récupère le numéro de tuile courant
-		int tileNumber=stateLayer.getCurseur()->getCodeTuile();
+		//Position des 4 coins du quad (x, y)
+		quad[0].position = sf::Vector2f(tileSize * state.getCursor()->getCursorX(), tileSize * state.getCursor()->getCursorY()); //Haut gauche
+		quad[1].position = sf::Vector2f(tileSize * (state.getCursor()->getCursorX() + 1), tileSize * state.getCursor()->getCursorY()); //Haut droite
+		quad[2].position = sf::Vector2f(tileSize * (state.getCursor()->getCursorX() + 1), tileSize * (state.getCursor()->getCursorY() + 1)); //Bas droite
+		quad[3].position = sf::Vector2f(tileSize * state.getCursor()->getCursorX(), tileSize * (state.getCursor()->getCursorY() + 1)); //Bas gauche
 		
-	    // on en déduit sa position dans la texture du tileset
-	    int tu = tileNumber % (texture.getSize().x / tileSize.x);
-	    int tv = tileNumber / (texture.getSize().x / tileSize.x);
-
-	    // on récupère un pointeur vers le quad à définir dans le tableau de vertex
-	    sf::Vertex* quad = &quads[0];
-		
-		// on définit ses quatre coins
-		quad[0].position = sf::Vector2f(stateLayer.getCurseur()->getPosition().getX() * tileSize.x, stateLayer.getCurseur()->getPosition().getY() * tileSize.y);
-		quad[1].position = sf::Vector2f((stateLayer.getCurseur()->getPosition().getX()+ 1) * tileSize.x, stateLayer.getCurseur()->getPosition().getY() * tileSize.y);
-		quad[2].position = sf::Vector2f((stateLayer.getCurseur()->getPosition().getX() + 1) * tileSize.x, (stateLayer.getCurseur()->getPosition().getY() + 1) * tileSize.y);
-		quad[3].position = sf::Vector2f(stateLayer.getCurseur()->getPosition().getX() * tileSize.x, (stateLayer.getCurseur()->getPosition().getY() + 1) * tileSize.y);
-		
-		// on définit ses quatre coordonnées de texture
-		quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-		quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-		quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-		quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+		//Position de la texture;
+		quad[0].texCoords = sf::Vector2f(0, 0);
+		quad[1].texCoords = sf::Vector2f(textSize.x, 0);
+		quad[2].texCoords = sf::Vector2f(textSize.x, textSize.y);
+		quad[3].texCoords = sf::Vector2f(0, textSize.y);
 		
 
 		return true;
 }
-
+/*
 bool Layer::loadInfos(state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u tileSize, unsigned int width, unsigned int height){
 
 	texture = textureTileset;
