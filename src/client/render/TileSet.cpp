@@ -11,16 +11,16 @@ TileSet::TileSet(LayerId newIdLayer){
 		//TODO: adjust value and path
 		cellWidth=20;
 		cellHeight=20;
-		imageFile="res/Map/texturetest.png";
+		imageFile="res/Map/texturetest3.png";
 	} else if (id==LAYERPLAYER){
 		cellWidth=24;
 		cellHeight=32;
 		imageFile="res/Char/Characters.png";
 	} else if (id==LAYERCURSOR){
 		//todo: adjust value
-		cellWidth=24;
-		cellHeight=14;
-		imageFile="res/curseur_tileset.png";
+		cellWidth=500;
+		cellHeight=500;
+		imageFile="res/curseur.png";
 	}
 	
 	textureTileset.loadFromFile(imageFile);

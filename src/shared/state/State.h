@@ -22,7 +22,7 @@ namespace state {
   /// class State - 
   class State : public state::Observable {
     // Associations
-    state::FieldStatusId fieldStatusId;
+    FieldStatusId fieldStatusId;
     state::FieldTypeId fieldTypeId;
     // Attributes
   private:

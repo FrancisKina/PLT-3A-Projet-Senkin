@@ -31,6 +31,8 @@ void State::setRound(int newRound){
 
 void State::initCursor(){
 	cursor = new Cursor();
+	cursor->setCursorX(0);
+	cursor->setCursorY(0);
 }
 
 Cursor* State::getCursor(){
@@ -41,9 +43,9 @@ void State::initPlayers(int nbPlayers){
 	for (int i=0;i<nbPlayers;i++){
 		players.push_back( new Player());
 		players[i]->setPlayerId(i+1);
-		players[i]->setX(rand()%getGrid()[0].size());
-		players[i]->setY(rand()%getGrid().size());
-		players[i]->setDirection(static_cast<DirectionId>(rand()%4));
+		players[i]->setX(i);
+		players[i]->setY(i);
+		players[i]->setDirection(SOUTH);
 		//players[i]->setClassId(static_cast<ClassId>(rand()%4));
 	}
 

@@ -1,9 +1,9 @@
-#include "engine.h"
+/*#include "engine.h"
 #include "render.h"
 #include "state.h"
 #include <iostream>
 #include <unistd.h>
-
+/*
 using namespace state;
 using namespace engine;
 using namespace render;
@@ -67,7 +67,7 @@ bool Moteur::verificationFinDeTour(){
 			else{
 				countJoueurActif = countJoueurActif - 1;
 			}
-			*/			
+			*//*			
 		}
 		
 		
@@ -77,12 +77,12 @@ bool Moteur::verificationFinDeTour(){
 				partieFinie = false;
 			}		
 		}
-	}
+	}*/
 	/*
 	if (countJoueurActif == 0){
 		partieFinie = true;
 	}
-	*/
+	*//*
 	
 	if (partieFinie && tourChange){
 		cout << "\tPartie Terminee !" << endl;
@@ -149,4 +149,4 @@ void Moteur::verificationDebutDeTour(){
 	}
 }
 
- 
+ */

@@ -1,21 +1,20 @@
-#include "engine.h"
+/*#include "engine.h"
 #include "state.h"
 #include <iostream> 
 #include <unistd.h>
 #include <stdlib.h>
-
+/*
 using namespace engine;
 using namespace state;
 using namespace std;
 
-Attaque::Attaque (state::Personnage& attaquant, state::Personnage& cible, bool newJoueur): attaquant(attaquant), cible(cible){
+Attaque::Attaque (state::Personnage& attaquant, std::vector<state::Personnage&> cibles, bool newJoueur): attaquant(attaquant), cible(cible){
 	id = ATTAQUE;
-	contreAtk=false;
 	joueur=newJoueur;
 }
     
 
-void Attaque::execute (state::Etat& etat){
+void Attaque::execute (state::State& state){
 	bool attaque_possible=false;
 	vector<Position> listePosAtq=attaquant.getLegalAttack(etat);
 
@@ -119,12 +118,12 @@ void Attaque::execute (state::Etat& etat){
 						contre_attaque.execute(etat);	
 					}
 					if(contreAtk==true){
-						/*// Le tour du contre-attaquant ne se termine pas apres sa contre-attaque
+						*//*// Le tour du contre-attaquant ne se termine pas apres sa contre-attaque
 						if(attaquant.getType()==ARCHER && cible.getType()!=ARCHER){
 							FinActions finattaque(attaquant, joueur);
 							sleep(2);
 							finattaque.execute(etat);		
-						}*/
+						}*//*
 						//else{
 							FinActions finattaque(cible, joueur);
 							sleep(2);
@@ -155,3 +154,5 @@ void Attaque::execute (state::Etat& etat){
 	
 	cout << "\n" ;
 }
+*/
+//void getCibles(

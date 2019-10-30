@@ -37,40 +37,45 @@ MovementId MT_Dwarf = NORMAL;
 ClassId class_Dwarf = DWARF;
 
 
-Character CharacterFactory::createCharacter(ClassId id){
-	Character chara;
+Character* CharacterFactory::createCharacter(ClassId id){
+	Character* chara = new Character();
+	
 	if (id==class_Knight){	//classe Knight
-		chara.setHpBase(HP_Knight);
-		chara.setMovementBase(MP_Knight);
-		chara.setSkillCountBase(skill_count);
-		chara.setInitiativeBase(initi_Knight);
-		chara.setMovementType(MT_Knight);
-		//chara.setAttack(atk_Knight);
-		chara.setClassId(id);
+		chara->setHpBase(HP_Knight);
+		chara->setMovementBase(MP_Knight);
+		chara->setSkillCountBase(skill_count);
+		chara->setInitiativeBase(initi_Knight);
+		chara->setMovementType(MT_Knight);
+		chara->setAttackBase(atk_Knight);
+		chara->setClassId(id);
+		
 	}else if (id==class_Frog){	//classe Frog
-		chara.setHpBase(HP_Frog);
-		chara.setMovementBase(MP_Frog);
-		chara.setSkillCountBase(skill_count);
-		chara.setInitiativeBase(initi_Frog);
-		chara.setMovementType(MT_Frog);
-		chara.setClassId(id);
-		//chara.setAttack(atk_Frog);
+		chara->setHpBase(HP_Frog);
+		chara->setMovementBase(MP_Frog);
+		chara->setSkillCountBase(skill_count);
+		chara->setInitiativeBase(initi_Frog);
+		chara->setMovementType(MT_Frog);
+		chara->setAttackBase(atk_Frog);
+		chara->setClassId(id);
+		
 	}else if (id==class_Archer){	//classe Archer
-		chara.setHpBase(HP_Archer);
-		chara.setMovementBase(MP_Archer);
-		chara.setSkillCountBase(skill_count);
-		chara.setInitiativeBase(initi_Archer);
-		chara.setMovementType(MT_Archer);
-		chara.setClassId(id);
-		//chara.setAttack(atk_Archer);
+		chara->setHpBase(HP_Archer);
+		chara->setMovementBase(MP_Archer);
+		chara->setSkillCountBase(skill_count);
+		chara->setInitiativeBase(initi_Archer);
+		chara->setMovementType(MT_Archer);
+		chara->setAttackBase(atk_Archer);
+		chara->setClassId(id);
+		
 	}else if (id==class_Dwarf){	//classe Dwarf
-		chara.setHpBase(HP_Dwarf);
-		chara.setMovementBase(MP_Dwarf);
-		chara.setSkillCountBase(skill_count);
-		chara.setInitiativeBase(initi_Dwarf);
-		chara.setMovementType(MT_Dwarf);
-		//chara.setAttack(atk_Dwarf);
-		chara.setClassId(id);
+		chara->setHpBase(HP_Dwarf);
+		chara->setMovementBase(MP_Dwarf);
+		chara->setSkillCountBase(skill_count);
+		chara->setInitiativeBase(initi_Dwarf);
+		chara->setMovementType(MT_Dwarf);
+		chara->setAttackBase(atk_Dwarf);
+		chara->setClassId(id);
+		
 	}
     return chara;
 }

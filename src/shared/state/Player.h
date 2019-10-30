@@ -19,9 +19,6 @@ namespace state {
   class Player {
     // Associations
     // Attributes
-  private:
-    Character* classPlayer;
-    std::vector<Skill*> skills;
   protected:
     int x;
     int y;
@@ -33,8 +30,11 @@ namespace state {
     int skillCount;
     std::vector<std::pair<CharStatusId,int>> status;
     bool ia;
+    Character* character;
+    std::vector<Skill*> skills;
     // Operations
   public:
+    Player ();
     int getX ();
     int getY ();
     DirectionId getDirection ();
@@ -57,10 +57,10 @@ namespace state {
     void setStatus (std::vector<std::pair<CharStatusId,int>> newStatus);
     void setIa (bool IA);
     Character* getCharacter ();
+    void setCharacter (Character* newcharacter);
     std::vector<Skill*> getSkills ();
     void setSkills (std::vector<Skill*> newSkills);
     void setSkill (Skill* newSkill);
-    Player ();
     // Setters and Getters
   };
 
