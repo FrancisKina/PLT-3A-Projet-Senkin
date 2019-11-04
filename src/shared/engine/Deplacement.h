@@ -19,11 +19,11 @@ namespace engine {
   class Deplacement : public engine::Commande {
     // Attributes
   private:
-    state::Personnage& cible;
+    state::Character& cible;
     std::tuple<int,int> destination;
     // Operations
   public:
-    Deplacement (state::Personnage& cible, std::vector<int,int> destination, bool joueur);
+    Deplacement (state::Character& cible, std::vector<int,int> destination, bool joueur);
     void execute (state::State& state);
     // Setters and Getters
   };

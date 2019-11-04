@@ -13,7 +13,7 @@ namespace state {
     BLOCKMOVE     = 12,
     BURNING     = 13,
     POISON     = 14,
-    GRAVIRY     = 15
+    GRAVITY     = 15
   };
 
 };

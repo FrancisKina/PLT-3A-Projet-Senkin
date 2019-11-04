@@ -18,10 +18,10 @@ namespace engine {
   class FinActions : public engine::Commande {
     // Attributes
   private:
-    state::Personnage& cible;
+    state::Character& cible;
     // Operations
   public:
-    FinActions (state::Personnage& cible, bool joueur);
+    FinActions (state::Character& cible, bool joueur);
     void execute (state::State& state);
     // Setters and Getters
   };

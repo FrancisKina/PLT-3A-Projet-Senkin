@@ -14,15 +14,20 @@ namespace engine {
 
   /// class Commande - 
   class Commande {
+    // Associations
     // Attributes
-  public:
+  protected:
     CommandeID id;
     bool joueur;
     // Operations
   public:
     CommandeID getCommandeID ();
-    virtual void execute (state::State& state) = 0;
+    void execute (state::State& state);
     // Setters and Getters
+    CommandeID getId() const;
+    void setId(CommandeID id);
+    bool getJoueur() const;
+    void setJoueur(bool joueur);
   };
 
 };

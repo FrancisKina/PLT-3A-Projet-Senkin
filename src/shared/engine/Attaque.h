@@ -19,15 +19,15 @@ namespace engine {
   class Attaque : public engine::Commande {
     // Attributes
   private:
-    state::Personnage& attaquant;
-    std::vector<state::Personnage&> cibles;
+    state::Character& attaquant;
+    std::vector<state::Character> cibles;
     state::Skill attaque;
-    std::tuple<int,int> positionCible;
+    std::vector<std::pair<int,int>> positionCible;
     // Operations
   public:
-    Attaque (state::Personnage& attaquant, std::tuple<int,int> positionCible, bool joueur, state::Skill attaque);
+    Attaque (state::Character& attaquant, std::vector<std::pair<int,int>> positionCible, bool joueur, state::Skill attaque);
     void execute (state::State& state);
-    void getCibles (state::Skill attaque, std::tuple<int,int> positionCible);
+    void getCibles (state::Skill attaque, std::vector<std::pair<int,int>> positionCible);
     // Setters and Getters
   };
 

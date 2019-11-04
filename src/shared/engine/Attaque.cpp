@@ -1,32 +1,52 @@
-/*#include "engine.h"
-#include "state.h"
+/*#include "Attaque.h"
 #include <iostream> 
 #include <unistd.h>
 #include <stdlib.h>
-/*
+
 using namespace engine;
 using namespace state;
 using namespace std;
 
-Attaque::Attaque (state::Personnage& attaquant, std::vector<state::Personnage&> cibles, bool newJoueur): attaquant(attaquant), cible(cible){
+Attaque::Attaque (state::Personnage& attaquant, std::vector<std::pair<<int,int>>  positionCible, bool joueur, state::Skill attaque){
 	id = ATTAQUE;
 	joueur=newJoueur;
 }
     
 
-void Attaque::execute (state::State& state){
+void Attaque::execute (state::State& state, state::Skill attaque){
 	bool attaque_possible=false;
-	vector<Position> listePosAtq=attaquant.getLegalAttack(etat);
-
-	if (attaquant.getStatut()!=ATTENTE && attaquant.getStatut()!=MORT){
-
-		for(size_t j=0; j<listePosAtq.size(); j++){
-			if(listePosAtq[j].equals(cible.getPosition())){
-				attaque_possible=true;
-				break;
+	//vector<Position> listePosAtq=attaquant.getLegalAttack(etat);
+	
+	if (attaquant.getSkillCount()!=0) && attaquant.getHP()>0){
+		//on considère uniquement les attaques horizontales et verticales
+		//cas pas de 0 dans range
+			/*int rangeSize=4*(attaque.getRange().second-attaque.getRange().first+1);
+			for(size_t j=0; j<rangeSize; j++){
+				if(listePosAtq[j].equals(cible.getPosition())){
+					attaque_possible=true;
+					break;
+				}
+				
+			}*//*
+			//teste renvoyant la liste position attaquable
+			for(int i=1, i<5,i++){
+				for(int j = attaque.getRange().first, j<attaque.getRange().second +1, j++){
+					int x = attaquant.getX();
+					int y = attaquant.getY();
+					std::pair<FieldStatusId, int> statusCase = state.getGrid[
+					if(){
+					}
+					if(j=attaque.getRange().second){
+						cout << "la direction n°" << i << " n'est pas bloqué" <<endl;
+					}
+				}
 			}
-			
-		}
+		
+		
+		
+		
+		
+		
 		if(attaque_possible){
 			
 				int attaque_attaquant=attaquant.getStatistiques().getAttaque();
@@ -137,22 +157,16 @@ void Attaque::execute (state::State& state){
 		
 		// Cas attaque impossible
 		else{
-			if (contreAtk == true){
-				cout << "\t CONTRE-ATTAQUE IMPOSSIBLE : ennemi hors de portée !" << endl;
-				FinActions finattaque(cible, joueur);
-				sleep(2);
-				finattaque.execute(etat);
-			}
-			else{
-				cout << "Attaque non autorisée !" << endl;
-			}		
+			cout << "Attaque non autorisée !" << endl;		
 		}
 	}
-	else if(attaquant.getStatut()==ATTENTE){
-		cout << attaquant.getNom() << " a terminé son tour d'actions, il ne peut plus attaquer." <<endl;  
+	else if(attaquant.getSkillCount()==0){
+		cout << "le joueur n°" << attaquant.getPlayerId() << " a utilisé tout ses PA, il ne peut plus attaquer." <<endl;  
 	}
 	
 	cout << "\n" ;
 }
-*/
+
 //void getCibles(
+	//prend la position central de l'attaque et renvoie la zone d'effet de l'attaque et la liste des persos touché
+	*/
