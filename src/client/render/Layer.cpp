@@ -27,10 +27,10 @@ bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vect
 				quad[3].position = sf::Vector2f(tileSize * j, tileSize * (i + 1));
 				
 				//Position de la texture
-				quad[0].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j].first - 1), 0);
-				quad[1].texCoords = sf::Vector2f(textSize.x * state.getGrid()[i][j].first, 0);
-				quad[2].texCoords = sf::Vector2f(textSize.x * state.getGrid()[i][j].first, textSize.y);
-				quad[3].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j].first - 1), textSize.y);
+				quad[0].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j]->getFieldType() - 1), 0);
+				quad[1].texCoords = sf::Vector2f(textSize.x * state.getGrid()[i][j]->getFieldType(), 0);
+				quad[2].texCoords = sf::Vector2f(textSize.x * state.getGrid()[i][j]->getFieldType(), textSize.y);
+				quad[3].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j]->getFieldType() - 1), textSize.y);
 			
 			}
 		}			

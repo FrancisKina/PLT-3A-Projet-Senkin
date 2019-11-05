@@ -2,10 +2,10 @@
 #ifndef __ENGINE__H
 #define __ENGINE__H
 
-#include "engine/CommandeID.h"
-#include "engine/Commande.h"
-#include "engine/Attaque.h"
-#include "engine/Deplacement.h"
-#include "engine/Moteur.h"
-#include "engine/FinActions.h"
+#include "engine/CommandID.h"
+#include "engine/Command.h"
+#include "engine/Attack.h"
+#include "engine/Move.h"
+#include "engine/Engine.h"
+#include "engine/EndActions.h"
 #endif

@@ -66,3 +66,11 @@ SkillId Skill::getSkillId (){
 void Skill::setSkillId (SkillId newSkillId){
 	id=newSkillId;
 }
+
+int Skill::getCooldownBase(){
+	return cooldownBase;
+}
+
+void Skill::setCooldownBase(int newCDB){
+	cooldownBase =  newCDB;
+}

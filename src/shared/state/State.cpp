@@ -12,8 +12,8 @@ using namespace state;
 using namespace std;
 //std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> grid;
 
-std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& State::getGrid(){
-	std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& refGrid = grid;
+std::vector<std::vector<Field*>>& State::getGrid(){
+	std::vector<std::vector<Field*>>& refGrid = grid;
 	return refGrid;
 }
 
@@ -55,31 +55,47 @@ bool State::initGrid(std::string map_txt){
 	std::ifstream fichier(map_txt, ios::in);
 	std::string strnombre, ligne;
 	int nombre;
-	std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>> cases;
-	std::pair<FieldTypeId, std::pair<FieldStatusId,int>> stat;
+	std::vector<Field*> ligneField;
+	//std::pair<FieldTypeId, std::vector<std::pair<FieldStatusId,int>>> stat;
 	
 	// Lecture Fichier
     if (fichier){
     	while (getline(fichier, ligne)){
-			for(size_t i = 0; i < ligne.size();i++){
+			for(size_t i = 0; i < ligne.size();i++){ //Lecture d'une ligne
 				if(isdigit(ligne.at(i)) != 0){
 					strnombre+=ligne.at(i);
 				}
 				else{
 					stringstream ssnombre(strnombre);
 					ssnombre >> nombre;
-					stat.first = static_cast<FieldTypeId>(nombre);
-					cases.push_back(stat);
+					ligneField.push_back(new Field());
+					ligneField.back()->setFieldType(static_cast<FieldTypeId>(nombre));
+					cout<<ligneField.back()->getFieldType();
 					i++;
 					strnombre = "";
-				}
-			}
-			grid.push_back(cases);
-			cases = {};
+				} 
+			} //Fin de ligne
+			grid.push_back(ligneField);
+			ligneField = {};
 			strnombre = "";
+			cout<<endl;
+		}
+		for(size_t i=0; i<grid.size(); i++){
+			cout<<endl;
+			for(size_t j=0; j<grid[0].size(); j++){
+				cout<<grid[i][j]->getFieldType();
+			}
 		}
 		fichier.close();
 		return 1;
     }
     else {return 0;}
+}
+
+Player* State::getPlaying(){
+	return playing;
+}
+
+void State::setPlaying(Player* newPlaying){
+	playing = newPlaying;
 }

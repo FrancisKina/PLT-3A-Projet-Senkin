@@ -24,6 +24,7 @@ namespace state {
     std::vector<std::pair<int,int>> area;
     int precision;
     std::vector<std::tuple<EffectId,int,int>> effect;
+    int cooldownBase;
     int cooldown;
     bool special;
     SkillId id;
@@ -45,6 +46,8 @@ namespace state {
     void setPrecision (int newPrecision);
     SkillId getSkillId ();
     void setSkillId (SkillId newSkillId);
+    int getCooldownBase ();
+    void setCooldownBase (int newCDB);
     // Setters and Getters
   };
 

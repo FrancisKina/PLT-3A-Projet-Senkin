@@ -9,30 +9,29 @@ namespace state {
   class Player;
   class Cursor;
   class Observable;
+  class Field;
 }
 
 #include "Observable.h"
+#include "Field.h"
 #include "Cursor.h"
 #include "Player.h"
-#include "FieldStatusId.h"
-#include "FieldTypeId.h"
 
 namespace state {
 
   /// class State - 
   class State : public state::Observable {
     // Associations
-    state::FieldStatusId fieldStatusId;
-    state::FieldTypeId fieldTypeId;
     // Attributes
   private:
-    std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>> grid;
+    std::vector<std::vector<Field*>> grid;
     std::vector<Player*> players;
     int round;
     Cursor* cursor;
+    Player* playing;
     // Operations
   public:
-    std::vector<std::vector<std::pair<FieldTypeId, std::pair<FieldStatusId,int>>>>& getGrid ();
+    std::vector<std::vector<Field*>>& getGrid ();
     std::vector<Player*> getPlayers ();
     int getRound ();
     void setRound (int newRound);
@@ -40,11 +39,9 @@ namespace state {
     void initPlayers (int nbPlayers);
     void initCursor ();
     Cursor* getCursor ();
+    Player* getPlaying ();
+    void setPlaying (Player* newPlaying);
     // Setters and Getters
-    FieldStatusId getFieldStatusId() const;
-    void setFieldStatusId(FieldStatusId fieldStatusId);
-    FieldTypeId getFieldTypeId() const;
-    void setFieldTypeId(FieldTypeId fieldTypeId);
   };
 
 };

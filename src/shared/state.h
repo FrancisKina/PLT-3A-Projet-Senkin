@@ -17,6 +17,7 @@
 #include "state/FieldStatusId.h"
 #include "state/IObserver.h"
 #include "state/Observable.h"
+#include "state/Field.h"
 #include "state/Cursor.h"
 #include "state/State.h"
 #endif
