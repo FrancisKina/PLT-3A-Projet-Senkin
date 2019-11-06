@@ -19,13 +19,11 @@ BOOST_AUTO_TEST_CASE(TestState)
 	BOOST_CHECK_EQUAL(s.getPlayers()[0]->getX(),0);
 	BOOST_CHECK_EQUAL(s.getPlayers()[3]->getX(),3);
 	BOOST_CHECK_EQUAL(s.getPlayers()[2]->getY(),0);
-	BOOST_CHECK_EQUAL(s.getPlayers()[4]->getPlayerId(),5);
 	BOOST_CHECK_EQUAL(s.getPlayers()[4]->getDirection(),SOUTH);
 	
 	//BOOST_CHECK_EQUAL(s.getPlayers()[5]->getX(),0);
 	BOOST_CHECK_EQUAL(s.getPlayers()[5]->getX(),5);
 	BOOST_CHECK_EQUAL(s.getPlayers()[5]->getY(),0);
-	BOOST_CHECK_EQUAL(s.getPlayers()[5]->getPlayerId(),6);
 	BOOST_CHECK_EQUAL(s.getPlayers()[5]->getDirection(),SOUTH);
 	BOOST_CHECK_EQUAL(done, 0);
 }

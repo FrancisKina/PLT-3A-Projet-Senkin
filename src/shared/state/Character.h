@@ -3,13 +3,8 @@
 #define STATE__CHARACTER__H
 
 
-namespace state {
-  class Player;
-}
-
 #include "MovementId.h"
 #include "ClassId.h"
-#include "Player.h"
 
 namespace state {
 

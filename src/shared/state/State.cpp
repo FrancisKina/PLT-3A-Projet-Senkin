@@ -42,7 +42,6 @@ Cursor* State::getCursor(){
 void State::initPlayers(int nbPlayers){
 	for (int i=0;i<nbPlayers;i++){
 		players.push_back( new Player());
-		players[i]->setPlayerId(i+1);
 		players[i]->setX(i);
 		players[i]->setY(i);
 		players[i]->setDirection(SOUTH);
@@ -56,7 +55,6 @@ bool State::initGrid(std::string map_txt){
 	std::string strnombre, ligne;
 	int nombre;
 	std::vector<Field*> ligneField;
-	//std::pair<FieldTypeId, std::vector<std::pair<FieldStatusId,int>>> stat;
 	
 	// Lecture Fichier
     if (fichier){
@@ -70,7 +68,6 @@ bool State::initGrid(std::string map_txt){
 					ssnombre >> nombre;
 					ligneField.push_back(new Field());
 					ligneField.back()->setFieldType(static_cast<FieldTypeId>(nombre));
-					cout<<ligneField.back()->getFieldType();
 					i++;
 					strnombre = "";
 				} 
@@ -78,13 +75,6 @@ bool State::initGrid(std::string map_txt){
 			grid.push_back(ligneField);
 			ligneField = {};
 			strnombre = "";
-			cout<<endl;
-		}
-		for(size_t i=0; i<grid.size(); i++){
-			cout<<endl;
-			for(size_t j=0; j<grid[0].size(); j++){
-				cout<<grid[i][j]->getFieldType();
-			}
 		}
 		fichier.close();
 		return 1;

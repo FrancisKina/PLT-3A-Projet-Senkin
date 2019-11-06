@@ -16,10 +16,6 @@ DirectionId Player::getDirection(){
     return direction;
 }
 
-int Player::getPlayerId(){
-    return playerId;
-}
-
 int Player::getHp(){
     return hp;
 }
@@ -57,10 +53,6 @@ void Player::setDirection (DirectionId id){
 	direction = id;
 }
 
-void Player::setPlayerId (int newId){
-	playerId = newId;
-}
-
 void Player::setHp (int newHp){
 	hp = newHp;
 }
@@ -77,7 +69,7 @@ void Player::setSkillCount (int newSC){
 	skillCount = newSC;
 }
 
-void Player::addStatus (std::pair<CharStatusId,int> newStatus){
+void Player::updateStatus (std::pair<CharStatusId,int> newStatus){
 	for(size_t i=0;i<status.size();i++){
 		if (newStatus.first == status[i].first){
 			status[i].second = newStatus.second;
@@ -99,6 +91,10 @@ Character* Player::getCharacter () {
 
 void Player::setCharacter (Character* newcharacter) {
 	character = newcharacter;
+	hp = character->getHpBase();
+	movement = character->getMovementBase();
+	initiative = character->getInitiativeBase();
+	skillCount = character->getSkillCountBase();
 }
 
 std::vector<Skill*> Player::getSkills (){
@@ -121,7 +117,6 @@ Player::Player(){
     movement=0;
     initiative=0;
     skillCount=0;
-    status={};
-    playerId=0;
+    status={{POISONED,0},{BURNED,0},{FEAR,0},{DAZZLED,0}};
     ia=0;
 }

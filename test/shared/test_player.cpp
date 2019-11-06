@@ -22,10 +22,6 @@ BOOST_AUTO_TEST_CASE(TestPlayer)
 	p.setDirection(NORTH);
 	BOOST_CHECK_EQUAL(p.getDirection(), NORTH);
 	BOOST_CHECK_EQUAL(p.getDirection(), static_cast<DirectionId>(1));
-
-	BOOST_CHECK_EQUAL(p.getPlayerId(), 0);
-	p.setPlayerId(99);
-	BOOST_CHECK_EQUAL(p.getPlayerId(), 99);
 	
 	BOOST_CHECK_EQUAL(p.getHp(), 0);
 	p.setHp(99);

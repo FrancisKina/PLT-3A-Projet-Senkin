@@ -17,10 +17,12 @@ void testSFML() {
 
 #include "state.h"
 #include "render.h"
+#include "engine.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
+using namespace engine;
 
 
 int main(int argc,char* argv[])
@@ -67,6 +69,39 @@ int main(int argc,char* argv[])
 			//Creation de la fenêtre puis affichage du rendu
 			statelayer.displayLayers(state_init);
 		}
+		
+		/*engine : changements d'état*/
+/*		else if(strcmp(argv[1],"engine")==0){
+			
+			//Initialisation de la grille par le moteur
+			Engine engine;
+			State state = engine.getState();
+			state.initGrid("res/maptest.txt");
+			
+			//Initialisation des personnages
+			CharacterFactory cf;
+			state.initPlayers(4);
+			
+				//Classes
+			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
+			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
+			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
+			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
+				//Directions
+			state.getPlayers()[0]->setDirection(NORTH);
+			state.getPlayers()[1]->setDirection(EAST);
+			state.getPlayers()[2]->setDirection(SOUTH);
+			state.getPlayers()[3]->setDirection(WEST);
+				//Positions
+			state.getPlayers()[0]->setX(10);
+			state.getPlayers()[0]->setY(10);
+			state.getPlayers()[1]->setX(10);
+			state.getPlayers()[1]->setY(14);
+			state.getPlayers()[2]->setX(14);
+			state.getPlayers()[2]->setY(14);
+			state.getPlayers()[3]->setX(14);
+			state.getPlayers()[3]->setY(10);
+		}*/
     cout << argv[1] << endl;
 	}
     return 0;

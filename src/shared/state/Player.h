@@ -10,6 +10,7 @@ namespace state {
 }
 
 #include "DirectionId.h"
+#include "Character.h"
 #include "Skill.h"
 #include "CharStatusId.h"
 
@@ -23,7 +24,6 @@ namespace state {
     int x;
     int y;
     DirectionId direction;
-    int playerId;
     int hp;
     int movement;
     int initiative;
@@ -38,7 +38,6 @@ namespace state {
     int getX ();
     int getY ();
     DirectionId getDirection ();
-    int getPlayerId ();
     int getHp ();
     int getMovement ();
     int getInitiative ();
@@ -48,12 +47,11 @@ namespace state {
     void setX (int newX);
     void setY (int newY);
     void setDirection (DirectionId id);
-    void setPlayerId (int newId);
     void setHp (int newHp);
     void setMovement (int newMove);
     void setInitiative (int newInit);
     void setSkillCount (int newSC);
-    void addStatus (std::pair<CharStatusId,int> newStatus);
+    void updateStatus (std::pair<CharStatusId,int> newStatus);
     void setStatus (std::vector<std::pair<CharStatusId,int>> newStatus);
     void setIa (bool IA);
     Character* getCharacter ();
