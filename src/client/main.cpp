@@ -159,7 +159,7 @@ int main(int argc,char* argv[])
 						window.close();
 				}
 				
-				sleep(2);
+				sleep(3);
 				if (commandList.size() > 0){
 					engine.executeCommand(commandList[0],window);
 					commandList.erase(commandList.begin());

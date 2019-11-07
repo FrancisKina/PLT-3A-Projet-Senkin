@@ -102,9 +102,6 @@ bool cmpPlayers(Player* player1, Player* player2){
 // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier
 void State::sortPlayers(){
 	std::sort(players.begin(), players.end(), cmpPlayers);
-	for(size_t i = 0; i < players.size(); i++){
-		cout << "init : " << players[i]->getInitiative() << endl;
-	}
 	setPlaying(players[0]);
 }
 
