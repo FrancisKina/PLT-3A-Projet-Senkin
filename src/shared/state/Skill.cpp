@@ -3,6 +3,18 @@
 
 using namespace state;
 
+Skill::Skill(){
+	damage = 0;
+	range = {0,0};
+	area = {};
+	precision = 0;
+	effect = {};
+	cooldownBase = 0;
+	cooldown = 0;
+	special = false;
+	id = FRAPPE;
+}
+
 int Skill::getDamage(){
     return damage;
 }

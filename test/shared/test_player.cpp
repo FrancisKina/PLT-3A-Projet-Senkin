@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_CASE(TestPlayer)
 		BOOST_CHECK_EQUAL(p.getStatus()[i].first, testStatus[i].first);
 		BOOST_CHECK_EQUAL(p.getStatus()[i].second, testStatus[i].second);
 	}
-	Skill skill1;
-	Skill skill2;
+	Skill* skill1;
+	Skill* skill2;
 	SkillFactory skfa;
 	skill1 = skfa.createSkill(FRAPPE);
 	skill2 = skfa.createSkill(ARC);

@@ -100,8 +100,11 @@ int main(int argc,char* argv[])
 			state.getPlayers()[3]->setX(14);
 			state.getPlayers()[3]->setY(10);
 			
-			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action
+				//Initialisation des skills
+			SkillFactory sf;
+			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			
+			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier
 				//Initialisation du curseur
 			state.initCursor();
 			state.getCursor()->setCursorX(rand()%state.getGrid()[0].size());
@@ -126,14 +129,23 @@ int main(int argc,char* argv[])
 			commandList.push_back(move1);
 			Move* move2 = new Move({11,13});
 			commandList.push_back(move2);
+			commandList.push_back(move1);
+			EndActions* endactions = new EndActions();
+			commandList.push_back(endactions);
 			
-			EndActions* endactions1 = new EndActions();
-			commandList.push_back(endactions1);
-			
-			Move* move3 = new Move({11,12});
+			Move* move3 = new Move({11,13});
 			commandList.push_back(move3);
-			Move* move4 = new Move({12,12});
+			Move* move4 = new Move({19,12});
 			commandList.push_back(move4);
+			commandList.push_back(endactions);
+			
+			Move* move5 = new Move({11,11});
+			commandList.push_back(move5);
+			Move* move6 = new Move({11,12});
+			commandList.push_back(move6);
+			//std::pair<int,int> p = {11,13};
+			//Attack* attack1 = new Attack(p , *state.getPlaying()->getSkills()[0]);
+			//commandList.push_back(attack1);
 			
 			bool finCommande = false;
 			

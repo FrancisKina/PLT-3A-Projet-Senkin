@@ -7,8 +7,8 @@ namespace state {
   class Skill;
 }
 
-#include "Skill.h"
 #include "SkillId.h"
+#include "Skill.h"
 
 namespace state {
 
@@ -17,7 +17,7 @@ namespace state {
     // Associations
     // Operations
   public:
-    Skill createSkill (SkillId id);
+    Skill* createSkill (SkillId id);
     // Setters and Getters
   };
 

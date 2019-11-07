@@ -90,15 +90,16 @@ void State::setPlaying(Player* newPlaying){
 	playing = newPlaying;
 }
 
+//Comparateur d'initiative des joueurs
 bool cmpPlayers(Player* player1, Player* player2){
 	if (player1->getInitiative() <= player2->getInitiative()){
 		return false;
 	}else{
 		return true;
-	}
-			
+	}		
 }
 
+// Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier
 void State::sortPlayers(){
 	std::sort(players.begin(), players.end(), cmpPlayers);
 	for(size_t i = 0; i < players.size(); i++){

@@ -23,14 +23,22 @@ void Move::execute (state::State& state){
 	int distance = abs(x-dx) + abs(y-dy);
 	
 	if (player->getMovement() - distance < 0){
-		cout << "Pas assez de PM pour aller en (" << dx << "," << dy << ") : " << distance << " necessaires, " << player->getMovement() << " restants" << endl;
+		cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << distance << " PM necessaires, " << player->getMovement() << " restants" << endl;
 		return;
+	}
+	
+	for(state::Player* player : state.getPlayers()){
+		if (player->getX() == dx && player->getY() == dy){
+			cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << "Joueur present sur la case" << endl;
+			return;
+		}
 	}
 	
 	//Generation de l'ensemble des coordonnees du chemin a prendre a partir de la position de depart et d'arrivee
 	//TODO : AMELIORER PATHFINDING
+	/*
 	std::vector<std::pair<int,int>> path;
-	/*while((x!=dx) || (y!=dy)){ //Recherche de chemin utilisant la plus grande distance
+	while((x!=dx) || (y!=dy)){ //Recherche de chemin utilisant la plus grande distance
 		if(abs(x-dx)>abs(y-dy)){
 			x = x-sgn(x-dx);
 		}
@@ -55,12 +63,13 @@ void Move::execute (state::State& state){
 		}
 	}
 	*/
-	//Nouvelle position du joueur
+	
+	//Deplacement du joueur
 	player->setX(dx);
 	player->setY(dy);
-	cout << "Joueur se déplace en (" << dx << "," << dy << ")" << endl;
+	cout << "Joueur se deplace en (" << dx << "," << dy << ")" << endl;
 	
-	//Maj mouvement
+	//Maj points de mouvement
 	player->setMovement(player->getMovement() - distance);
-	cout << "Point(s) de mouvement restant : " << player->getMovement() << endl;
+	cout << "Points de mouvement restants : " << player->getMovement() << endl;
 }

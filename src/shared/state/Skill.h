@@ -4,13 +4,8 @@
 
 #include <vector>
 
-namespace state {
-  class SkillFactory;
-}
-
 #include "SkillId.h"
 #include "EffectId.h"
-#include "SkillFactory.h"
 
 namespace state {
 
@@ -48,6 +43,7 @@ namespace state {
     void setSkillId (SkillId newSkillId);
     int getCooldownBase ();
     void setCooldownBase (int newCDB);
+    Skill ();
     // Setters and Getters
   };
 

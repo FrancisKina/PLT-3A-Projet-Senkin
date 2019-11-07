@@ -1,5 +1,6 @@
 #include "SkillFactory.h"
 #include <tuple>
+#include <vector>
 
 using namespace state;
 
@@ -148,144 +149,144 @@ std::vector<std::tuple<EffectId,int,int>> effect_COUP_DE_BOULE={std::make_tuple(
 int cooldown_COUP_DE_BOULE=0;
 bool special_COUP_DE_BOULE=0;
 
-Skill SkillFactory::createSkill(SkillId id){
-	Skill move;
+Skill* SkillFactory::createSkill(SkillId id){
+	Skill* skill = new Skill();
 	if (id==FRAPPE){
-		move.setDamage(damage_FRAPPE);
-		move.setRange(range_FRAPPE);
-		move.setArea(area_FRAPPE);
-		move.setPrecision(precision_FRAPPE);
-		move.setEffect(effect_FRAPPE);
-		move.setCooldown(cooldown_FRAPPE);
-		move.setSpecial(special_FRAPPE);
-		move.setSkillId(FRAPPE);
+		skill->setDamage(damage_FRAPPE);
+		skill->setRange(range_FRAPPE);
+		skill->setArea(area_FRAPPE);
+		skill->setPrecision(precision_FRAPPE);
+		skill->setEffect(effect_FRAPPE);
+		skill->setCooldown(cooldown_FRAPPE);
+		skill->setSpecial(special_FRAPPE);
+		skill->setSkillId(FRAPPE);
 	}else if (id==SAUT_PIQUE){
-		move.setDamage(damage_SAUTPIQUE);
-		move.setRange(range_SAUTPIQUE);
-		move.setArea(area_SAUTPIQUE);
-		move.setPrecision(precision_SAUTPIQUE);
-		move.setEffect(effect_SAUTPIQUE);
-		move.setCooldown(cooldown_SAUTPIQUE);
-		move.setSpecial(special_SAUTPIQUE);
-		move.setSkillId(SAUT_PIQUE);
+		skill->setDamage(damage_SAUTPIQUE);
+		skill->setRange(range_SAUTPIQUE);
+		skill->setArea(area_SAUTPIQUE);
+		skill->setPrecision(precision_SAUTPIQUE);
+		skill->setEffect(effect_SAUTPIQUE);
+		skill->setCooldown(cooldown_SAUTPIQUE);
+		skill->setSpecial(special_SAUTPIQUE);
+		skill->setSkillId(SAUT_PIQUE);
 	}else if (id==ARC){
-		move.setDamage(damage_ARC);
-		move.setRange(range_ARC);
-		move.setArea(area_ARC);
-		move.setPrecision(precision_ARC);
-		move.setEffect(effect_ARC);
-		move.setCooldown(cooldown_ARC);
-		move.setSpecial(special_ARC);
-		move.setSkillId(ARC);
+		skill->setDamage(damage_ARC);
+		skill->setRange(range_ARC);
+		skill->setArea(area_ARC);
+		skill->setPrecision(precision_ARC);
+		skill->setEffect(effect_ARC);
+		skill->setCooldown(cooldown_ARC);
+		skill->setSpecial(special_ARC);
+		skill->setSkillId(ARC);
 	}else if (id==ARC_EN_CIEL){
-		move.setDamage(damage_ARC_EN_CIEL);
-		move.setRange(range_ARC_EN_CIEL);
-		move.setArea(area_ARC_EN_CIEL);
-		move.setPrecision(precision_ARC_EN_CIEL);
-		move.setEffect(effect_ARC_EN_CIEL);
-		move.setCooldown(cooldown_ARC_EN_CIEL);
-		move.setSpecial(special_ARC_EN_CIEL);
-		move.setSkillId(ARC_EN_CIEL);
+		skill->setDamage(damage_ARC_EN_CIEL);
+		skill->setRange(range_ARC_EN_CIEL);
+		skill->setArea(area_ARC_EN_CIEL);
+		skill->setPrecision(precision_ARC_EN_CIEL);
+		skill->setEffect(effect_ARC_EN_CIEL);
+		skill->setCooldown(cooldown_ARC_EN_CIEL);
+		skill->setSpecial(special_ARC_EN_CIEL);
+		skill->setSkillId(ARC_EN_CIEL);
 	}else if (id==SOIN){
-		move.setDamage(damage_SOIN);
-		move.setRange(range_SOIN);
-		move.setArea(area_SOIN);
-		move.setPrecision(precision_SOIN);
-		move.setEffect(effect_SOIN);
-		move.setCooldown(cooldown_SOIN);
-		move.setSpecial(special_SOIN);
-		move.setSkillId(SOIN);
+		skill->setDamage(damage_SOIN);
+		skill->setRange(range_SOIN);
+		skill->setArea(area_SOIN);
+		skill->setPrecision(precision_SOIN);
+		skill->setEffect(effect_SOIN);
+		skill->setCooldown(cooldown_SOIN);
+		skill->setSpecial(special_SOIN);
+		skill->setSkillId(SOIN);
 	}else if (id==SOIN_LEGER){
-		move.setDamage(damage_SOIN_LEGER);
-		move.setRange(range_SOIN_LEGER);
-		move.setArea(area_SOIN_LEGER);
-		move.setPrecision(precision_SOIN_LEGER);
-		move.setEffect(effect_SOIN_LEGER);
-		move.setCooldown(cooldown_SOIN_LEGER);
-		move.setSpecial(special_SOIN_LEGER);
-		move.setSkillId(SOIN_LEGER);
+		skill->setDamage(damage_SOIN_LEGER);
+		skill->setRange(range_SOIN_LEGER);
+		skill->setArea(area_SOIN_LEGER);
+		skill->setPrecision(precision_SOIN_LEGER);
+		skill->setEffect(effect_SOIN_LEGER);
+		skill->setCooldown(cooldown_SOIN_LEGER);
+		skill->setSpecial(special_SOIN_LEGER);
+		skill->setSkillId(SOIN_LEGER);
 	}else if (id==ENTAILLE){
-		move.setDamage(damage_ENTAILLE);
-		move.setRange(range_ENTAILLE);
-		move.setArea(area_ENTAILLE);
-		move.setPrecision(precision_ENTAILLE);
-		move.setEffect(effect_ENTAILLE);
-		move.setCooldown(cooldown_ENTAILLE);
-		move.setSpecial(special_ENTAILLE);
-		move.setSkillId(ENTAILLE);
+		skill->setDamage(damage_ENTAILLE);
+		skill->setRange(range_ENTAILLE);
+		skill->setArea(area_ENTAILLE);
+		skill->setPrecision(precision_ENTAILLE);
+		skill->setEffect(effect_ENTAILLE);
+		skill->setCooldown(cooldown_ENTAILLE);
+		skill->setSpecial(special_ENTAILLE);
+		skill->setSkillId(ENTAILLE);
 	}else if (id==TRANCHARGE){
-		move.setDamage(damage_TRANCHARGE);
-		move.setRange(range_TRANCHARGE);
-		move.setArea(area_TRANCHARGE);
-		move.setPrecision(precision_TRANCHARGE);
-		move.setEffect(effect_TRANCHARGE);
-		move.setCooldown(cooldown_TRANCHARGE);
-		move.setSpecial(special_TRANCHARGE);
-		move.setSkillId(TRANCHARGE);
+		skill->setDamage(damage_TRANCHARGE);
+		skill->setRange(range_TRANCHARGE);
+		skill->setArea(area_TRANCHARGE);
+		skill->setPrecision(precision_TRANCHARGE);
+		skill->setEffect(effect_TRANCHARGE);
+		skill->setCooldown(cooldown_TRANCHARGE);
+		skill->setSpecial(special_TRANCHARGE);
+		skill->setSkillId(TRANCHARGE);
 	}else if (id==PIETINEMENT){
-		move.setDamage(damage_PIETINEMENT);
-		move.setRange(range_PIETINEMENT);
-		move.setArea(area_PIETINEMENT);
-		move.setPrecision(precision_PIETINEMENT);
-		move.setEffect(effect_PIETINEMENT);
-		move.setCooldown(cooldown_PIETINEMENT);
-		move.setSpecial(special_PIETINEMENT);
-		move.setSkillId(PIETINEMENT);
+		skill->setDamage(damage_PIETINEMENT);
+		skill->setRange(range_PIETINEMENT);
+		skill->setArea(area_PIETINEMENT);
+		skill->setPrecision(precision_PIETINEMENT);
+		skill->setEffect(effect_PIETINEMENT);
+		skill->setCooldown(cooldown_PIETINEMENT);
+		skill->setSpecial(special_PIETINEMENT);
+		skill->setSkillId(PIETINEMENT);
 	}else if (id==FEU_D_ENFER){
-		move.setDamage(damage_FEU_D_ENFER);
-		move.setRange(range_FEU_D_ENFER);
-		move.setArea(area_FEU_D_ENFER);
-		move.setPrecision(precision_FEU_D_ENFER);
-		move.setEffect(effect_FEU_D_ENFER);
-		move.setCooldown(cooldown_FEU_D_ENFER);
-		move.setSpecial(special_FEU_D_ENFER);
-		move.setSkillId(FEU_D_ENFER);
+		skill->setDamage(damage_FEU_D_ENFER);
+		skill->setRange(range_FEU_D_ENFER);
+		skill->setArea(area_FEU_D_ENFER);
+		skill->setPrecision(precision_FEU_D_ENFER);
+		skill->setEffect(effect_FEU_D_ENFER);
+		skill->setCooldown(cooldown_FEU_D_ENFER);
+		skill->setSpecial(special_FEU_D_ENFER);
+		skill->setSkillId(FEU_D_ENFER);
 	}else if (id==DOUBLE_LAME){
-		move.setDamage(damage_DOUBLE_LAME);
-		move.setRange(range_DOUBLE_LAME);
-		move.setArea(area_DOUBLE_LAME);
-		move.setPrecision(precision_DOUBLE_LAME);
-		move.setEffect(effect_DOUBLE_LAME);
-		move.setCooldown(cooldown_DOUBLE_LAME);
-		move.setSpecial(special_DOUBLE_LAME);
-		move.setSkillId(DOUBLE_LAME);
+		skill->setDamage(damage_DOUBLE_LAME);
+		skill->setRange(range_DOUBLE_LAME);
+		skill->setArea(area_DOUBLE_LAME);
+		skill->setPrecision(precision_DOUBLE_LAME);
+		skill->setEffect(effect_DOUBLE_LAME);
+		skill->setCooldown(cooldown_DOUBLE_LAME);
+		skill->setSpecial(special_DOUBLE_LAME);
+		skill->setSkillId(DOUBLE_LAME);
 	}else if (id==FOUDRE){
-		move.setDamage(damage_FOUDRE);
-		move.setRange(range_FOUDRE);
-		move.setArea(area_FOUDRE);
-		move.setPrecision(precision_FOUDRE);
-		move.setEffect(effect_FOUDRE);
-		move.setCooldown(cooldown_FOUDRE);
-		move.setSpecial(special_FOUDRE);
-		move.setSkillId(FOUDRE);
+		skill->setDamage(damage_FOUDRE);
+		skill->setRange(range_FOUDRE);
+		skill->setArea(area_FOUDRE);
+		skill->setPrecision(precision_FOUDRE);
+		skill->setEffect(effect_FOUDRE);
+		skill->setCooldown(cooldown_FOUDRE);
+		skill->setSpecial(special_FOUDRE);
+		skill->setSkillId(FOUDRE);
 	}else if (id==BOULE_DE_FEU){
-		move.setDamage(damage_BOULE_DE_FEU);
-		move.setRange(range_BOULE_DE_FEU);
-		move.setArea(area_BOULE_DE_FEU);
-		move.setPrecision(precision_BOULE_DE_FEU);
-		move.setEffect(effect_BOULE_DE_FEU);
-		move.setCooldown(cooldown_BOULE_DE_FEU);
-		move.setSpecial(special_BOULE_DE_FEU);
-		move.setSkillId(BOULE_DE_FEU);
+		skill->setDamage(damage_BOULE_DE_FEU);
+		skill->setRange(range_BOULE_DE_FEU);
+		skill->setArea(area_BOULE_DE_FEU);
+		skill->setPrecision(precision_BOULE_DE_FEU);
+		skill->setEffect(effect_BOULE_DE_FEU);
+		skill->setCooldown(cooldown_BOULE_DE_FEU);
+		skill->setSpecial(special_BOULE_DE_FEU);
+		skill->setSkillId(BOULE_DE_FEU);
 	}else if (id==LANCER_DE_HACHE){
-		move.setDamage(damage_LANCER_DE_HACHE);
-		move.setRange(range_LANCER_DE_HACHE);
-		move.setArea(area_LANCER_DE_HACHE);
-		move.setPrecision(precision_LANCER_DE_HACHE);
-		move.setEffect(effect_LANCER_DE_HACHE);
-		move.setCooldown(cooldown_LANCER_DE_HACHE);
-		move.setSpecial(special_LANCER_DE_HACHE);
-		move.setSkillId(LANCER_DE_HACHE);
+		skill->setDamage(damage_LANCER_DE_HACHE);
+		skill->setRange(range_LANCER_DE_HACHE);
+		skill->setArea(area_LANCER_DE_HACHE);
+		skill->setPrecision(precision_LANCER_DE_HACHE);
+		skill->setEffect(effect_LANCER_DE_HACHE);
+		skill->setCooldown(cooldown_LANCER_DE_HACHE);
+		skill->setSpecial(special_LANCER_DE_HACHE);
+		skill->setSkillId(LANCER_DE_HACHE);
 	}else if (id==COUP_DE_BOULE){
-		move.setDamage(damage_COUP_DE_BOULE);
-		move.setRange(range_COUP_DE_BOULE);
-		move.setArea(area_COUP_DE_BOULE);
-		move.setPrecision(precision_COUP_DE_BOULE);
-		move.setEffect(effect_COUP_DE_BOULE);
-		move.setCooldown(cooldown_COUP_DE_BOULE);
-		move.setSpecial(special_COUP_DE_BOULE);
-		move.setSkillId(COUP_DE_BOULE);
+		skill->setDamage(damage_COUP_DE_BOULE);
+		skill->setRange(range_COUP_DE_BOULE);
+		skill->setArea(area_COUP_DE_BOULE);
+		skill->setPrecision(precision_COUP_DE_BOULE);
+		skill->setEffect(effect_COUP_DE_BOULE);
+		skill->setCooldown(cooldown_COUP_DE_BOULE);
+		skill->setSpecial(special_COUP_DE_BOULE);
+		skill->setSkillId(COUP_DE_BOULE);
 	}
-	return move;
+	return skill;
 }
 	

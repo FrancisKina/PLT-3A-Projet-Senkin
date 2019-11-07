@@ -8,7 +8,6 @@
 #include "state/Character.h"
 #include "state/SkillId.h"
 #include "state/EffectId.h"
-#include "state/SkillFactory.h"
 #include "state/Skill.h"
 #include "state/CharStatusId.h"
 #include "state/Player.h"
@@ -20,4 +19,5 @@
 #include "state/Field.h"
 #include "state/Cursor.h"
 #include "state/State.h"
+#include "state/SkillFactory.h"
 #endif
