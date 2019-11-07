@@ -3,9 +3,11 @@
 #define STATE__OBSERVABLE__H
 
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 namespace state {
   class IObserver;
+  class State;
 }
 
 #include "IObserver.h"
@@ -20,8 +22,8 @@ namespace state {
     std::vector<IObserver*> observers;
     // Operations
   public:
-    void registerObserver ();
-    void notifyObservers ();
+    void registerObserver (IObserver* observer);
+    void notifyObservers (State& state, sf::RenderWindow& window);
     // Setters and Getters
   };
 

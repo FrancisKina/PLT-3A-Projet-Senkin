@@ -89,3 +89,21 @@ Player* State::getPlaying(){
 void State::setPlaying(Player* newPlaying){
 	playing = newPlaying;
 }
+
+bool cmpPlayers(Player* player1, Player* player2){
+	if (player1->getInitiative() <= player2->getInitiative()){
+		return false;
+	}else{
+		return true;
+	}
+			
+}
+
+void State::sortPlayers(){
+	std::sort(players.begin(), players.end(), cmpPlayers);
+	for(size_t i = 0; i < players.size(); i++){
+		cout << "init : " << players[i]->getInitiative() << endl;
+	}
+	setPlaying(players[0]);
+}
+

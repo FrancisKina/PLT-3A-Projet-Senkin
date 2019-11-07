@@ -41,6 +41,7 @@ namespace state {
     Cursor* getCursor ();
     Player* getPlaying ();
     void setPlaying (Player* newPlaying);
+    void sortPlayers ();
     // Setters and Getters
   };
 

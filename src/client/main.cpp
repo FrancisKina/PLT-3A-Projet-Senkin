@@ -5,6 +5,8 @@
 #include <map>
 #include <memory>
 #include <time.h>
+#include <unistd.h>
+
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
@@ -71,28 +73,24 @@ int main(int argc,char* argv[])
 		}
 		
 		/*engine : changements d'état*/
-/*		else if(strcmp(argv[1],"engine")==0){
+		else if(strcmp(argv[1],"engine")==0){
 			
-			//Initialisation de la grille par le moteur
+			//Initialisation générale
+				//Initialisation de la grille par le moteur
 			Engine engine;
-			State state = engine.getState();
+			State& state = engine.getState();
 			state.initGrid("res/maptest.txt");
 			
-			//Initialisation des personnages
+				//Initialisation des personnages
 			CharacterFactory cf;
 			state.initPlayers(4);
 			
-				//Classes
+					//Classes
 			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
 			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
 			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
 			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
-				//Directions
-			state.getPlayers()[0]->setDirection(NORTH);
-			state.getPlayers()[1]->setDirection(EAST);
-			state.getPlayers()[2]->setDirection(SOUTH);
-			state.getPlayers()[3]->setDirection(WEST);
-				//Positions
+					//Positions
 			state.getPlayers()[0]->setX(10);
 			state.getPlayers()[0]->setY(10);
 			state.getPlayers()[1]->setX(10);
@@ -101,7 +99,67 @@ int main(int argc,char* argv[])
 			state.getPlayers()[2]->setY(14);
 			state.getPlayers()[3]->setX(14);
 			state.getPlayers()[3]->setY(10);
-		}*/
+			
+			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action
+			
+				//Initialisation du curseur
+			state.initCursor();
+			state.getCursor()->setCursorX(rand()%state.getGrid()[0].size());
+			state.getCursor()->setCursorY(rand()%state.getGrid().size());
+			
+				//Initialisation de la liste des différents layers avec texture
+			StateLayer statelayer;
+			statelayer.initLayers(state, 35);
+			state.registerObserver(&statelayer);
+			
+				//Creation puis affichage de la fenêtre
+			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
+			sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
+			window.draw(statelayer.getLayers()[0]);//Affichage terrain
+			window.draw(statelayer.getLayers()[1]);//Affichage personnages
+			window.draw(statelayer.getLayers()[2]);//Affichage curseur
+			window.display();
+			
+				//Suite de commandes
+			std::vector<Command*> commandList;
+			Move* move1 = new Move({11,11});
+			commandList.push_back(move1);
+			Move* move2 = new Move({11,13});
+			commandList.push_back(move2);
+			
+			EndActions* endactions1 = new EndActions();
+			commandList.push_back(endactions1);
+			
+			Move* move3 = new Move({11,12});
+			commandList.push_back(move3);
+			Move* move4 = new Move({12,12});
+			commandList.push_back(move4);
+			
+			bool finCommande = false;
+			
+			while (window.isOpen())
+			{
+				// on gère les évènements
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if(event.type == sf::Event::Closed)
+						window.close();
+				}
+				
+				sleep(2);
+				if (commandList.size() > 0){
+					engine.executeCommand(commandList[0],window);
+					commandList.erase(commandList.begin());
+				}
+				else if(finCommande == false){
+					cout << "Fin de commande" << endl;
+					finCommande = true;
+				}
+				window.display();
+				
+			}
+		}
     cout << argv[1] << endl;
 	}
     return 0;

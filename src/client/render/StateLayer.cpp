@@ -12,10 +12,11 @@
 using namespace render;
 using namespace std;
 using namespace state;
+using namespace sf;
 
 /*Creation de la liste contenant chaque type de tuile avec la texture associée : [0] Field, [1] Players*/
 StateLayer::StateLayer(){
-
+	
 	TileSet tilesetField(LAYERFIELD);
 	tilesets.push_back(tilesetField);
 
@@ -103,3 +104,21 @@ void StateLayer::displayLayers(state::State& state){
 		window.display();
 	}
 }
+
+void StateLayer::stateChanged (state::State& state, sf::RenderWindow& window){
+	initLayers(state,35);
+	draw(window);
+}
+
+void StateLayer::draw (sf::RenderWindow& window){
+	window.clear();
+	window.draw(getLayers()[0]);//Affichage terrain
+	window.draw(getLayers()[1]);//Affichage personnages
+	window.draw(getLayers()[2]);//Affichage curseur
+	window.display();
+}
+/*
+void StateLayer::setWindow (sf::RenderWindow& newWindow){
+	window = newWindow;
+}
+*/

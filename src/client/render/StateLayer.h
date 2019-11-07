@@ -3,6 +3,7 @@
 #define RENDER__STATELAYER__H
 
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 namespace render {
   class TileSet;
@@ -10,16 +11,18 @@ namespace render {
 };
 namespace state {
   class State;
+  class IObserver;
 }
 
 #include "TileSet.h"
 #include "Layer.h"
+#include "state/IObserver.h"
 #include "state/State.h"
 
 namespace render {
 
   /// class StateLayer - 
-  class StateLayer {
+  class StateLayer : public state::IObserver {
     // Associations
     // Attributes
   protected:
@@ -32,6 +35,9 @@ namespace render {
     std::vector<Layer>& getLayers ();
     void initLayers (state::State& state, int tileSize);
     void displayLayers (state::State& state);
+    void stateChanged (state::State& state, sf::RenderWindow& window);
+    void draw (sf::RenderWindow& window);
+    void setWindow (sf::RenderWindow& newWindow);
     // Setters and Getters
     void setTilesets(const std::vector<TileSet>& tilesets);
     void setLayers(const std::vector<Layer>& layers);
