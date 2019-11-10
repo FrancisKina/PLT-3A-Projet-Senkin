@@ -16,7 +16,7 @@ void EndActions::execute(state::State& state){
 		
 		if(player==state.getPlayers()[i]){ //Si le joueur est bien dans la liste des joueurs
 			
-			cout << "- Fin d'action -" << endl;
+			cout << endl << "| Fin d'action |" << endl;
 			
 			//Résolution des statuts
 			std::vector<std::pair<CharStatusId, int>> status = player->getStatus();
@@ -35,18 +35,23 @@ void EndActions::execute(state::State& state){
 				}
 			}
 			
-			//Réinitialisation des PM
+			//Réinitialisation des PM et PA
 			player->setMovement(player->getCharacter()->getMovementBase());
 			cout << "Reinitialisation des PM du joueur" << endl;
+			player->setSkillCount(player->getCharacter()->getSkillCountBase());
+			cout << "Reinitialisation des PA du joueur" << endl;
 			
 			//Avancement du tour d'action
 			if(i<state.getPlayers().size()-1){ //Si ce n'est pas le dernier joueur du round
 				//cout << "playing : " << state.getPlaying() << " | newplaying : " << state.getPlayers()[i+1] << endl;
 				state.setPlaying(state.getPlayers()[i+1]);
-				cout << endl << "-------- Tour du joueur suivant -----------" << endl << endl;
+				cout << endl << "-------- Tour du joueur suivant -----------" << endl;
 			}
 			else{
-				cout << "Fin de round" << endl;
+				cout << endl << "[ Fin de round ]" << endl;
+				state.sortPlayers();
+				cout << "Calcul de l'ordre d'action des joueurs" << endl;
+				cout << "[ Nouveau round ]" << endl;
 			}
 			
 			return;

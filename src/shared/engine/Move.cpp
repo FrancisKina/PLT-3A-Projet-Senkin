@@ -18,12 +18,14 @@ Move::Move(std::pair<int,int> newDestination){
 void Move::execute (state::State& state){
 	player = state.getPlaying();
 	
+	cout << endl;
+	
 	int x = player->getX(), y = player->getY();
 	int dx = destination.first, dy = destination.second;
 	int distance = abs(x-dx) + abs(y-dy);
 	
 	if (player->getMovement() - distance < 0){
-		cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << distance << " PM necessaires, " << player->getMovement() << " restants" << endl;
+		cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << distance << " PM requis, " << player->getMovement() << " restants" << endl;
 		return;
 	}
 	
@@ -65,11 +67,11 @@ void Move::execute (state::State& state){
 	*/
 	
 	//Deplacement du joueur
+	cout << "Joueur se deplace de (" << x << "," << y << ") a (" << dx << "," << dy << ") : " << distance << " PM utilises" << endl;
 	player->setX(dx);
 	player->setY(dy);
-	cout << "Joueur se deplace en (" << dx << "," << dy << ")" << endl;
 	
 	//Maj points de mouvement
 	player->setMovement(player->getMovement() - distance);
-	cout << "Points de mouvement restants : " << player->getMovement() << endl;
+	cout << "PM restants : " << player->getMovement() << endl;
 }

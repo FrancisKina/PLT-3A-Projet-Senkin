@@ -99,12 +99,15 @@ int main(int argc,char* argv[])
 			state.getPlayers()[2]->setY(14);
 			state.getPlayers()[3]->setX(14);
 			state.getPlayers()[3]->setY(10);
-			
 				//Initialisation des skills
 			SkillFactory sf;
+			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[3]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			
-			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier
+			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
+			
 				//Initialisation du curseur
 			state.initCursor();
 			state.getCursor()->setCursorX(rand()%state.getGrid()[0].size());
@@ -143,15 +146,42 @@ int main(int argc,char* argv[])
 			commandList.push_back(move5);
 			Move* move6 = new Move({11,12});
 			commandList.push_back(move6);
-			//std::pair<int,int> p = {11,13};
-			//Attack* attack1 = new Attack(p , *state.getPlaying()->getSkills()[0]);
-			//commandList.push_back(attack1);
+			std::pair<int,int> p = {11,13};
+			Attack* attack1 = new Attack(p , state.getPlaying()->getSkills()[0]);
+			commandList.push_back(attack1);
+			commandList.push_back(attack1);
+			commandList.push_back(attack1);
+			commandList.push_back(endactions);
+			
+			Move* move7 = new Move({12,13});
+			commandList.push_back(move7);
+			commandList.push_back(attack1);
+			commandList.push_back(attack1);
+			commandList.push_back(endactions);
+			
+			p = {11,14};
+			Attack* attack2 = new Attack(p , state.getPlaying()->getSkills()[0]);
+			commandList.push_back(attack2);
+			commandList.push_back(endactions);
+			
+			Move* move8 = new Move({11,14});
+			commandList.push_back(move8);
+			commandList.push_back(attack1);
+			commandList.push_back(attack1);
+			commandList.push_back(endactions);
+			
+			commandList.push_back(attack1);
+			commandList.push_back(attack1);
+			commandList.push_back(endactions);
+			
+			commandList.push_back(attack1);
+			
+			
 			
 			bool finCommande = false;
 			
 			while (window.isOpen())
 			{
-				// on gère les évènements
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
@@ -159,13 +189,13 @@ int main(int argc,char* argv[])
 						window.close();
 				}
 				
-				sleep(3);
+				sleep(1);
 				if (commandList.size() > 0){
 					engine.executeCommand(commandList[0],window);
 					commandList.erase(commandList.begin());
 				}
 				else if(finCommande == false){
-					cout << "Fin de commande" << endl;
+					cout << endl << "---------- Fin de commande ----------" << endl;
 					finCommande = true;
 				}
 				window.display();
