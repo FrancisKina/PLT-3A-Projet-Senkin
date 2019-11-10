@@ -67,11 +67,11 @@ void Move::execute (state::State& state){
 	*/
 	
 	//Deplacement du joueur
-	cout << "Joueur se deplace de (" << x << "," << y << ") a (" << dx << "," << dy << ") : " << distance << " PM utilises" << endl;
+	cout << player->getName() << " se deplace de (" << x << "," << y << ") a (" << dx << "," << dy << ") : " << distance << " PM utilises, ";
 	player->setX(dx);
 	player->setY(dy);
 	
 	//Maj points de mouvement
 	player->setMovement(player->getMovement() - distance);
-	cout << "PM restants : " << player->getMovement() << endl;
+	cout << player->getMovement() << " PM restants" << endl;
 }

@@ -42,9 +42,7 @@ Cursor* State::getCursor(){
 void State::initPlayers(int nbPlayers){
 	for (int i=0;i<nbPlayers;i++){
 		players.push_back( new Player());
-		players[i]->setX(i);
-		players[i]->setY(i);
-		players[i]->setDirection(SOUTH);
+		players[i]->setName("J" + std::to_string(i+1));
 		//players[i]->setClassId(static_cast<ClassId>(rand()%4));
 	}
 

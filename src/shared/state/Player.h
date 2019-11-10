@@ -3,6 +3,7 @@
 #define STATE__PLAYER__H
 
 #include <vector>
+#include <string>
 
 namespace state {
   class Character;
@@ -32,6 +33,7 @@ namespace state {
     bool ia;
     Character* character;
     std::vector<Skill*> skills;
+    std::string name;
     // Operations
   public:
     Player ();
@@ -59,6 +61,8 @@ namespace state {
     std::vector<Skill*> getSkills ();
     void setSkills (std::vector<Skill*> newSkills);
     void setSkill (Skill* newSkill);
+    std::string getName ();
+    void setName (std::string newName);
     // Setters and Getters
   };
 

@@ -42,15 +42,21 @@ void EndActions::execute(state::State& state){
 			cout << "Reinitialisation des PA du joueur" << endl;
 			
 			//Avancement du tour d'action
-			if(i<state.getPlayers().size()-1){ //Si ce n'est pas le dernier joueur du round
-				//cout << "playing : " << state.getPlaying() << " | newplaying : " << state.getPlayers()[i+1] << endl;
+			//Si ce n'est pas le dernier joueur du round
+			if(i<state.getPlayers().size()-1){ 
 				state.setPlaying(state.getPlayers()[i+1]);
-				cout << endl << "-------- Tour du joueur suivant -----------" << endl;
+				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
 			}
-			else{
+			//Fin de round
+			else{ 
 				cout << endl << "[ Fin de round ]" << endl;
 				state.sortPlayers();
-				cout << "Calcul de l'ordre d'action des joueurs" << endl;
+				cout << "Nouvel ordre de jeu : ";
+				for (Player* p : state.getPlayers()){
+					cout << p->getName() << " ";
+				}
+				cout << endl;
+				
 				cout << "[ Nouveau round ]" << endl;
 			}
 			

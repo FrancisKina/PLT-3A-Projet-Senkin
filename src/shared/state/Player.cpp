@@ -109,6 +109,14 @@ void Player::setSkill (Skill* newSkill){
 	skills.push_back(newSkill);
 }
 
+std::string Player::getName(){
+	return name;
+}
+
+void Player::setName(std::string newName){
+	name = newName;
+}
+
 Player::Player(){
 	x=0;
     y=0;
@@ -119,4 +127,5 @@ Player::Player(){
     skillCount=0;
     status={{POISONED,0},{BURNED,0},{FEAR,0},{DAZZLED,0}};
     ia=0;
+    name="J";
 }

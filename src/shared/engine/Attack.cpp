@@ -76,7 +76,7 @@ void Attack::execute (state::State& state){
 				
 				if(targetPlayer.size()!=0){
 					for(size_t i=0;i<targetPlayer.size();i++){
-						cout<<"Joueur "<<targetPlayer[i]<<" est vise."<<endl;
+						cout<<"Joueur "<<targetPlayer[i]->getName()<<" est vise"<<endl;
 						target_HP.push_back(targetPlayer[i]->getHp());
 						target_Dodge.push_back(1);
 						target_Status.push_back(targetPlayer[i]->getStatus());
@@ -260,11 +260,11 @@ void Attack::execute (state::State& state){
 				}
 				//------------------------succes ou echec----------------------------------
 				if(targetPlayer.size()!=0){
-					cout << "Joueur " << attacker << " attaque ";
-					for(size_t i=0; i<targetPlayer.size()-1;i++){
-						cout<<"joueur "<< targetPlayer[i] << " , " ;
+					cout << "Joueur " << attacker->getName() << " attaque ";
+					for(size_t i=0; i<targetPlayer.size();i++){
+						cout<<"joueur "<< targetPlayer[i]->getName() << " " ;
 					}
-					cout<<"joueur "<<targetPlayer[targetPlayer.size()-1]<<"."<< endl;
+					cout << endl;
 				}else{
 					cout<<"Joueur " << attacker << " attaque case vide ("<<posTarget.first<<","<<posTarget.second<<")."<<endl;
 				}
@@ -341,22 +341,10 @@ void Attack::execute (state::State& state){
 						}else{
 				//---------------------------Degat subis-----------------------------------
 							targetPlayer[p]->setHp(target_HP[p]-degats);
-							cout << "Joueur " << targetPlayer[p] << " perd " << degats << " PV. " << endl;
-							cout << "Il ne lui reste plus que " << targetPlayer[p]->getHp() << " PV."<< endl;
+							cout << "Joueur " << targetPlayer[p]->getName() << " perd " << degats << " PV " << endl;
+							cout << "Il ne lui reste plus que " << targetPlayer[p]->getHp() << " PV"<< endl;
 						
-				//--------------------------verif mort------------------------------------
-							if(targetPlayer[p]->getHp()<=0){
-								targetPlayer[p]->setX(-1);
-								targetPlayer[p]->setY(-1);
-								for(size_t i=0; i<state.getPlayers().size(); i++) {
-									std::vector<state::Player*> players = state.getPlayers();
-									if(players[i] == targetPlayer[p]){
-										players.erase(players.begin()+i);
-									}
-								}
-								cout << "Joueur " << targetPlayer[p] <<  " est mort." << endl;
-							}else{
-				//--------------------------test effet------------------------------------
+						if(targetPlayer[p]->getHp()>0){
 								for(size_t i=0; i<effect.size();i++){
 									//POISON
 									if(get<0>(effect[i])==POISON_CHAR){
@@ -486,7 +474,7 @@ void Attack::execute (state::State& state){
 		}
 		
 	}else if(attacker->getSkillCount()==0){
-		cout << "Le joueur " << attacker << " a utilise tous ses PA, il ne peut plus attaquer." <<endl;  
+		cout << "Le joueur " << attacker->getName() << " a utilise tous ses PA, il ne peut plus attaquer." <<endl;  
 	}
 }
 
