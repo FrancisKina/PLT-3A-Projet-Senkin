@@ -101,10 +101,10 @@ int main(int argc,char* argv[])
 			state.getPlayers()[3]->setY(10);
 				//Initialisation des skills
 			SkillFactory sf;
-			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
-			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(PIETINEMENT)});
+			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(SOIN_LEGER)});
 			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
-			state.getPlayers()[3]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
 			
 			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
 			
@@ -127,6 +127,10 @@ int main(int argc,char* argv[])
 			window.display();
 			
 				//Suite de commandes
+				//j2
+			cout<<"test poison j2"<<endl;
+			std::pair<CharStatusId, int> newStatus = {BURNED,4};
+			state.getPlaying()->updateStatus(newStatus);
 			std::vector<Command*> commandList;
 			Move* move1 = new Move({11,11});
 			commandList.push_back(move1);
@@ -136,44 +140,54 @@ int main(int argc,char* argv[])
 			EndActions* endactions = new EndActions();
 			commandList.push_back(endactions);
 			
+			//j1
 			Move* move3 = new Move({11,13});
 			commandList.push_back(move3);
 			Move* move4 = new Move({19,12});
 			commandList.push_back(move4);
 			commandList.push_back(endactions);
 			
+			//j3
 			Move* move5 = new Move({11,11});
 			commandList.push_back(move5);
 			Move* move6 = new Move({11,12});
 			commandList.push_back(move6);
 			std::pair<int,int> p = {11,13};
-			Attack* attack1 = new Attack(p , state.getPlaying()->getSkills()[0]);
-			commandList.push_back(attack1);
-			commandList.push_back(attack1);
-			commandList.push_back(attack1);
+			Attack* attackJ3a = new Attack(p , state.getPlaying()->getSkills()[0]);
+			Attack* attackJ3b = new Attack(p , state.getPlaying()->getSkills()[1]);
+			commandList.push_back(attackJ3a);
+			commandList.push_back(attackJ3b);
+			commandList.push_back(attackJ3a);
 			commandList.push_back(endactions);
 			
+			//j4
 			Move* move7 = new Move({12,13});
+			Attack* attackJ4a = new Attack(p , state.getPlaying()->getSkills()[0]);
+			Attack* attackJ4b = new Attack(p , state.getPlaying()->getSkills()[1]);
 			commandList.push_back(move7);
-			commandList.push_back(attack1);
-			commandList.push_back(attack1);
+			commandList.push_back(attackJ4a);
+			commandList.push_back(attackJ4b);
 			commandList.push_back(endactions);
 			
-			p = {11,14};
-			Attack* attack2 = new Attack(p , state.getPlaying()->getSkills()[0]);
+			//j2
+			Attack* attack2 = new Attack(p , state.getPlaying()->getSkills()[1]);
 			commandList.push_back(attack2);
 			commandList.push_back(endactions);
 			
+			//j1
+			Attack* attack1 = new Attack(p , state.getPlaying()->getSkills()[1]);
 			Move* move8 = new Move({11,14});
 			commandList.push_back(move8);
 			commandList.push_back(attack1);
 			commandList.push_back(attack1);
 			commandList.push_back(endactions);
 			
+			//j3
 			commandList.push_back(attack1);
 			commandList.push_back(attack1);
 			commandList.push_back(endactions);
 			
+			//j4
 			commandList.push_back(attack1);
 			
 			
