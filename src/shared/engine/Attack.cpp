@@ -351,7 +351,7 @@ void Attack::execute (state::State& state){
 									//fait passer l'etat du perso a POISON
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive<=get<2>(effect[i])){
+									if(chanceEffet<=get<2>(effect[i])){
 										cout << "Effet POISON rate "<< endl;
 									}else{
 										cout << "Joueur empoisonne"<< endl;
@@ -374,7 +374,7 @@ void Attack::execute (state::State& state){
 									//fait passer l'Ã©tat du perso Ã  BURN
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet BURN ratÃ© "<< endl;
 									}else{
 										cout << "Joueur brulé"<< endl;
@@ -397,7 +397,7 @@ void Attack::execute (state::State& state){
 									//fait passer l'Ã©tat du perso Ã  FEAR
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet FEAR ratÃ© "<< endl;
 									}else{
 										cout << "Joueur appeuré"<< endl;
@@ -420,7 +420,7 @@ void Attack::execute (state::State& state){
 									//fait passer l'Ã©tat du perso Ã  DAZZLE
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet DAZZLE ratÃ© "<< endl;
 									}else{
 										cout << "Joueur ébloui"<< endl;
@@ -443,7 +443,7 @@ void Attack::execute (state::State& state){
 									//soigne les status
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL STATUS ratÃ© "<< endl;
 									}else{
 										cout << "Soin status"<< endl;
@@ -457,7 +457,7 @@ void Attack::execute (state::State& state){
 									//soigne les PV
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(M) ratÃ© "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
@@ -471,7 +471,7 @@ void Attack::execute (state::State& state){
 									//soigne les PV
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(L) ratÃ© "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
@@ -485,7 +485,7 @@ void Attack::execute (state::State& state){
 									//soigne les PV
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
-									if(chanceEsquive>=get<2>(effect[i])){
+									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(H) ratÃ© "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
