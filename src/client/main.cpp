@@ -128,9 +128,10 @@ int main(int argc,char* argv[])
 			
 				//Suite de commandes
 				//j2
-			cout<<"test poison j2"<<endl;
 			std::pair<CharStatusId, int> newStatus = {BURNED,4};
 			state.getPlaying()->updateStatus(newStatus);
+			//std::pair<CharStatusId, int> newStatus2 = {POISONED,4};
+			//state.getPlaying()->updateStatus(newStatus2);
 			std::vector<Command*> commandList;
 			Move* move1 = new Move({11,11});
 			commandList.push_back(move1);

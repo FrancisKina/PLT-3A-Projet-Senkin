@@ -68,10 +68,11 @@ bool State::initGrid(std::string map_txt){
 					ligneField.push_back(new Field());
 					ligneField.back()->setFieldType(static_cast<FieldTypeId>(nombre));
 					
-					//POISON
+					//SWAMP -> POISON
 					if (ligneField.back()->getFieldType() == SWAMP){
 						ligneField.back()->updateFieldStatus({POISON, 999});
 					}
+					//SAND -> BURNED
 					else if (ligneField.back()->getFieldType() == SAND){
 						ligneField.back()->updateFieldStatus({BURNING, 999});
 					}
