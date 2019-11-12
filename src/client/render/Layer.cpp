@@ -1,14 +1,15 @@
 #include "Layer.h"
 #include <state.h>
 #include <cstdlib>
+#include <iostream>
 
 using namespace render;
 using namespace state;
+using namespace std;
 
 
 bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
 	
-		//std::vector<std::vector<std::pair<state::FieldTypeId, std::pair<FieldStatusId,int>>>>& grid = state.getGrid();
 		texture = textureTileset;
 		
       	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
@@ -32,6 +33,40 @@ bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vect
 				quad[2].texCoords = sf::Vector2f(textSize.x * state.getGrid()[i][j]->getFieldType(), textSize.y);
 				quad[3].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j]->getFieldType() - 1), textSize.y);
 			
+			}
+		}			
+		return true;				
+}
+
+bool Layer::loadFieldEffect(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
+	
+		texture = textureTileset;
+		
+      	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
+	   	quads.setPrimitiveType(sf::Quads);
+       	quads.resize(width * height * 4);
+		
+		// création de tous les quads
+		for(size_t i=0; i<state.getGrid().size(); i++){
+			for(size_t j=0; j<state.getGrid()[0].size(); j++){
+				sf::Vertex* quad = &quads[(i * state.getGrid()[0].size()+ j) * 4];
+				
+				//Position des 4 coins du quad
+				quad[0].position = sf::Vector2f(tileSize * j, tileSize * i);
+				quad[1].position = sf::Vector2f(tileSize * (j + 1), tileSize * i);
+				quad[2].position = sf::Vector2f(tileSize * (j + 1), tileSize * (i + 1));
+				quad[3].position = sf::Vector2f(tileSize * j, tileSize * (i + 1));
+				
+				//Position de la texture
+				for(size_t k=0; k<state.getGrid()[i][j]->getFieldStatus().size(); k++){
+					std::pair<FieldStatusId, int> status = state.getGrid()[i][j]->getFieldStatus()[k];
+					if(status.second > 0){
+						quad[0].texCoords = sf::Vector2f(textSize.x * (status.first - 1), 0);
+						quad[1].texCoords = sf::Vector2f(textSize.x * status.first, 0);
+						quad[2].texCoords = sf::Vector2f(textSize.x * status.first, textSize.y);
+						quad[3].texCoords = sf::Vector2f(textSize.x * (status.first - 1), textSize.y);
+					}
+				}
 			}
 		}			
 		return true;				

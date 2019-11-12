@@ -57,7 +57,8 @@ bool State::initGrid(std::string map_txt){
 	// Lecture Fichier
     if (fichier){
     	while (getline(fichier, ligne)){
-			for(size_t i = 0; i < ligne.size();i++){ //Lecture d'une ligne
+			//Nouvelle ligne
+			for(size_t i = 0; i < ligne.size();i++){ 
 				if(isdigit(ligne.at(i)) != 0){
 					strnombre+=ligne.at(i);
 				}
@@ -66,15 +67,26 @@ bool State::initGrid(std::string map_txt){
 					ssnombre >> nombre;
 					ligneField.push_back(new Field());
 					ligneField.back()->setFieldType(static_cast<FieldTypeId>(nombre));
+					
+					//POISON
+					if (ligneField.back()->getFieldType() == SWAMP){
+						ligneField.back()->updateFieldStatus({POISON, 999});
+					}
+					else if (ligneField.back()->getFieldType() == SAND){
+						ligneField.back()->updateFieldStatus({BURNING, 999});
+					}
+					
 					i++;
 					strnombre = "";
 				} 
-			} //Fin de ligne
+			} 
+			//Fin de ligne
 			grid.push_back(ligneField);
 			ligneField = {};
 			strnombre = "";
 		}
 		fichier.close();
+		
 		return 1;
     }
     else {return 0;}

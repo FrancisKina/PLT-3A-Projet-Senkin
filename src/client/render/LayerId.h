@@ -14,7 +14,8 @@ namespace render {
   enum LayerId {
     LAYERFIELD     = 1,
     LAYERPLAYER     = 2,
-    LAYERCURSOR     = 3
+    LAYERCURSOR     = 3,
+    LAYERFIELDEFFECT     = 4
   };
 
 };

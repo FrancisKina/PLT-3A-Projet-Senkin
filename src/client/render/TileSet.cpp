@@ -8,16 +8,18 @@ TileSet::TileSet(LayerId newIdLayer){
 	LayerId id=newIdLayer;
 	
 	if (id==LAYERFIELD){
-		//TODO: adjust value and path
 		cellWidth=20;
 		cellHeight=20;
 		imageFile="res/Map/texturetest3.png";
+	} else if (id==LAYERFIELDEFFECT){
+		cellWidth=20;
+		cellHeight=20;
+		imageFile="res/Map/textureeffect.png";
 	} else if (id==LAYERPLAYER){
 		cellWidth=24;
 		cellHeight=32;
 		imageFile="res/Char/Characters.png";
 	} else if (id==LAYERCURSOR){
-		//todo: adjust value
 		cellWidth=500;
 		cellHeight=500;
 		imageFile="res/curseur.png";

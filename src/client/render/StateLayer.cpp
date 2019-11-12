@@ -19,6 +19,9 @@ StateLayer::StateLayer(){
 	
 	TileSet tilesetField(LAYERFIELD);
 	tilesets.push_back(tilesetField);
+	
+	TileSet tilesetFieldEffect(LAYERFIELDEFFECT);
+	tilesets.push_back(tilesetFieldEffect);
 
 	TileSet tilesetPlayer(LAYERPLAYER);
 	tilesets.push_back(tilesetPlayer);
@@ -36,15 +39,18 @@ StateLayer::StateLayer(){
 /*Creation de la liste contenant tous les layers texturées*/
 void StateLayer::initLayers(state::State& state, int tileSize){	
 	Layer layerField;
+	Layer layerFieldEffect;
 	Layer layerPlayer;
 	Layer layerCursor;
 	Layer layerInfos;
 	
 	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
+	
+	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[1].size(), state.getGrid().size(), tileSize);
 
-	layerPlayer.loadPlayer(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getPlayers().size(), 1, tileSize);
+	layerPlayer.loadPlayer(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 
-	layerCursor.loadCursor(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), 1, 1, tileSize);
+	layerCursor.loadCursor(state, tilesets[3].getTexture(), sf::Vector2u(tilesets[3].getCellWidth(), tilesets[3].getCellHeight()), 1, 1, tileSize);
 	
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), 1, 1);
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), state.getPlayers().size(), 1);
@@ -62,6 +68,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	}
 	
 	layers.push_back(layerField);
+	layers.push_back(layerFieldEffect);
 	layers.push_back(layerPlayer);
 	layers.push_back(layerCursor);
 	//layers.push_back(move(ptr_surfInfos));
@@ -112,9 +119,9 @@ void StateLayer::stateChanged (state::State& state, sf::RenderWindow& window){
 
 void StateLayer::draw (sf::RenderWindow& window){
 	window.clear();
-	window.draw(getLayers()[0]);//Affichage terrain
-	window.draw(getLayers()[1]);//Affichage personnages
-	window.draw(getLayers()[2]);//Affichage curseur
+	for(size_t i=0; i<layers.size(); i++){
+		window.draw(getLayers()[i]);
+	}
 	window.display();
 }
 /*
