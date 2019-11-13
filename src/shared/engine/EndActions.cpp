@@ -156,20 +156,14 @@ void EndActions::execute(state::State& state){
 				}
 				cout << endl;
 				
-				//changment aléatoire d'état du terrain
-				int nb_case_total = field_grid[1].size()*field_grid.size();
-				int nb_case; //aléatoire de 0 à sizegridy*sizegridyx decroissant
-				//def nb_case*
-				int chanceCase =rand()%(nb_case_total*(nb_case_total+1)+1);//de 0 a nbmax
-				int nb_case_test=nb_case_total*(nb_case_total+1)/2;
-				for(int u=0;u<nb_case_total;u++){
-					if(chanceCase<nb_case_test){
-						nb_case = u;
-						break;
-					}else{
-						nb_case_test=nb_case_test+nb_case_total*(nb_case_total+1)/2-u*(nb_case_total-1);
-						
-					}
+			//------------------------changment aléatoire d'état du terrain------------------------
+				bool newcase;
+				int proba_new_case= 80;
+				int chanceFirstCase=rand()%100+1;
+				if(proba_new_case>chanceFirstCase){
+					newcase=true;
+				}else{
+					newcase=false;
 				}
 				
 				int cx,cy; //aléatoire equiprobable
@@ -182,7 +176,7 @@ void EndActions::execute(state::State& state){
 				std::vector<std::pair<FieldStatusId,int>> case_field_status;
 				FieldTypeId case_field_type;
 				bool meteo=true;
-				for(int n=0;n<nb_case;n++){
+				while(newcase){
 					//def cx et cy
 					cy=rand()%field_grid.size();
 					cx=rand()%field_grid[1].size();
@@ -260,6 +254,12 @@ void EndActions::execute(state::State& state){
 						}
 					}
 					cout<<" sur la case ("<<cx<<","<<cy<<")."<<endl;
+					int chanceNewCase=rand()%100+1;
+					if(proba_new_case>chanceNewCase){
+						newcase=true;
+					}else{
+						newcase=false;
+					}
 				}
 				cout << endl << "[ Début de round "<< state.getRound() <<"]" << endl;
 				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
