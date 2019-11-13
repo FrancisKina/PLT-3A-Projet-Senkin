@@ -106,29 +106,29 @@ int main(int argc,char* argv[])
 			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
 			
+			engine.startGame(state);
+			/*
 			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
 			
 				//Initialisation du curseur
 			state.initCursor();
 			state.getCursor()->setCursorX(rand()%state.getGrid()[0].size());
 			state.getCursor()->setCursorY(rand()%state.getGrid().size());
+			*/
 			
 				//Initialisation de la liste des différents layers avec texture
 			StateLayer statelayer;
 			statelayer.initLayers(state, 35);
 			state.registerObserver(&statelayer);
-			
 				//Creation puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
 			sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
-			window.draw(statelayer.getLayers()[0]);//Affichage terrain
-			window.draw(statelayer.getLayers()[1]);//Affichage personnages
-			window.draw(statelayer.getLayers()[2]);//Affichage curseur
 			window.display();
 			
 				//Suite de commandes
 				//j2
-			cout<<"test poison j2"<<endl;
+			//state.getGrid()[13][11]->updateFieldStatus({RAIN,1});
+			state.getGrid()[13][11]->updateFieldStatus({BURNING,4});
 			std::pair<CharStatusId, int> newStatus = {BURNED,4};
 			state.getPlaying()->updateStatus(newStatus);
 			std::vector<Command*> commandList;
