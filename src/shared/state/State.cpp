@@ -77,10 +77,15 @@ bool State::initGrid(std::string map_txt){
 						ligneField.back()->updateFieldStatus({BURNING, 999});
 					}
 					
-					//SAND -> BURNED
+					//WALL -> BLOCKMOVE + BLOCKATTACK
 					else if (ligneField.back()->getFieldType() == WALL){
 						ligneField.back()->updateFieldStatus({BLOCKMOVE, 999});
 						ligneField.back()->updateFieldStatus({BLOCKATTACK, 999});
+					}
+					
+					//WATER -> BLOCKMOVE
+					else if (ligneField.back()->getFieldType() == WALL){
+						ligneField.back()->updateFieldStatus({BLOCKMOVE, 999});
 					}
 					
 					i++;

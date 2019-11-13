@@ -3,6 +3,7 @@
 #define STATE__SKILL__H
 
 #include <vector>
+#include <string>
 
 #include "SkillId.h"
 #include "EffectId.h"
@@ -23,6 +24,7 @@ namespace state {
     int cooldown;
     bool special;
     SkillId id;
+    std::string name;
     // Operations
   public:
     int getDamage ();
@@ -43,6 +45,8 @@ namespace state {
     void setSkillId (SkillId newSkillId);
     int getCooldownBase ();
     void setCooldownBase (int newCDB);
+    std::string getName ();
+    void setName (std::string newName);
     Skill ();
     // Setters and Getters
   };

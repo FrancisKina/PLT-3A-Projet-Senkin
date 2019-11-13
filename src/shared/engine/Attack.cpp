@@ -11,9 +11,9 @@ using namespace engine;
 using namespace state;
 using namespace std;
 
-Attack::Attack (std::pair<int,int> newPosTarget, state::Skill* newAttack){
+Attack::Attack (std::pair<int,int> newPosTarget, int newnSkill){
 	id = ATTACK;
-	attack = newAttack;
+	nSkill = newnSkill;
 	posTarget = newPosTarget;
 	attaque_possible = false;
 	direction_skill = SOUTH;
@@ -23,12 +23,13 @@ Attack::Attack (std::pair<int,int> newPosTarget, state::Skill* newAttack){
 void Attack::execute (state::State& state){
 	player = state.getPlaying();
 	Player* attacker = player;
+	attack = attacker->getSkills()[nSkill];
 	
 	cout << endl << "| Lancement d'une attaque |" << endl;
 	
 	//TODO range f(gravity)
 	if (attacker->getHp()>0 && attack->getCooldown()<=0 && attacker->getSkillCount() > 0){
-		cout << "Le joueur a le droit d'attaquer" << endl;
+		cout << attacker->getName() << " tente d'utiliser " << attack->getName() << endl;
 		int X = attacker->getX();
 		int Y = attacker->getY();
 		//case
@@ -579,7 +580,7 @@ void Attack::execute (state::State& state){
 			}
 		// Cas attaque impossible
 		}else{
-			cout << "Attaque non autorisee !" << endl;		
+			cout << "Attaque non autorisee ! (Hors de portée)" << endl;		
 		}
 		
 	}else if(attacker->getSkillCount()==0){
@@ -630,7 +631,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Attack::g
 					}
 				}
 				if(!is_blocked){
-					cout << "Attaque non bloquee par un obstacle" << endl;
+					//cout << "Attaque non bloquee par un obstacle" << endl;
 					v_posField.push_back({pos_x,pos_y});
 					for(size_t p = 0; p<sizePlayers;p++){
 						if(players[p]->getX()==pos_x && players[p]->getY()==pos_y ){
@@ -663,7 +664,7 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 					break;
 				}	
 				if(Y-j==posTarget.second && i==statusCase.size()-1){
-					cout << "La direction NORD n'est pas bloquee" <<endl;
+					//cout << "La direction NORD n'est pas bloquee" <<endl;
 					direction_skill=NORTH;
 					attaque_possible=true;
 				}
@@ -678,7 +679,7 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 					break;
 				}	
 				if(Y+j==posTarget.second && i==statusCase.size()-1){
-					cout << "La direction SUD n'est pas bloquee" <<endl;
+					//cout << "La direction SUD n'est pas bloquee" <<endl;
 					direction_skill=SOUTH;
 					attaque_possible=true;
 				}
@@ -693,7 +694,7 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 					break;
 				}	
 				if(X-j==posTarget.first && i==statusCase.size()-1){
-					cout << "La direction OUEST n'est pas bloquee" <<endl;
+					//cout << "La direction OUEST n'est pas bloquee" <<endl;
 					direction_skill=WEST;
 					attaque_possible=true;
 				}
@@ -708,7 +709,7 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 					break;
 				}	
 				if(X+j==posTarget.first && i==statusCase.size()-1){
-					cout << "La direction EST n'est pas bloquee" <<endl;
+					//cout << "La direction EST n'est pas bloquee" <<endl;
 					direction_skill=EAST;
 					attaque_possible=true;
 				}

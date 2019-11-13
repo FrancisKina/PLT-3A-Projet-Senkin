@@ -86,3 +86,11 @@ int Skill::getCooldownBase(){
 void Skill::setCooldownBase(int newCDB){
 	cooldownBase =  newCDB;
 }
+
+std::string Skill::getName(){
+	return name;
+}
+
+void Skill::setName(std::string newName){
+	name = newName;
+}

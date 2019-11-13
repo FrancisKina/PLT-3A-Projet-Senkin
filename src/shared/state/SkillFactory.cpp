@@ -152,138 +152,153 @@ bool special_COUP_DE_BOULE=0;
 Skill* SkillFactory::createSkill(SkillId id){
 	Skill* skill = new Skill();
 	if (id==FRAPPE){
+		skill->setName("FRAPPE");
 		skill->setDamage(damage_FRAPPE);
 		skill->setRange(range_FRAPPE);
 		skill->setArea(area_FRAPPE);
 		skill->setPrecision(precision_FRAPPE);
 		skill->setEffect(effect_FRAPPE);
-		skill->setCooldown(cooldown_FRAPPE);
+		skill->setCooldownBase(cooldown_FRAPPE);
 		skill->setSpecial(special_FRAPPE);
 		skill->setSkillId(FRAPPE);
 	}else if (id==SAUT_PIQUE){
+		skill->setName("SAUT PIQUE");
 		skill->setDamage(damage_SAUTPIQUE);
 		skill->setRange(range_SAUTPIQUE);
 		skill->setArea(area_SAUTPIQUE);
 		skill->setPrecision(precision_SAUTPIQUE);
 		skill->setEffect(effect_SAUTPIQUE);
-		skill->setCooldown(cooldown_SAUTPIQUE);
+		skill->setCooldownBase(cooldown_SAUTPIQUE);
 		skill->setSpecial(special_SAUTPIQUE);
 		skill->setSkillId(SAUT_PIQUE);
 	}else if (id==ARC){
+		skill->setName("ARC");
 		skill->setDamage(damage_ARC);
 		skill->setRange(range_ARC);
 		skill->setArea(area_ARC);
 		skill->setPrecision(precision_ARC);
 		skill->setEffect(effect_ARC);
-		skill->setCooldown(cooldown_ARC);
+		skill->setCooldownBase(cooldown_ARC);
 		skill->setSpecial(special_ARC);
 		skill->setSkillId(ARC);
 	}else if (id==ARC_EN_CIEL){
+		skill->setName("ARC EN CIEL");
 		skill->setDamage(damage_ARC_EN_CIEL);
 		skill->setRange(range_ARC_EN_CIEL);
 		skill->setArea(area_ARC_EN_CIEL);
 		skill->setPrecision(precision_ARC_EN_CIEL);
 		skill->setEffect(effect_ARC_EN_CIEL);
-		skill->setCooldown(cooldown_ARC_EN_CIEL);
+		skill->setCooldownBase(cooldown_ARC_EN_CIEL);
 		skill->setSpecial(special_ARC_EN_CIEL);
 		skill->setSkillId(ARC_EN_CIEL);
 	}else if (id==SOIN){
+		skill->setName("SOIN");
 		skill->setDamage(damage_SOIN);
 		skill->setRange(range_SOIN);
 		skill->setArea(area_SOIN);
 		skill->setPrecision(precision_SOIN);
 		skill->setEffect(effect_SOIN);
-		skill->setCooldown(cooldown_SOIN);
+		skill->setCooldownBase(cooldown_SOIN);
 		skill->setSpecial(special_SOIN);
 		skill->setSkillId(SOIN);
 	}else if (id==SOIN_LEGER){
+		skill->setName("SOIN LEGER");
 		skill->setDamage(damage_SOIN_LEGER);
 		skill->setRange(range_SOIN_LEGER);
 		skill->setArea(area_SOIN_LEGER);
 		skill->setPrecision(precision_SOIN_LEGER);
 		skill->setEffect(effect_SOIN_LEGER);
-		skill->setCooldown(cooldown_SOIN_LEGER);
+		skill->setCooldownBase(cooldown_SOIN_LEGER);
 		skill->setSpecial(special_SOIN_LEGER);
 		skill->setSkillId(SOIN_LEGER);
 	}else if (id==ENTAILLE){
+		skill->setName("ENTAILLE");
 		skill->setDamage(damage_ENTAILLE);
 		skill->setRange(range_ENTAILLE);
 		skill->setArea(area_ENTAILLE);
 		skill->setPrecision(precision_ENTAILLE);
 		skill->setEffect(effect_ENTAILLE);
-		skill->setCooldown(cooldown_ENTAILLE);
+		skill->setCooldownBase(cooldown_ENTAILLE);
 		skill->setSpecial(special_ENTAILLE);
 		skill->setSkillId(ENTAILLE);
 	}else if (id==TRANCHARGE){
+		skill->setName("TRANCHARGE");
 		skill->setDamage(damage_TRANCHARGE);
 		skill->setRange(range_TRANCHARGE);
 		skill->setArea(area_TRANCHARGE);
 		skill->setPrecision(precision_TRANCHARGE);
 		skill->setEffect(effect_TRANCHARGE);
-		skill->setCooldown(cooldown_TRANCHARGE);
+		skill->setCooldownBase(cooldown_TRANCHARGE);
 		skill->setSpecial(special_TRANCHARGE);
 		skill->setSkillId(TRANCHARGE);
 	}else if (id==PIETINEMENT){
+		skill->setName("PIETINEMENT");
 		skill->setDamage(damage_PIETINEMENT);
 		skill->setRange(range_PIETINEMENT);
 		skill->setArea(area_PIETINEMENT);
 		skill->setPrecision(precision_PIETINEMENT);
 		skill->setEffect(effect_PIETINEMENT);
-		skill->setCooldown(cooldown_PIETINEMENT);
+		skill->setCooldownBase(cooldown_PIETINEMENT);
 		skill->setSpecial(special_PIETINEMENT);
 		skill->setSkillId(PIETINEMENT);
 	}else if (id==FEU_D_ENFER){
+		skill->setName("FEU D'ENFER");
 		skill->setDamage(damage_FEU_D_ENFER);
 		skill->setRange(range_FEU_D_ENFER);
 		skill->setArea(area_FEU_D_ENFER);
 		skill->setPrecision(precision_FEU_D_ENFER);
 		skill->setEffect(effect_FEU_D_ENFER);
-		skill->setCooldown(cooldown_FEU_D_ENFER);
+		skill->setCooldownBase(cooldown_FEU_D_ENFER);
 		skill->setSpecial(special_FEU_D_ENFER);
 		skill->setSkillId(FEU_D_ENFER);
 	}else if (id==DOUBLE_LAME){
+		skill->setName("DOUBLE LAME");
 		skill->setDamage(damage_DOUBLE_LAME);
 		skill->setRange(range_DOUBLE_LAME);
 		skill->setArea(area_DOUBLE_LAME);
 		skill->setPrecision(precision_DOUBLE_LAME);
 		skill->setEffect(effect_DOUBLE_LAME);
-		skill->setCooldown(cooldown_DOUBLE_LAME);
+		skill->setCooldownBase(cooldown_DOUBLE_LAME);
 		skill->setSpecial(special_DOUBLE_LAME);
 		skill->setSkillId(DOUBLE_LAME);
 	}else if (id==FOUDRE){
+		skill->setName("FOUDRE");
 		skill->setDamage(damage_FOUDRE);
 		skill->setRange(range_FOUDRE);
 		skill->setArea(area_FOUDRE);
 		skill->setPrecision(precision_FOUDRE);
 		skill->setEffect(effect_FOUDRE);
-		skill->setCooldown(cooldown_FOUDRE);
+		skill->setCooldownBase(cooldown_FOUDRE);
 		skill->setSpecial(special_FOUDRE);
 		skill->setSkillId(FOUDRE);
 	}else if (id==BOULE_DE_FEU){
+		skill->setName("BOULE DE FEU");
 		skill->setDamage(damage_BOULE_DE_FEU);
 		skill->setRange(range_BOULE_DE_FEU);
 		skill->setArea(area_BOULE_DE_FEU);
 		skill->setPrecision(precision_BOULE_DE_FEU);
 		skill->setEffect(effect_BOULE_DE_FEU);
-		skill->setCooldown(cooldown_BOULE_DE_FEU);
+		skill->setCooldownBase(cooldown_BOULE_DE_FEU);
 		skill->setSpecial(special_BOULE_DE_FEU);
 		skill->setSkillId(BOULE_DE_FEU);
 	}else if (id==LANCER_DE_HACHE){
+		skill->setName("LANCER DE HACHE");
 		skill->setDamage(damage_LANCER_DE_HACHE);
 		skill->setRange(range_LANCER_DE_HACHE);
 		skill->setArea(area_LANCER_DE_HACHE);
 		skill->setPrecision(precision_LANCER_DE_HACHE);
 		skill->setEffect(effect_LANCER_DE_HACHE);
-		skill->setCooldown(cooldown_LANCER_DE_HACHE);
+		skill->setCooldownBase(cooldown_LANCER_DE_HACHE);
 		skill->setSpecial(special_LANCER_DE_HACHE);
 		skill->setSkillId(LANCER_DE_HACHE);
 	}else if (id==COUP_DE_BOULE){
+		skill->setName("COUP DE BOULE");
 		skill->setDamage(damage_COUP_DE_BOULE);
 		skill->setRange(range_COUP_DE_BOULE);
 		skill->setArea(area_COUP_DE_BOULE);
 		skill->setPrecision(precision_COUP_DE_BOULE);
 		skill->setEffect(effect_COUP_DE_BOULE);
-		skill->setCooldown(cooldown_COUP_DE_BOULE);
+		skill->setCooldownBase(cooldown_COUP_DE_BOULE);
 		skill->setSpecial(special_COUP_DE_BOULE);
 		skill->setSkillId(COUP_DE_BOULE);
 	}

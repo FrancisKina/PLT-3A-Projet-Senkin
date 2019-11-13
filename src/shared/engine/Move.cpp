@@ -24,11 +24,13 @@ void Move::execute (state::State& state){
 	int dx = destination.first, dy = destination.second;
 	int distance = abs(x-dx) + abs(y-dy);
 	
+	//Test PM suffisant
 	if (player->getMovement() - distance < 0){
 		cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << distance << " PM requis, " << player->getMovement() << " restants" << endl;
 		return;
 	}
 	
+	//Test case libre
 	for(state::Player* player : state.getPlayers()){
 		if (player->getX() == dx && player->getY() == dy){
 			cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << "Joueur present sur la case" << endl;
@@ -36,35 +38,12 @@ void Move::execute (state::State& state){
 		}
 	}
 	
-	//Generation de l'ensemble des coordonnees du chemin a prendre a partir de la position de depart et d'arrivee
-	//TODO : AMELIORER PATHFINDING
-	/*
-	std::vector<std::pair<int,int>> path;
-	while((x!=dx) || (y!=dy)){ //Recherche de chemin utilisant la plus grande distance
-		if(abs(x-dx)>abs(y-dy)){
-			x = x-sgn(x-dx);
-		}
-		else{
-			y = y-sgn(y-dy);
-		}
-		path.push_back({x,y});
+	//Test case bloquee
+	if (state.getGrid()[dy][dx]->getFieldStatus()[11].second > 0){
+		cout << "Deplacement impossible en (" << dx << "," << dy << ") : " << "Destination bloquee" << endl;
+		return;
 	}
-	path.push_back({dx,dy});
-	
-	
-	//Avancee pas a pas avec path
-	for(size_t i=0; i<path.size();i++){ //Parcourir la liste des terrains du chemin
-		state::Field* field = state.getGrid()[path[i].first][path[i].second]; 
-		for(size_t j=0; j < field->getFieldStatus().size(); j++){ //Parcourir la liste des statuts du terrain
-			if(field->getFieldStatus()[j].first == POISON && field->getFieldStatus()[j].second > 0){
-				cout << "Terrain : Joueur empoisonne" << endl;
-			}
-			if(field->getFieldStatus()[j].first == BURNING && field->getFieldStatus()[j].second > 0){
-				cout << "Terrain : Joueur brule" << endl;
-			}
-		}
-	}
-	*/
+
 	
 	//Deplacement du joueur
 	cout << player->getName() << " se deplace de (" << x << "," << y << ") a (" << dx << "," << dy << ") : " << distance << " PM utilises, ";
@@ -74,4 +53,24 @@ void Move::execute (state::State& state){
 	//Maj points de mouvement
 	player->setMovement(player->getMovement() - distance);
 	cout << player->getMovement() << " PM restants" << endl;
+	
+	//Effets de terrain
+	state::Field* field = state.getGrid()[dy][dx];
+	int testEffect;
+	for (size_t j=0; j<field->getFieldStatus().size(); j++){
+		if(field->getFieldStatus()[j].first == POISON && field->getFieldStatus()[j].second > 0){
+			testEffect = rand()%100 + 1;
+			if (testEffect > 70){
+				cout << "Terrain : le joueur est empoisonne" << endl;
+				player->updateStatus({POISONED,2});
+			}
+		}
+		if(field->getFieldStatus()[j].first == BURNING && field->getFieldStatus()[j].second > 0){
+			testEffect = rand()%100 + 1;
+			if (testEffect > 50){
+				cout << "Terrain : le joueur brule" << endl;
+				player->updateStatus({BURNED,2});
+			}
+		}
+	}
 }
