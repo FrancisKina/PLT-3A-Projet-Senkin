@@ -66,7 +66,7 @@ void EndActions::execute(state::State& state){
 								}
 							}
 							if(field_grid[fy][fx]->getFieldStatus()[s].second==0){
-								cout<<"fin du status n°"<<s<<endl;
+								cout<<"Fin du status n°"<<s<<endl;
 							}
 						}
 					}
@@ -262,6 +262,7 @@ void EndActions::execute(state::State& state){
 					cout<<" sur la case ("<<cx<<","<<cy<<")."<<endl;
 				}
 				cout << endl << "[ Début de round "<< state.getRound() <<"]" << endl;
+				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
 			}
 			
 			return;

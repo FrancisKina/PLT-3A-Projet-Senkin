@@ -98,7 +98,7 @@ void Attack::execute (state::State& state){
 				if (casePlayer->getFieldStatus()[i].first==GRAVITY && casePlayer->getFieldStatus()[i].second!=0){
 					if(attack->getRange().first==0 && attack->getRange().second==0 && !skill_special){
 						skill_damage=skill_damage*1.5;
-						cout<<"La gravite augemente les degats de l'attaque au corps Ã  corps (attaquant)."<<endl;
+						cout<<"La gravite augemente les degats de l'attaque au corps a corps (attaquant)."<<endl;
 					}
 				}
 			}
@@ -115,12 +115,12 @@ void Attack::execute (state::State& state){
 			if (caseCible->getFieldType()==MOUNTAIN){
 				if(attack->getRange().first==0 && attack->getRange().second==0&& !skill_special){
 					skill_precision=skill_precision*0.85;
-					cout<<"La montagne baisse la precision de l'attaque au corps Ã  corps (case cible)."<<endl;
+					cout<<"La montagne baisse la precision de l'attaque au corps a corps (case cible)."<<endl;
 				}
 			}else if (caseCible->getFieldType()==FOREST){
 				if((attack->getRange().first==0 || attack->getRange().second==0)){
 					skill_precision=skill_precision*0.85;
-					cout<<"La foret baisse la precision de l'attaque Ã  distance (case cible)."<<endl;
+					cout<<"La foret baisse la precision de l'attaque a distance (case cible)."<<endl;
 				}
 			}
 			//attaque (terrain de l'attaque XOR terrain cible)
@@ -132,24 +132,24 @@ void Attack::execute (state::State& state){
 						//Brume
 						if (caseTarget->getFieldStatus()[i].first==MIST && caseTarget->getFieldStatus()[i].second!=0){
 							target_Dodge[p]=target_Dodge[p]*0.75;
-							cout<<"La brume diminiue la precision de l'attaque sur l'attaque nÂ°"<<p<<"."<<endl;
+							cout<<"La brume diminiue la precision de l'attaque n°"<<p<<"."<<endl;
 						}
 					}
 					if (caseTarget->getFieldType()==MOUNTAIN){
 						if(attack->getRange().first==0 && attack->getRange().second==0&& !skill_special){
 							target_Dodge[p]=target_Dodge[p]*0.85;
-							cout<<"La montagne baisse la precision de l'attaque au corps Ã  corps sur l'attaque nÂ°"<<p<<"."<<endl;
+							cout<<"La montagne baisse la precision de l'attaque au corps a corps sur l'attaque n°"<<p<<"."<<endl;
 						}
 					}else if (caseTarget->getFieldType()==FOREST){
 						if((attack->getRange().first==0 || attack->getRange().second==0)){
 							target_Dodge[p]=target_Dodge[p]*0.85;
-							cout<<"La foret baisse la precision de l'attaque a distance sur l'attaque nÂ°"<<p<<"."<<endl;
+							cout<<"La foret baisse la precision de l'attaque a distance sur l'attaque n°"<<p<<"."<<endl;
 						}
 					}
 				}
 			}
 			
-			//attaque Ã  distance (terrain entre le terrain cible et l'attaquant)
+			//attaque a distance (terrain entre le terrain cible et l'attaquant)
 			//uniquement pris en compte le centre de l'attaque si eloigne de plus de 2 case
 			if(abs(posTarget.first-X)>1 || abs(posTarget.second-Y)>1){
 				if(direction_skill==NORTH){
@@ -181,7 +181,7 @@ void Attack::execute (state::State& state){
 							//Brume
 							if (caseInter->getFieldStatus()[i].first==MIST && caseInter->getFieldStatus()[i].second!=0){
 								skill_precision=skill_precision*0.75;
-								cout<<"La brume diminiue la precision de l'attaque Ã  distance (inter)."<<endl;
+								cout<<"La brume diminiue la precision de l'attaque a distance (inter)."<<endl;
 							}
 						}
 					}
@@ -192,7 +192,7 @@ void Attack::execute (state::State& state){
 							//Brume
 							if (caseInter->getFieldStatus()[i].first==MIST && caseInter->getFieldStatus()[i].second!=0){
 								skill_precision=skill_precision*0.75;
-								cout<<"La brume diminiue la precision de l'attaque Ã  distance (inter)."<<endl;
+								cout<<"La brume diminiue la precision de l'attaque a distance (inter)."<<endl;
 							}
 						}
 					}
@@ -336,7 +336,7 @@ void Attack::execute (state::State& state){
 						}
 			//------------------------echec de l'attaque-------------------------------
 						if(!touche){
-							cout << "Joueur "<<targetPlayer[p]<<" esquive l'attaque"<< endl;
+							cout << "Joueur "<<targetPlayer[p]->getName()<<" esquive l'attaque"<< endl;
 			//------------------------succes de l'attaque-------------------------------
 						}else{
 			//---------------------------Degat subis-----------------------------------
@@ -365,17 +365,17 @@ void Attack::execute (state::State& state){
 										if(test_fc){
 											std::pair<CharStatusId, int> newStatus = {POISONED,get<1>(effect[i])};
 											targetPlayer[p]->updateStatus(newStatus);
-											cout<<"Le joueur "<<targetPlayer[p]<<" sera empoisonne pendant "<<get<1>(effect[i])<<" tours"<<endl;
+											cout<<"Le joueur "<<targetPlayer[p]->getName()<<" sera empoisonne pendant "<<get<1>(effect[i])<<" tours"<<endl;
 										}
 									}
 								}
 								//BURN
 								if(get<0>(effect[i])==BURN_CHAR){
-									//fait passer l'Ã©tat du perso Ã  BURN
+									//fait passer l'etat du perso a BURN
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet BURN ratÃ© "<< endl;
+										cout << "Effet BURN rate "<< endl;
 									}else{
 										cout << "Joueur brulé"<< endl;
 										bool test_fc=true;
@@ -388,17 +388,17 @@ void Attack::execute (state::State& state){
 										if(test_fc){
 											std::pair<CharStatusId, int> newStatus = {BURNED,get<1>(effect[i])};
 											targetPlayer[p]->updateStatus(newStatus);
-											cout<<"Le joueur "<<targetPlayer[p]<<" sera brulé pendant "<<get<1>(effect[i])<<" tours"<<endl;
+											cout<<"Le joueur "<<targetPlayer[p]->getName()<<" sera brulé pendant "<<get<1>(effect[i])<<" tours"<<endl;
 										}
 									}
 								}
 								//FEAR
 								if(get<0>(effect[i])==FEAR_CHAR){
-									//fait passer l'Ã©tat du perso Ã  FEAR
+									//fait passer l'etat du perso a FEAR
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet FEAR ratÃ© "<< endl;
+										cout << "Effet FEAR rate "<< endl;
 									}else{
 										cout << "Joueur appeuré"<< endl;
 										bool test_fc=true;
@@ -411,17 +411,17 @@ void Attack::execute (state::State& state){
 										if(test_fc){
 											std::pair<CharStatusId, int> newStatus = {FEAR,get<1>(effect[i])};
 											targetPlayer[p]->updateStatus(newStatus);
-											cout<<"Le joueur "<<targetPlayer[p]<<" aura peur pendant "<<get<1>(effect[i])<<" tours"<<endl;
+											cout<<"Le joueur "<<targetPlayer[p]->getName()<<" aura peur pendant "<<get<1>(effect[i])<<" tours"<<endl;
 										}
 									}
 								}
 								//DAZZLE
 								if(get<0>(effect[i])==DAZZLE_CHAR){
-									//fait passer l'Ã©tat du perso Ã  DAZZLE
+									//fait passer l'etat du perso a DAZZLE
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet DAZZLE ratÃ© "<< endl;
+										cout << "Effet DAZZLE rate "<< endl;
 									}else{
 										cout << "Joueur ébloui"<< endl;
 										bool test_fc=true;
@@ -434,7 +434,7 @@ void Attack::execute (state::State& state){
 										if(test_fc){
 											std::pair<CharStatusId, int> newStatus = {DAZZLED,get<1>(effect[i])};
 											targetPlayer[p]->updateStatus(newStatus);
-											cout<<"Le joueur "<<targetPlayer[p]<<" sera ébloui pendant "<<get<1>(effect[i])<<" tours"<<endl;
+											cout<<"Le joueur "<<targetPlayer[p]->getName()<<" sera ébloui pendant "<<get<1>(effect[i])<<" tours"<<endl;
 										}
 									}
 								}
@@ -444,7 +444,7 @@ void Attack::execute (state::State& state){
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet HEAL STATUS ratÃ© "<< endl;
+										cout << "Effet HEAL STATUS rate "<< endl;
 									}else{
 										cout << "Soin status"<< endl;
 										for(size_t s=0; s<targetPlayer[p]->getStatus().size();s++){
@@ -458,12 +458,12 @@ void Attack::execute (state::State& state){
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet HEAL(M) ratÃ© "<< endl;
+										cout << "Effet HEAL(M) rate "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
 										int heal = 0.1*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
-										cout<<"Le joueur "<<targetPlayer[p]<<" est soigne de "<<heal<<" PV"<<endl;
+										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
 								//HEAL LOW
@@ -472,12 +472,12 @@ void Attack::execute (state::State& state){
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet HEAL(L) ratÃ© "<< endl;
+										cout << "Effet HEAL(L) rate "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
 										int heal = 0.05*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
-										cout<<"Le joueur "<<targetPlayer[p]<<" est soignÃ© de "<<heal<<" PV"<<endl;
+										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
 								//HEAL HIGH
@@ -486,12 +486,12 @@ void Attack::execute (state::State& state){
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet HEAL(H) ratÃ© "<< endl;
+										cout << "Effet HEAL(H) rate "<< endl;
 									}else{
 										cout << "Soin medium"<< endl;
 										int heal = 0.2*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
-										cout<<"Le joueur "<<targetPlayer[p]<<" est soignÃ© de "<<heal<<" PV"<<endl;
+										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
 								//MOVE FOE

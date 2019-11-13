@@ -75,6 +75,7 @@ int main(int argc,char* argv[])
 		/*engine : changements d'état*/
 		else if(strcmp(argv[1],"engine")==0){
 			
+			srand(time(NULL));
 			//Initialisation générale
 				//Initialisation de la grille par le moteur
 			Engine engine;
@@ -123,14 +124,10 @@ int main(int argc,char* argv[])
 				//Creation puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
 			sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
-			window.display();
+			statelayer.draw(window);
 			
 				//Suite de commandes
 				//j2
-			//state.getGrid()[13][11]->updateFieldStatus({RAIN,1});
-			state.getGrid()[13][11]->updateFieldStatus({BURNING,4});
-			std::pair<CharStatusId, int> newStatus = {BURNED,4};
-			state.getPlaying()->updateStatus(newStatus);
 			std::vector<Command*> commandList;
 			Move* move1 = new Move({11,11});
 			commandList.push_back(move1);
@@ -193,27 +190,39 @@ int main(int argc,char* argv[])
 			
 			
 			bool finCommande = false;
+			bool go = false;
 			
 			while (window.isOpen())
 			{
 				sf::Event event;
 				while (window.pollEvent(event))
 				{
-					if(event.type == sf::Event::Closed)
+					if(event.type == sf::Event::Closed){
 						window.close();
+					}
+					//Sortie de pause
+					else if(event.type==sf::Event::KeyPressed && go == false){
+						go = true;
+						cout << endl;
+					}
 				}
 				
-				sleep(1);
-				if (commandList.size() > 0){
-					engine.executeCommand(commandList[0],window);
-					commandList.erase(commandList.begin());
+				if(go){
+					sleep(1);
+					if (commandList.size() > 0){
+						engine.executeCommand(commandList[0],window);
+						go = !(commandList[0] == endactions); //Mettre en pause si fin d'action
+						commandList.erase(commandList.begin());
+					}
+					else if(finCommande == false){
+						cout << endl << "---------- Fin de commande ----------" << endl;
+						finCommande = true;
+					}
 				}
-				else if(finCommande == false){
-					cout << endl << "---------- Fin de commande ----------" << endl;
-					finCommande = true;
+				else{
+					cout << "\rAPPUYEZ SUR UNE TOUCHE POUR CONTINUER     ";
 				}
 				window.display();
-				
 			}
 		}
     cout << argv[1] << endl;

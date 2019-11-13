@@ -12,6 +12,10 @@ Engine::Engine(){
 void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 	command->execute(currentState);
 	
+	//Placement du curseur le joueur qui joue
+	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
+	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
+	
 	std::vector<state::Player*> players = currentState.getPlayers();
 	for(size_t i=0; i<players.size(); i++) {
 		if(players[i]->getHp() <= 0){
@@ -38,10 +42,7 @@ void Engine::startGame (state::State& state){
 	int chanceMist=25;
 		//Initialisation du curseur
 	currentState.initCursor();
-	currentState.getCursor()->setCursorX(rand()%currentState.getGrid()[0].size());
-	currentState.getCursor()->setCursorY(rand()%currentState.getGrid().size());
-	
-	
+
 	cout<<"Lancement du jeu"<<endl;
 	currentState.setRound(1);
 	currentState.sortPlayers();// Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
@@ -50,6 +51,10 @@ void Engine::startGame (state::State& state){
 		cout << p->getName() << " ";
 	}
 	cout << endl;
+	
+	//Placement du curseur le joueur qui joue
+	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
+	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
 	//changment aléatoire d'état du terrain
 	int nb_case_total = field_grid[1].size()*field_grid.size();

@@ -50,7 +50,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	
 	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 	
-	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[1].size(), state.getGrid().size(), tileSize);
+	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 
 	layerPlayer.loadPlayer(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 	

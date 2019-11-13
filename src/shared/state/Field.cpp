@@ -9,13 +9,13 @@ Field::Field(){
 	fieldStatus.push_back({RAIN, 0}); //1
 	fieldStatus.push_back({SNOW, 0}); //2
 	fieldStatus.push_back({MIST, 0}); //3
-	fieldStatus.push_back({MIST, 0}); //4
-	fieldStatus.push_back({MIST, 0}); //5
-	fieldStatus.push_back({MIST, 0}); //6
-	fieldStatus.push_back({MIST, 0}); //7
-	fieldStatus.push_back({MIST, 0}); //8
-	fieldStatus.push_back({MIST, 0}); //9
-	fieldStatus.push_back({MIST, 0}); //10
+	fieldStatus.push_back({BLOCKATTACK, 0}); //4
+	fieldStatus.push_back({BLOCKATTACK, 0}); //5
+	fieldStatus.push_back({BLOCKATTACK, 0}); //6
+	fieldStatus.push_back({BLOCKATTACK, 0}); //7
+	fieldStatus.push_back({BLOCKATTACK, 0}); //8
+	fieldStatus.push_back({BLOCKATTACK, 0}); //9
+	fieldStatus.push_back({BLOCKATTACK, 0}); //10
 	fieldStatus.push_back({BLOCKATTACK, 0}); //11
 	fieldStatus.push_back({BLOCKMOVE, 0}); //12
 	fieldStatus.push_back({BURNING, 0}); //13
