@@ -14,11 +14,15 @@ TileSet::TileSet(LayerId newIdLayer){
 	} else if (id==LAYERFIELDEFFECT){
 		cellWidth=20;
 		cellHeight=20;
-		imageFile="res/Map/textureeffect.png";
+		imageFile="res/Map/textureeffect2.png";
 	} else if (id==LAYERPLAYER){
 		cellWidth=24;
 		cellHeight=32;
 		imageFile="res/Char/Characters.png";
+	} else if (id==LAYERPLAYEREFFECT){
+		cellWidth=20;
+		cellHeight=20;
+		imageFile="res/Char/iconeffect.png";
 	} else if (id==LAYERCURSOR){
 		cellWidth=500;
 		cellHeight=500;

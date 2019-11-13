@@ -30,6 +30,7 @@ namespace render {
     bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int  height, int tileSize);
     bool loadFieldEffect (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     bool loadPlayer (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
+    bool loadPlayerEffect (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     bool loadCursor (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     virtual void  draw (sf::RenderTarget& target, sf::RenderStates states) const;
     sf::VertexArray getQuads ();

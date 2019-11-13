@@ -25,7 +25,10 @@ StateLayer::StateLayer(){
 
 	TileSet tilesetPlayer(LAYERPLAYER);
 	tilesets.push_back(tilesetPlayer);
-
+	
+	TileSet tilesetPlayerEffect(LAYERPLAYEREFFECT);
+	tilesets.push_back(tilesetPlayerEffect);
+	
 	TileSet tilesetCursor(LAYERCURSOR);
 	tilesets.push_back(tilesetCursor);
 /*
@@ -41,6 +44,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	Layer layerField;
 	Layer layerFieldEffect;
 	Layer layerPlayer;
+	Layer layerPlayerEffect;
 	Layer layerCursor;
 	Layer layerInfos;
 	
@@ -49,8 +53,10 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[1].size(), state.getGrid().size(), tileSize);
 
 	layerPlayer.loadPlayer(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), state.getPlayers().size(), 1, tileSize);
-
-	layerCursor.loadCursor(state, tilesets[3].getTexture(), sf::Vector2u(tilesets[3].getCellWidth(), tilesets[3].getCellHeight()), 1, 1, tileSize);
+	
+	layerPlayerEffect.loadPlayerEffect(state, tilesets[3].getTexture(), sf::Vector2u(tilesets[3].getCellWidth(), tilesets[3].getCellHeight()), state.getPlayers().size(), 1, tileSize);
+	
+	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 1, 1, tileSize);
 	
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), 1, 1);
 	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), state.getPlayers().size(), 1);
@@ -70,6 +76,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	layers.push_back(layerField);
 	layers.push_back(layerFieldEffect);
 	layers.push_back(layerPlayer);
+	layers.push_back(layerPlayerEffect);
 	layers.push_back(layerCursor);
 	//layers.push_back(move(ptr_surfInfos));
 	
