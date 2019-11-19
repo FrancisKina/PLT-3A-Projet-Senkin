@@ -28,7 +28,7 @@ namespace render {
     // Operations
   public:
     bool loadField (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int  height, int tileSize);
-    bool loadFieldEffect (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
+    bool loadFieldEffect (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize, bool isMeteo);
     bool loadPlayer (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     bool loadPlayerEffect (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);
     bool loadCursor (state::State& stateLayer, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize);

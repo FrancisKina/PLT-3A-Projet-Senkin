@@ -16,6 +16,7 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
+	//Verification joueur mort
 	std::vector<state::Player*> players = currentState.getPlayers();
 	for(size_t i=0; i<players.size(); i++) {
 		if(players[i]->getHp() <= 0){
@@ -35,11 +36,6 @@ state::State& Engine::getState(){
 }
 
 void Engine::startGame (state::State& state){
-	std::vector<std::vector<Field*>>& field_grid = state.getGrid();
-	//définition chance changement météo
-	int chanceRain=70;
-	int chanceSnow=5;
-	int chanceMist=25;
 		//Initialisation du curseur
 	currentState.initCursor();
 
@@ -57,6 +53,7 @@ void Engine::startGame (state::State& state){
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
 	//------------------------changment aléatoire d'état du terrain-----------------------
+	/*
 	bool new_case;
 	int proba_new_case= 80;
 	int chanceNewCase=rand()%100+1;
@@ -163,5 +160,43 @@ void Engine::startGame (state::State& state){
 		}
 		cout<<" sur la case ("<<cx<<","<<cy<<")."<<endl;
 	}
+	*/
+	cout << "Evenements aléatoires" << endl;
+	int nzone = rand()%3+1;
+	
+	for(int i=0; i<nzone; i++){
+		unsigned int x = rand()%state.getGrid()[0].size();
+		unsigned int y = rand()%state.getGrid().size();
+		unsigned int ntour = state.getPlayers().size() * (rand()%2+1);
+		
+		int chanceRain, chanceMist, chanceSnow, chanceBurn;
+		FieldTypeId type = state.getGrid()[y][x]->getFieldType();
+		if(type == MOUNTAIN) chanceRain=25, chanceMist=35, chanceSnow=40, chanceBurn = 0 ;
+		else if (type == SAND) chanceRain=10, chanceMist=5, chanceSnow=5, chanceBurn = 80;
+		else chanceRain=60, chanceMist=30, chanceSnow=10;
+		
+		int reffect = rand()%100+1;
+		FieldStatusId effect;
+		if(reffect<chanceRain) effect = RAIN;
+		else if(reffect<chanceRain+chanceMist) effect = MIST;
+		else if(reffect<chanceRain+chanceMist+chanceSnow) effect = SNOW;
+		else if(reffect<chanceRain+chanceMist+chanceSnow+chanceBurn) effect = BURNING;
+		
+		int proba = 100;
+		while(proba>0){
+			if (rand()%100<proba){
+				state.getGrid()[y][x]->updateFieldStatus(std::make_pair(effect, ntour));
+				x += rand()%3-1;
+				y += rand()%3-1;
+				if (x<0) x=0;
+				if (y<0) y=0;	
+				if (x>=state.getGrid()[0].size()) x=state.getGrid()[0].size()-1;
+				if (y>=state.getGrid().size()) y=state.getGrid().size()-1;	
+			}
+			proba-=5;
+		}
+	}
+	
 	cout << endl << "[ Début de round "<< currentState.getRound() <<"]" << endl;
+	cout << endl << "---------- Tour du joueur " << currentState.getPlaying()->getName() << " ----------" << endl;
 }

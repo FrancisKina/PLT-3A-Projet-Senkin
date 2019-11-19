@@ -12,10 +12,6 @@ EndActions::EndActions(){
 void EndActions::execute(state::State& state){
 	player = state.getPlaying();
 	int chanceEffet;
-	//définition chance changement météo
-	int chanceRain=70;
-	int chanceSnow=5;
-	int chanceMist=15;
 	for(size_t i=0; i<state.getPlayers().size();i++){ //Parcourir la liste des joueurs qui est triée par ordre d'action
 		
 		if(player==state.getPlayers()[i]){ //Si le joueur est bien dans la liste des joueurs
@@ -56,17 +52,16 @@ void EndActions::execute(state::State& state){
 					for(size_t s=0;s<field_status.size(); s++){
 						if(field_status[s].second>0){
 							field_changed->updateFieldStatus({field_status[s].first,field_status[s].second-1});
-							//cout << "Decrementation de la duree du status n°" << s <<" sur le terrain ("<<fx<<","<<fy<<"."<< endl;
 							field_status=field_grid[fy][fx]->getFieldStatus();//redefinir pour actualiser
 							if(field_status[0].second>0 && field_status[12].second>0){//s'il pleut et brule
 								chanceEffet=rand()%100 + 1;
 								if(chanceEffet<=50){
-									cout << "La pluie affaiblie l'incendie" << endl;
-									field_changed->updateFieldStatus({field_status[s].first,status[s].second-1});
+									cout << "La pluie affaiblit l'incendie" << endl;
+									field_changed->updateFieldStatus({field_status[12].first,status[12].second-1});
 								}
 							}
 							if(field_grid[fy][fx]->getFieldStatus()[s].second==0){
-								cout<<"Fin du status n°"<<s<<endl;
+								//cout<<"Fin du status n°"<<s<<endl;
 							}
 						}
 					}
@@ -88,7 +83,6 @@ void EndActions::execute(state::State& state){
 			FieldTypeId current_field_type = field_grid[Y][X]->getFieldType();
 			//neige
 			if(current_field_status[1].second>0){
-			//if(current_field_status[s].first==SNOW && field_status[s].second>0){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50){
 					cout << "Effet de diminution des PM raté "<< endl;
@@ -103,7 +97,7 @@ void EndActions::execute(state::State& state){
 				if(chanceEffet>=50){
 					cout << "Effet BURN rate "<< endl;
 				}else{
-					cout << "Joueur brulé"<< endl;
+					cout << "Joueur brule"<< endl;
 					bool test_fc=true;
 					for(size_t s=0; s<status.size();s++){
 						if ((status[s].first==BURNED) && (status[s].second>2)){
@@ -114,7 +108,7 @@ void EndActions::execute(state::State& state){
 					if(test_fc){
 						std::pair<CharStatusId, int> newStatus = {BURNED,2};
 						player->updateStatus(newStatus);
-						cout<<"Le joueur "<<player->getName()<<" sera brulé pendant "<<2<<" tours"<<endl;
+						cout<<"Le joueur "<<player->getName()<<" sera brule pendant "<<2<<" tours"<<endl;
 					}
 				}
 			}
@@ -125,11 +119,12 @@ void EndActions::execute(state::State& state){
 				if(chanceEffet>=50 || player->getMovement()<2){
 					cout << "Effet reduction de PM rate "<< endl;
 				}else{
-					cout << "Baisse des PM du joueur"<< endl;
+					cout << "Diminution des PM"<< endl;
 					player->setMovement(player->getMovement()-2);
 				}
-			} else if(current_field_type==SAND){
-				//desert
+			}
+			//desert
+			if(current_field_type==SAND){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50){
 					cout << "Effet baisse d'initative rate "<< endl;
@@ -144,6 +139,7 @@ void EndActions::execute(state::State& state){
 			if(i<state.getPlayers().size()-1){ 
 				state.setPlaying(state.getPlayers()[i+1]);
 				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
+				return;
 			}
 			//Fin de round
 			else{ 
@@ -157,115 +153,45 @@ void EndActions::execute(state::State& state){
 				cout << endl;
 				
 			//------------------------changment aléatoire d'état du terrain------------------------
-				bool newcase;
-				int proba_new_case= 80;
-				int chanceFirstCase=rand()%100+1;
-				if(proba_new_case>chanceFirstCase){
-					newcase=true;
-				}else{
-					newcase=false;
-				}
+				cout << "Evenements aléatoires" << endl;
+				int nzone = rand()%3+1;
 				
-				int cx,cy; //aléatoire equiprobable
-				int nb_player = state.getPlayers().size();
-				int nb_tour_max=6;
-				int nb_tour; //aléatoire de 1 à bcp decroissant
-				int status_id_test;
-				FieldStatusId status_id; //aléatoire equiprobable
-				Field* case_field;
-				std::vector<std::pair<FieldStatusId,int>> case_field_status;
-				FieldTypeId case_field_type;
-				bool meteo=true;
-				while(newcase){
-					//def cx et cy
-					cy=rand()%field_grid.size();
-					cx=rand()%field_grid[1].size();
-					//def nb_tour
-					int chanceTour =rand()%nb_tour_max*(nb_tour_max+1)+1;//de 1 a nbtourmax
-					int nb_tour_test=nb_tour_max*(nb_tour_max+1)/2;
-					for(int u=1;u<nb_tour_max;u++){
-						if(chanceTour<nb_tour_test){
-							nb_tour = u*nb_player;
-							break;
-						}else{
-							nb_tour_test=nb_tour_test+nb_tour_max*(nb_tour_max+1)/2-u*(nb_tour_max-1);
-							
-						}
-					}
+				for(int i=0; i<nzone; i++){
+					unsigned int x = rand()%state.getGrid()[0].size();
+					unsigned int y = rand()%state.getGrid().size();
+					unsigned int ntour = state.getPlayers().size() * (rand()%2+1);
 					
-					case_field = field_grid[cy][cx];
-					case_field_status = case_field->getFieldStatus();
-					case_field_type = case_field->getFieldType();
-					//calcul des probas de chaque status meteo
-					std::vector<Field*> case_field_prox ={field_grid[cy+1][cx],field_grid[cy-1][cx],field_grid[cy][cx+1],field_grid[cy][cx-1]};
-					for(int p=0;p<4;p++){
-						if((case_field_prox[p]->getFieldType()==WATER || case_field_prox[p]->getFieldType()==SWAMP || case_field_prox[p]->getFieldType()==MOUNTAIN ) && case_field_type!=MOUNTAIN){
-							chanceRain=60;
-							chanceMist=35;
-						}else if(case_field_type==MOUNTAIN){
-							chanceRain=25;
-							chanceSnow=40;
-							chanceMist=35;
-						}else if(case_field_type==SAND){
-							chanceRain=1;
-							chanceSnow=1;
-							chanceMist=5;
-						}
-					}
+					int chanceRain, chanceMist, chanceSnow, chanceBurn;
+					FieldTypeId type = state.getGrid()[y][x]->getFieldType();
+					if(type == MOUNTAIN) chanceRain=25, chanceMist=35, chanceSnow=40, chanceBurn = 0 ;
+					else if (type == SAND) chanceRain=10, chanceMist=5, chanceSnow=5, chanceBurn = 80;
+					else chanceRain=60, chanceMist=30, chanceSnow=10;
 					
-					//def status_id
-					cout<<"Il ";
-					status_id_test=rand()%100 + 1;
-					if(status_id_test<chanceRain){
-						status_id=RAIN;
-						cout<<"pleut";
-					}else if(status_id_test<chanceRain+chanceMist){
-						status_id=MIST;
-						cout<<"brume";
-					}else if(status_id_test<chanceRain+chanceMist+chanceSnow){
-						status_id=SNOW;
-						cout<<"neige";
-					}else{
-						meteo=false;
-						cout<<"ne se passe rien";
-					}
-					if(meteo){
-						//verfication status case
-						if(case_field_status[status_id].second>0){
-							//intensifie l'état
-							case_field->updateFieldStatus({status_id,nb_tour+case_field_status[status_id].second});
-							cout<<" encore plus fort pendant "<<nb_tour+case_field_status[status_id].second<<" tour(s)";
-						}else{
-							//change l'état
-							for(int m=1;m<10;m++){//m<10 => état météo
-								if(m!=status_id){
-									std::pair<FieldStatusId,int> newFieldStatus={static_cast<FieldStatusId>(m),0};
-									case_field->updateFieldStatus(newFieldStatus);
-								}
-							}
-							case_field->updateFieldStatus({status_id,nb_tour});
-							cout<<" pendant "<<nb_tour<<" tour(s)";
+					int reffect = rand()%100+1;
+					FieldStatusId effect;
+					if(reffect<chanceRain) effect = RAIN;
+					else if(reffect<chanceRain+chanceMist) effect = MIST;
+					else if(reffect<chanceRain+chanceMist+chanceSnow) effect = SNOW;
+					else if(reffect<chanceRain+chanceMist+chanceSnow+chanceBurn) effect = BURNING;
+					
+					int proba = 100;
+					while(proba>0){
+						if (rand()%100<proba){
+							state.getGrid()[y][x]->updateFieldStatus(std::make_pair(effect, ntour));
+							x += rand()%3-1;
+							y += rand()%3-1;
+							if (x<0) x=0;
+							if (y<0) y=0;	
+							if (x>=state.getGrid()[0].size()) x=state.getGrid()[0].size()-1;
+							if (y>=state.getGrid().size()) y=state.getGrid().size()-1;	
 						}
-					}else{
-						//change l'état
-						for(int m=1;m<10;m++){
-							std::pair<FieldStatusId,int> newFieldStatus={static_cast<FieldStatusId>(m),0};
-							case_field->updateFieldStatus(newFieldStatus);
-						}
-					}
-					cout<<" sur la case ("<<cx<<","<<cy<<")."<<endl;
-					int chanceNewCase=rand()%100+1;
-					if(proba_new_case>chanceNewCase){
-						newcase=true;
-					}else{
-						newcase=false;
+						proba-=5;
 					}
 				}
 				cout << endl << "[ Début de round "<< state.getRound() <<"]" << endl;
 				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
+				return;
 			}
-			
-			return;
 		}
 	}
 	cout << "Joueur non trouvé pour la fin d'action" << endl;
