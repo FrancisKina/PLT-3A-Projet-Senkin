@@ -14,7 +14,7 @@ TileSet::TileSet(LayerId newIdLayer){
 	} else if (id==LAYERFIELDEFFECT){
 		cellWidth=20;
 		cellHeight=20;
-		imageFile="res/Map/textureeffect2.png";
+		imageFile="res/Map/textureeffect.png";
 	} else if (id==LAYERPLAYER){
 		cellWidth=24;
 		cellHeight=32;
@@ -27,6 +27,10 @@ TileSet::TileSet(LayerId newIdLayer){
 		cellWidth=500;
 		cellHeight=500;
 		imageFile="res/curseur.png";
+	} else if (id==LAYERINFOS){
+		cellWidth=21;
+		cellHeight=24;
+		imageFile="res/font.png";
 	}
 	
 	textureTileset.loadFromFile(imageFile);

@@ -85,7 +85,7 @@ bool State::initGrid(std::string map_txt){
 					}
 					
 					//WATER -> BLOCKMOVE
-					else if (ligneField.back()->getFieldType() == WALL){
+					else if (ligneField.back()->getFieldType() == WATER){
 						ligneField.back()->updateFieldStatus({BLOCKMOVE, 9999});
 					}
 					
