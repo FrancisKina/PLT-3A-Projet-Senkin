@@ -53,10 +53,11 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 				}
 			}
 			else{randomAction = rand()%3;}
-			cout<<"Action selectionné :"<<randomAction<<endl;
+			cout<<"Action selectionné :";
 												
 			// 0 : Cas du deplacement
 			if (randomAction == 0){
+				cout<<" déplacement"<<endl;
 				randomDirection=rand()%4;
 				if(randomDirection==0){
 					randomPosition = {bot->getX(),bot->getY()-1};
@@ -77,42 +78,47 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			}
 			// 1 : Cas de l'attaque
 			else if (randomAction == 1){
+				cout<<" attaque"<<endl;
 				std::vector<Skill*> listeAttaques = bot-> getSkills();
 				
-				for(size_t a=listeAttaques.size()-1;a>=0;a--){
-					if(listeAttaques[a]->getCooldown()!=0){
+				for(size_t a=0;a<listeAttaques.size();a++){
+					if(listeAttaques[a]->getCooldown()==0){
 						attaquesValides.push_back(a);
 					}
 				}
 				if (attaquesValides.size() !=0){
+					cout<<"attaques valides"<<endl;
 					
 					//choix aléatoire de l'attaque parmi les attaques possibles
 					randomAttaque = attaquesValides[rand()%attaquesValides.size()];
+					cout<<"attaque selectionné :"<<listeAttaques[randomAttaque]->getName()<<endl;
 							
+					
 					//choix de la direction aléatoire
 					randomDirection=rand()%4;
 					if(randomDirection==0){
 						X=0;
 						Y=-1;
+						cout<<"Direction : Nord"<<endl;
 					}else 
 					if(randomDirection==1){
 						X=1;
 						Y=0;
+						cout<<"Direction : Est"<<endl;
 					}else 
 					if(randomDirection==2){
 						X=0;
 						Y=1;
+						cout<<"Direction : Sud"<<endl;
 					}else 
 					if(randomDirection==3){
 						X=-1;
 						Y=0;
+						cout<<"Direction : Ouest"<<endl;
 					}
 					//choix de la case attaqué (range) aléatoire
-					if(listeAttaques[randomAttaque]->getRange().first==listeAttaques[randomAttaque]->getRange().second){
-						range=listeAttaques[randomAttaque]->getRange().first;
-					}else{
-						range=rand()%listeAttaques[randomAttaque]->getRange().second+1 -listeAttaques[randomAttaque]->getRange().first;
-					}
+					range=rand()%(listeAttaques[randomAttaque]->getRange().second -listeAttaques[randomAttaque]->getRange().first+1)+listeAttaques[randomAttaque]->getRange().first;
+					
 					randomPosition={bot->getX()+X*range,bot->getY()+Y*range};
 					
 					// Commande d'attaque
@@ -130,6 +136,7 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			
 			// 2 : Cas de fin d'actions
 			else if (randomAction == 2){
+				cout<<" fin de tour"<<endl;
 				EndActions* endactions = new EndActions();
 				engine.executeCommand(endactions, window);
 				actionPossible=false;

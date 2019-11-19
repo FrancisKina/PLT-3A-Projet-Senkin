@@ -268,7 +268,6 @@ int main(int argc,char* argv[])
 			statelayer.draw(window);
 			
 			RandomIA ai;
-			ai.run(engine,window);
 			
 			while (window.isOpen())
 			{
@@ -279,6 +278,7 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 				}
+					ai.run(engine,window);
 				window.display();
 			}
 		}
