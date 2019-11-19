@@ -38,7 +38,7 @@ bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vect
 		return true;				
 }
 
-bool Layer::loadFieldEffect(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
+bool Layer::loadFieldEffect(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize, bool isMeteo){
 	
 		texture = textureTileset;
 		
@@ -58,7 +58,11 @@ bool Layer::loadFieldEffect(state::State& state, sf::Texture& textureTileset, sf
 				quad[3].position = sf::Vector2f(tileSize * j, tileSize * (i + 1));
 				
 				//Position de la texture
-				for(size_t k=0; k<state.getGrid()[i][j]->getFieldStatus().size(); k++){
+				unsigned int effectbegin, effectend;
+				if(isMeteo) effectbegin = 0, effectend = 10;
+				else effectbegin = 10, effectend = state.getGrid()[i][j]->getFieldStatus().size(); 
+				
+				for(size_t k=effectbegin; k<effectend; k++){
 					std::pair<FieldStatusId, int> status = state.getGrid()[i][j]->getFieldStatus()[k];
 					if(status.second > 0){
 						quad[0].texCoords = sf::Vector2f(textSize.x * (status.first - 1), 0);

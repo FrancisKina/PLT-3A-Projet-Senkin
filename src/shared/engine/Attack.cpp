@@ -461,7 +461,7 @@ void Attack::execute (state::State& state){
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(M) rate "<< endl;
 									}else{
-										cout << "Soin medium"<< endl;
+										cout << "Soin moyen"<< endl;
 										int heal = 0.1*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
@@ -475,21 +475,21 @@ void Attack::execute (state::State& state){
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(L) rate "<< endl;
 									}else{
-										cout << "Soin medium"<< endl;
+										cout << "Soin faible"<< endl;
 										int heal = 0.05*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
 								//HEAL HIGH
-								if(get<0>(effect[i])==HEAL_MEDIUM){
+								if(get<0>(effect[i])==HEAL_HIGH){
 									//soigne les PV
 									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(H) rate "<< endl;
 									}else{
-										cout << "Soin medium"<< endl;
+										cout << "Soin fort"<< endl;
 										int heal = 0.2*target_HP[p];
 										targetPlayer[p]->setHp(target_HP[p]+heal);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
