@@ -259,8 +259,10 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
+			int SIZE = 30;	
+				
 			StateLayer statelayer;
-			statelayer.initLayers(state, 35);
+			statelayer.initLayers(state, SIZE);
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;

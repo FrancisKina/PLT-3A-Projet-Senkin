@@ -301,7 +301,7 @@ void Attack::execute (state::State& state){
 								}
 								if(test_burn){
 									//v_caseField[f]->updateStatus(BURNING,get<1>(effect[i]));
-									cout<<"La case "<<v_caseField[f]->getFieldType()<<" brulera pendant "<<get<1>(effect[i])<<" tours"<<endl;
+									//cout<<"La case "<<v_caseField[f]->getFieldType()<<" brulera pendant "<<get<1>(effect[i])<<" tours"<<endl;
 								}
 							}
 						}

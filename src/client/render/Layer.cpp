@@ -103,7 +103,7 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				quad[3].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
 		}
 		
-		//Affichage du joueur dans la partie info
+		//INFOS
 		sf::Vertex* quad = &quads[width * height * 4];
 		
 		//Position des 4 coins du quad (x, y)
@@ -128,14 +128,14 @@ bool Layer::loadPlayerEffect(state::State& state, sf::Texture& textureTileset, s
 		
       	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
 	   	quads.setPrimitiveType(sf::Quads);
-       	quads.resize(width * height * 4 * state.getPlayers()[0]->getStatus().size());
+       	quads.resize((width * height + 1) * 4 * state.getPlayers()[0]->getStatus().size()); // +1 -> Affichage en infos
        	
         // on remplit le tableau de vertex, avec un quad par tuile
         for (size_t i = 0; i < width; i++){
-				int it = i * 4 * state.getPlayers()[0]->getStatus().size();
+				int it = i * 4 * state.getPlayers()[0]->getStatus().size(); //Décalage vers le ième joueur
 				int neffect = 0;
 				
-				//Position de la texture
+				
 				for(size_t k=0; k<state.getPlayers()[i]->getStatus().size(); k++){
 					sf::Vertex* quad = &quads[it + k * 4];
 					std::pair<CharStatusId, int> status = state.getPlayers()[i]->getStatus()[k];
@@ -146,6 +146,7 @@ bool Layer::loadPlayerEffect(state::State& state, sf::Texture& textureTileset, s
 					quad[2].position = sf::Vector2f(tileSize * (state.getPlayers()[i]->getX() + 1), tileSize * (state.getPlayers()[i]->getY() + 1) - 14*tileSize/20 + 6*tileSize/20 * neffect); //Bas droite
 					quad[3].position = sf::Vector2f(tileSize * state.getPlayers()[i]->getX() + 14*tileSize/20, tileSize * (state.getPlayers()[i]->getY() + 1) - 14*tileSize/20 + 6*tileSize/20 * neffect); //Bas gauche
 					
+					//Position de la texture
 					if(status.second > 0){
 						quad[0].texCoords = sf::Vector2f(textSize.x * (status.first - 1), 0);
 						quad[1].texCoords = sf::Vector2f(textSize.x * status.first, 0);
@@ -154,6 +155,29 @@ bool Layer::loadPlayerEffect(state::State& state, sf::Texture& textureTileset, s
 						neffect++;
 					}
 				}
+		}
+		
+		//INFOS
+		int it = width * 4 * state.getPlaying()->getStatus().size();
+		int neffect = 0;
+		for(size_t k=0; k<state.getPlaying()->getStatus().size(); k++){
+			sf::Vertex* quad = &quads[it + k * 4];
+			std::pair<CharStatusId, int> status = state.getPlaying()->getStatus()[k];
+			
+			//Position des 4 coins du quad (x, y)
+			quad[0].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + 4.5) + 3*14*tileSize/20, tileSize + 3*6*tileSize/20 * neffect); //Haut gauche
+			quad[1].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + 7.5), tileSize + 3*6*tileSize/20 * neffect); //Haut droite
+			quad[2].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + 7.5), tileSize * 4 - 3*14*tileSize/20 + 3*6*tileSize/20 * neffect); //Bas droite
+			quad[3].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + 4.5) + 3*14*tileSize/20, tileSize * 4 - 3*14*tileSize/20 + 3*6*tileSize/20 * neffect); //Bas gauche
+			
+			//Position de la texture
+			if(status.second > 0){
+				quad[0].texCoords = sf::Vector2f(textSize.x * (status.first - 1), 0);
+				quad[1].texCoords = sf::Vector2f(textSize.x * status.first, 0);
+				quad[2].texCoords = sf::Vector2f(textSize.x * status.first, textSize.y);
+				quad[3].texCoords = sf::Vector2f(textSize.x * (status.first - 1), textSize.y);
+				neffect++;
+			}
 		}
 
 		return true;
@@ -198,6 +222,11 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 		infos[12] += state.getPlaying()->getSkills()[0]->getName();
 		infos[14] += state.getPlaying()->getSkills()[1]->getName();
 		
+		infos[18] += "TERRAIN";
+		std::vector<std::string> fieldName = {"","PLAINE","ROUTE","FORET","MONTAGNE","EAU","SABLE","VILLE","MARECAGE","MUR"};
+		infos[20] += fieldName[state.getGrid()[state.getCursor()->getCursorY()][state.getCursor()->getCursorX()]->getFieldType()];
+		
+		//Nombre de caracteres a afficher
 		unsigned int quadsize = 0;
 		for(std::string info : infos){
 			quadsize+=info.size();
