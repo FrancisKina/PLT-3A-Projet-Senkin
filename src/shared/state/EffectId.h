@@ -17,7 +17,8 @@ namespace state {
     MOVE_USER     = 10,
     MOVE_FOE     = 11,
     BOOST_ATK_RAIN     = 12,
-    HEAL_STATUS     = 13
+    HEAL_STATUS     = 13,
+    POISON_FIELD     = 14
   };
 
 };
