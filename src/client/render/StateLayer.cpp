@@ -14,7 +14,7 @@ using namespace std;
 using namespace state;
 using namespace sf;
 
-/*Creation de la liste contenant chaque type de tuile avec la texture associée : [0] Field, [1] Players*/
+/*Creation de la liste contenant chaque type de tuile avec la texture associée*/
 StateLayer::StateLayer(){
 	
 	TileSet tilesetField(LAYERFIELD);
@@ -38,7 +38,9 @@ StateLayer::StateLayer(){
 }
 
 /*Creation de la liste contenant tous les layers texturées*/
-void StateLayer::initLayers(state::State& state, int tileSize){	
+void StateLayer::initLayers(state::State& state, int newTileSize){
+	tileSize = newTileSize;
+	
 	Layer layerField;
 	Layer layerFieldEffect;
 	Layer layerPlayer;
@@ -122,7 +124,7 @@ void StateLayer::displayLayers(state::State& state){
 }
 
 void StateLayer::stateChanged (state::State& state, sf::RenderWindow& window){
-	initLayers(state,35);
+	initLayers(state,tileSize);
 	draw(window);
 }
 

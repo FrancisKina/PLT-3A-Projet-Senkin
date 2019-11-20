@@ -28,6 +28,7 @@ namespace render {
   protected:
     std::vector<TileSet> tilesets;
     std::vector<Layer> layers;
+    int tileSize;
     // Operations
   public:
     StateLayer ();
@@ -41,6 +42,8 @@ namespace render {
     // Setters and Getters
     void setTilesets(const std::vector<TileSet>& tilesets);
     void setLayers(const std::vector<Layer>& layers);
+    int getTileSize() const;
+    void setTileSize(int tileSize);
   };
 
 };
