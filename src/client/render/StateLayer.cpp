@@ -31,11 +31,9 @@ StateLayer::StateLayer(){
 	
 	TileSet tilesetCursor(LAYERCURSOR);
 	tilesets.push_back(tilesetCursor);
-/*
-	TileSet tilesetInfos(INFOSTILESET);
-	std::unique_ptr<TileSet> ptr_tilesetInfos (new TileSet(tilesetInfos));
-	tilesets.push_back(move(ptr_tilesetInfos));
-*/	
+
+	TileSet tilesetInfos(LAYERINFOS);
+	tilesets.push_back(tilesetInfos);
 	
 }
 
@@ -61,8 +59,8 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	
 	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 1, 1, tileSize);
 	
-	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), 1, 1);
-	//surfInfos.loadInfos(state, tilesets[3]->getTexture(), sf::Vector2u(tilesets[3]->getCellWidth(), tilesets[3]->getCellHeight()), state.getPlayers().size(), 1);
+	layerInfos.loadInfos(state, tilesets[5].getTexture(), sf::Vector2u(tilesets[5].getCellWidth(), tilesets[5].getCellHeight()), 1, 1, tileSize);
+
 	
 	//std::unique_ptr<Layer> ptr_surfField (new Layer(surfField));
 	//std::unique_ptr<Layer> ptr_surfPersonnage (new Layer(surfPersonnage));
@@ -82,7 +80,7 @@ void StateLayer::initLayers(state::State& state, int tileSize){
 	layers.push_back(layerPlayerEffect);
 	layers.push_back(layerFieldMeteo);
 	layers.push_back(layerCursor);
-	//layers.push_back(move(ptr_surfInfos));
+	layers.push_back(layerInfos);
 	
 }
 

@@ -44,6 +44,11 @@ void Move::execute (state::State& state){
 		return;
 	}
 
+	//Direction du joueur
+	if (dx-x<0) player->setDirection(WEST);
+	else if (dx-x>0) player->setDirection(EAST);
+	else if (dy-y<0) player->setDirection(NORTH);
+	else if (dy-y>0) player->setDirection(SOUTH);
 	
 	//Deplacement du joueur
 	cout << player->getName() << " se deplace de (" << x << "," << y << ") a (" << dx << "," << dy << ") : " << distance << " PM utilises, ";

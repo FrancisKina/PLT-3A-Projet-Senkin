@@ -16,7 +16,8 @@ namespace render {
     LAYERPLAYER     = 2,
     LAYERCURSOR     = 3,
     LAYERFIELDEFFECT     = 4,
-    LAYERPLAYEREFFECT     = 5
+    LAYERPLAYEREFFECT     = 5,
+    LAYERINFOS     = 6
   };
 
 };

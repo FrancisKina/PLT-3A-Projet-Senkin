@@ -268,7 +268,7 @@ int main(int argc,char* argv[])
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
+			sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
 			statelayer.draw(window);
 			
 			RandomIA ai;
@@ -282,7 +282,7 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 				}
-					ai.run(engine,window);
+				ai.run(engine,window);
 				window.display();
 			}
 		}
