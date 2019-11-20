@@ -110,7 +110,7 @@ void Attack::execute (state::State& state){
 				}
 				//faire condition distance gravite
 				if (casePlayer->getFieldStatus()[i].first==GRAVITY && casePlayer->getFieldStatus()[i].second!=0){
-					if(attack->getRange().first==0 && attack->getRange().second==0 && !skill_special){
+					if(range_first==0 && range_second==0 && !skill_special){
 						skill_damage=skill_damage*1.5;
 						cout<<"La gravite augemente les degats de l'attaque au corps a corps (attaquant)."<<endl;
 					}
@@ -127,18 +127,17 @@ void Attack::execute (state::State& state){
 			}
 			//type
 			if (caseCible->getFieldType()==MOUNTAIN){
-				if(attack->getRange().first==0 && attack->getRange().second==0&& !skill_special){
+				if(range_first==0 && range_second==0&& !skill_special){
 					skill_precision=skill_precision*0.85;
 					cout<<"La montagne baisse la precision de l'attaque au corps a corps (case cible)."<<endl;
 				}
 			}else if (caseCible->getFieldType()==FOREST){
-				if((attack->getRange().first==0 || attack->getRange().second==0)){
+				if((range_first==0 || range_second==0)){
 					skill_precision=skill_precision*0.85;
 					cout<<"La foret baisse la precision de l'attaque a distance (case cible)."<<endl;
 				}
 			}
 			//attaque (terrain de l'attaque XOR terrain cible)
-			//todo modifier pour avoir une precision par perso
 			for(size_t p=0;p<targetPlayer.size();p++){
 				caseTarget = state.getGrid()[targetPlayer[p]->getY()][targetPlayer[p]->getX()];
 				if (caseTarget!=caseCible){
@@ -150,12 +149,12 @@ void Attack::execute (state::State& state){
 						}
 					}
 					if (caseTarget->getFieldType()==MOUNTAIN){
-						if(attack->getRange().first==0 && attack->getRange().second==0&& !skill_special){
+						if(range_first==0 && range_second==0&& !skill_special){
 							target_Dodge[p]=target_Dodge[p]*0.85;
 							cout<<"La montagne baisse la precision de l'attaque au corps a corps sur l'attaque n°"<<p<<"."<<endl;
 						}
 					}else if (caseTarget->getFieldType()==FOREST){
-						if((attack->getRange().first==0 || attack->getRange().second==0)){
+						if((range_first==0 || range_second==0)){
 							target_Dodge[p]=target_Dodge[p]*0.85;
 							cout<<"La foret baisse la precision de l'attaque a distance sur l'attaque n°"<<p<<"."<<endl;
 						}
@@ -319,6 +318,28 @@ void Attack::execute (state::State& state){
 							}
 						}
 					}
+					if(get<0>(effect[i])==POISON_FIELD){
+						//Fait passer l'etat du terrain a POISON
+						srand(time(NULL));
+						chanceEffet=rand()%100 + 1;
+						if(chanceEffet<=get<2>(effect[i])){
+							cout << "Effet POISON_FIELD rate "<< endl;
+						}else{
+							cout << "Terrain(s) incendie"<< endl;
+							bool test_poison=true;
+							for(size_t f=0;f<v_caseField.size();f++){
+								for(size_t s=0; s<v_caseField[f]->getFieldStatus().size();s++){
+									if (v_caseField[f]->getFieldStatus()[s].first==POISON && v_caseField[f]->getFieldStatus()[s].second>get<1>(effect[i])){
+										test_poison=false;
+										break;
+									}
+								}
+								if(test_poison){
+									cout<<"La case "<<v_caseField[f]->getFieldType()<<" empoisonnera pendant "<<get<1>(effect[i])<<" tours"<<endl;
+								}
+							}
+						}
+					}
 				}
 			//------------------------effet sur le lanceur-------------------------------
 				for(size_t i=0; i<effect.size();i++){
@@ -476,7 +497,10 @@ void Attack::execute (state::State& state){
 									}else{
 										cout << "Soin moyen"<< endl;
 										int heal = 0.1*target_HP[p];
-										targetPlayer[p]->setHp(target_HP[p]+heal);
+										if(target_HP[p]+heal>targetPlayer[p]->getCharacter()->getHpBase()){
+											heal = targetPlayer[p]->getCharacter()->getHpBase()-target_HP[p];
+										}
+										targetPlayer[p]->setHp(heal+target_HP[p]);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
@@ -490,6 +514,9 @@ void Attack::execute (state::State& state){
 									}else{
 										cout << "Soin faible"<< endl;
 										int heal = 0.05*target_HP[p];
+										if(target_HP[p]+heal>targetPlayer[p]->getCharacter()->getHpBase()){
+											heal = targetPlayer[p]->getCharacter()->getHpBase()-target_HP[p];
+										}
 										targetPlayer[p]->setHp(target_HP[p]+heal);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
@@ -504,6 +531,9 @@ void Attack::execute (state::State& state){
 									}else{
 										cout << "Soin fort"<< endl;
 										int heal = 0.2*target_HP[p];
+										if(target_HP[p]+heal>targetPlayer[p]->getCharacter()->getHpBase()){
+											heal = targetPlayer[p]->getCharacter()->getHpBase()-target_HP[p];
+										}
 										targetPlayer[p]->setHp(target_HP[p]+heal);
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
