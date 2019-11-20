@@ -18,7 +18,7 @@ Move::Move(std::pair<int,int> newDestination){
 void Move::execute (state::State& state){
 	player = state.getPlaying();
 	
-	cout << endl;
+	cout << endl << "| Deplacement |" << endl;
 	
 	int x = player->getX(), y = player->getY();
 	int dx = destination.first, dy = destination.second;

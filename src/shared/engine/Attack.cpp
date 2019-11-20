@@ -63,7 +63,7 @@ void Attack::execute (state::State& state){
 				if(attack->getRange().first>1){
 					range_first = attack->getRange().first-1;
 				}
-				//attack->setRange({first,second});
+				attack->setRange({range_first,range_second});
 				cout<<"La gravité diminue la porté de l'attaque."<<endl;
 			}
 		}
@@ -508,6 +508,12 @@ void Attack::execute (state::State& state){
 										cout<<"Le joueur "<<targetPlayer[p]->getName()<<" est soigne de "<<heal<<" PV"<<endl;
 									}
 								}
+								
+								//Limite de vie maximale pour le soin
+								if (targetPlayer[p]->getHp() > targetPlayer[p]->getCharacter()->getHpBase()){
+									targetPlayer[p]->setHp(targetPlayer[p]->getCharacter()->getHpBase());
+								}
+								
 								//MOVE FOE
 								if(get<0>(effect[i])==MOVE_USER){
 									//deplace la cible

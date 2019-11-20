@@ -29,8 +29,9 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			
 			
 		while ((bot->getHp() > 0) && actionPossible){
+			sleep(1);
 			if(premierEssai == true){
-				cout<< "\t\t-> Début du tour du CPU " << bot->getName() << " <-" << endl;
+				cout<< "\t [Controle par le CPU] " << endl;
 				premierEssai = false;
 			}
 			
@@ -53,11 +54,11 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 				}
 			}
 			else{randomAction = rand()%3;}
-			cout<<"Action selectionné :";
+			//cout<<"Action selectionné :";
 												
 			// 0 : Cas du deplacement
 			if (randomAction == 0){
-				cout<<" déplacement"<<endl;
+				//cout<<" déplacement"<<endl;
 				randomDirection=rand()%4;
 				if(randomDirection==0){
 					randomPosition = {bot->getX(),bot->getY()-1};
@@ -73,25 +74,24 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 				}
 				Move* move = new Move(randomPosition);
 				engine.executeCommand(move, window);
-				sleep(1);
 				
 			}
 			// 1 : Cas de l'attaque
 			else if (randomAction == 1){
-				cout<<" attaque"<<endl;
+				//cout<<" attaque"<<endl;
 				std::vector<Skill*> listeAttaques = bot-> getSkills();
 				
 				for(size_t a=0;a<listeAttaques.size();a++){
-					if(listeAttaques[a]->getCooldown()==0){
+					if(listeAttaques[a]->getCooldown()<=0){
 						attaquesValides.push_back(a);
 					}
 				}
 				if (attaquesValides.size() !=0){
-					cout<<"attaques valides"<<endl;
+					//cout<<"attaques valides"<<endl;
 					
 					//choix aléatoire de l'attaque parmi les attaques possibles
 					randomAttaque = attaquesValides[rand()%attaquesValides.size()];
-					cout<<"attaque selectionné :"<<listeAttaques[randomAttaque]->getName()<<endl;
+					//cout<<"attaque selectionné :"<<listeAttaques[randomAttaque]->getName()<<endl;
 							
 					
 					//choix de la direction aléatoire
@@ -99,22 +99,22 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 					if(randomDirection==0){
 						X=0;
 						Y=-1;
-						cout<<"Direction : Nord"<<endl;
+						//cout<<"Direction : Nord"<<endl;
 					}else 
 					if(randomDirection==1){
 						X=1;
 						Y=0;
-						cout<<"Direction : Est"<<endl;
+						//cout<<"Direction : Est"<<endl;
 					}else 
 					if(randomDirection==2){
 						X=0;
 						Y=1;
-						cout<<"Direction : Sud"<<endl;
+						//cout<<"Direction : Sud"<<endl;
 					}else 
 					if(randomDirection==3){
 						X=-1;
 						Y=0;
-						cout<<"Direction : Ouest"<<endl;
+						//cout<<"Direction : Ouest"<<endl;
 					}
 					//choix de la case attaqué (range) aléatoire
 					range=rand()%(listeAttaques[randomAttaque]->getRange().second -listeAttaques[randomAttaque]->getRange().first+1)+listeAttaques[randomAttaque]->getRange().first;
@@ -126,7 +126,6 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 					Attack* attack = new Attack(randomPosition , randomAttaque);
 					engine.executeCommand(attack, window);
 					
-					sleep(1);
 					
 				}else{
 					cout<<"Le CPU n'a pas d'attaque possible"<<endl;
@@ -136,11 +135,10 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			
 			// 2 : Cas de fin d'actions
 			else if (randomAction == 2){
-				cout<<" fin de tour"<<endl;
+				//cout<<" fin de tour"<<endl;
 				EndActions* endactions = new EndActions();
 				engine.executeCommand(endactions, window);
 				actionPossible=false;
-				sleep(1);
 				return 0;
 			}
 		}	
@@ -149,6 +147,6 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 		if(actionPossible == false){
 			cout<< "\t\t-> Action impossible pour le  CPU " << bot->getName() << " <-" << endl;
 		}	
-
 	}
+	return 0;
 }

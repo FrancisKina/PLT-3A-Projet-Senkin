@@ -74,6 +74,11 @@ void EndActions::execute(state::State& state){
 			cout << "Reinitialisation des PA du joueur" << endl;
 			player->setInitiative(player->getCharacter()->getInitiativeBase());
 			
+			//Baisse du cooldown des skills
+			for(Skill* skill : player->getSkills()){
+				skill->setCooldown(skill->getCooldown()-1);
+			}
+			
 			//Application des effets du terrain
 			int X = player->getX();
 			int Y = player->getY();
@@ -91,7 +96,7 @@ void EndActions::execute(state::State& state){
 					player->setMovement(player->getMovement()-1);
 				}
 			}
-			//incendie
+			//Incendie
 			if(field_status[12].second>0){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50){
@@ -113,7 +118,7 @@ void EndActions::execute(state::State& state){
 				}
 			}
 			
-			//marécage
+			//Marecage
 			if(current_field_type==SWAMP){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50 || player->getMovement()<2){
@@ -123,7 +128,7 @@ void EndActions::execute(state::State& state){
 					player->setMovement(player->getMovement()-2);
 				}
 			}
-			//desert
+			//Desert
 			if(current_field_type==SAND){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50){
@@ -152,7 +157,7 @@ void EndActions::execute(state::State& state){
 				}
 				cout << endl;
 				
-			//------------------------changment aléatoire d'état du terrain------------------------
+			//------------------------Changement aléatoire d'etat du terrain------------------------
 				cout << "Evenements aléatoires" << endl;
 				int nzone = rand()%3+1;
 				
