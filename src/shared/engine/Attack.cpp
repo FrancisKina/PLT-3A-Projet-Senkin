@@ -27,7 +27,6 @@ void Attack::execute (state::State& state){
 	
 	cout << endl << "| Lancement d'une attaque |" << endl;
 	
-	//TODO range f(gravity)
 	if (attacker->getHp()>0 && attack->getCooldown()<=0 && attacker->getSkillCount() > 0){
 		cout << attacker->getName() << " tente d'utiliser " << attack->getName() << endl;
 		int X = attacker->getX();
@@ -53,6 +52,20 @@ void Attack::execute (state::State& state){
 
 		for(size_t i=0;i<v_casePos.size();i++){
 			v_caseField.push_back(state.getGrid()[v_casePos[i].second][v_casePos[i].first]);
+		}
+		
+		//effet gravité
+		int range_first=attack->getRange().first;
+		int range_second=attack->getRange().second;
+		if(!attack->getSpecial() && attack->getRange().second>1){
+			if (casePlayer->getFieldStatus()[14].second>0){
+				range_second = attack->getRange().second-1;
+				if(attack->getRange().first>1){
+					range_first = attack->getRange().first-1;
+				}
+				//attack->setRange({first,second});
+				cout<<"La gravité diminue la porté de l'attaque."<<endl;
+			}
 		}
 		
 		//VPT effet attaque passe-muraille (attaque_possible = true)

@@ -109,6 +109,9 @@ int main(int argc,char* argv[])
 			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
 			
+			//test gravité
+			state.getGrid()[12][11]->updateFieldStatus({GRAVITY,999});
+			
 			engine.startGame(state);
 			/*
 			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
@@ -127,6 +130,7 @@ int main(int argc,char* argv[])
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
 			sf::RenderWindow window(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
 			statelayer.draw(window);
+			
 			
 				//Suite de commandes
 				//j2
