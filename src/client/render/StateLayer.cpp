@@ -48,16 +48,19 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 	Layer layerFieldMeteo;
 	Layer layerCursor;
 	Layer layerInfos;
+	Layer layerBuilding;
 	
 	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 	
-	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, false);
+	layerFieldEffect.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, 0);
 
 	layerPlayer.loadPlayer(state, tilesets[2].getTexture(), sf::Vector2u(tilesets[2].getCellWidth(), tilesets[2].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 	
 	layerPlayerEffect.loadPlayerEffect(state, tilesets[3].getTexture(), sf::Vector2u(tilesets[3].getCellWidth(), tilesets[3].getCellHeight()), state.getPlayers().size(), 1, tileSize);
 	
-	layerFieldMeteo.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, true);
+	layerBuilding.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, 2);
+	
+	layerFieldMeteo.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, 1);
 	
 	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 1, 1, tileSize);
 	
@@ -80,6 +83,7 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 	layers.push_back(layerFieldEffect);
 	layers.push_back(layerPlayer);
 	layers.push_back(layerPlayerEffect);
+	layers.push_back(layerBuilding);
 	layers.push_back(layerFieldMeteo);
 	layers.push_back(layerCursor);
 	layers.push_back(layerInfos);

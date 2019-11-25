@@ -13,7 +13,10 @@ namespace state {
     BLOCKMOVE     = 12,
     BURNING     = 13,
     POISON     = 14,
-    GRAVITY     = 15
+    GRAVITY     = 15,
+    FORT     = 16,
+    TENT     = 17,
+    TOWER     = 18
   };
 
 };
