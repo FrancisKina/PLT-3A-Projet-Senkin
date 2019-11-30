@@ -21,6 +21,9 @@ Field::Field(){
 	fieldStatus.push_back({BURNING, 0}); //13
 	fieldStatus.push_back({POISON, 0}); //14
 	fieldStatus.push_back({GRAVITY, 0});//15
+	fieldStatus.push_back({FORT, 0});//16
+	fieldStatus.push_back({TENT, 0});//17
+	fieldStatus.push_back({TOWER, 0});//18
 }
 
 FieldTypeId Field::getFieldType(){

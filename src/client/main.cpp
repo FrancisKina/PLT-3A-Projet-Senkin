@@ -263,7 +263,11 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			int SIZE = 30;	
+			int SIZE = 35;	
+			
+			state.getGrid()[12][11]->updateFieldStatus({TOWER,999});
+			state.getGrid()[12][13]->updateFieldStatus({TENT,999});
+			state.getGrid()[12][15]->updateFieldStatus({FORT,999});
 				
 			StateLayer statelayer;
 			statelayer.initLayers(state, SIZE);
@@ -274,6 +278,7 @@ int main(int argc,char* argv[])
 			statelayer.draw(window);
 			
 			RandomIA ai;
+			
 			
 			while (window.isOpen())
 			{

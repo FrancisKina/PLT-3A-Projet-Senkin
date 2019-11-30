@@ -78,6 +78,7 @@ bool State::initGrid(std::string map_txt){
 						ligneField.back()->updateFieldStatus({BURNING, 999});
 					}
 					*/
+					
 					//WALL -> BLOCKMOVE + BLOCKATTACK
 					else if (ligneField.back()->getFieldType() == WALL){
 						ligneField.back()->updateFieldStatus({BLOCKMOVE, 9999});

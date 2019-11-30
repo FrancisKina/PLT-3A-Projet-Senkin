@@ -22,7 +22,7 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 		if(players[i]->getHp() <= 0){
 			players[i]->setX(-1);
 			players[i]->setY(-1);
-			cout << endl << players[i]->getName() <<  " est mort." << endl;
+			//cout << endl << players[i]->getName() <<  " est mort." << endl;
 			players.erase(players.begin()+i);
 		}
 	}

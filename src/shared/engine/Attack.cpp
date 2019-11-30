@@ -297,22 +297,14 @@ void Attack::execute (state::State& state){
 				for(size_t i=0; i<effect.size();i++){
 					if(get<0>(effect[i])==BURN_FIELD){
 						//Fait passer l'etat du terrain a BURNING
-						srand(time(NULL));
 						chanceEffet=rand()%100 + 1;
-						if(chanceEffet<=get<2>(effect[i])){
-							cout << "Effet BURN_FIELD rate "<< endl;
+						if(chanceEffet>=get<2>(effect[i])){
+							cout << "Effet BURN FIELD rate "<<endl;
 						}else{
-							cout << "Terrain(s) incendie"<< endl;
-							bool test_burn=true;
+							cout << "Terrain incendie"<< endl;
 							for(size_t f=0;f<v_caseField.size();f++){
-								for(size_t s=0; s<v_caseField[f]->getFieldStatus().size();s++){
-									if (v_caseField[f]->getFieldStatus()[s].first==BURNING && v_caseField[f]->getFieldStatus()[s].second>get<1>(effect[i])){
-										test_burn=false;
-										break;
-									}
-								}
-								if(test_burn){
-									//v_caseField[f]->updateStatus(BURNING,get<1>(effect[i]));
+								if (v_caseField[f]->getFieldStatus()[12].second < get<1>(effect[i])){
+									v_caseField[f]->updateFieldStatus({BURNING,get<1>(effect[i])});
 									//cout<<"La case "<<v_caseField[f]->getFieldType()<<" brulera pendant "<<get<1>(effect[i])<<" tours"<<endl;
 								}
 							}
@@ -320,22 +312,15 @@ void Attack::execute (state::State& state){
 					}
 					if(get<0>(effect[i])==POISON_FIELD){
 						//Fait passer l'etat du terrain a POISON
-						srand(time(NULL));
 						chanceEffet=rand()%100 + 1;
-						if(chanceEffet<=get<2>(effect[i])){
+						if(chanceEffet>=get<2>(effect[i])){
 							cout << "Effet POISON_FIELD rate "<< endl;
 						}else{
-							cout << "Terrain(s) incendie"<< endl;
-							bool test_poison=true;
+							cout << "Terrain empoisonne"<< endl;
 							for(size_t f=0;f<v_caseField.size();f++){
-								for(size_t s=0; s<v_caseField[f]->getFieldStatus().size();s++){
-									if (v_caseField[f]->getFieldStatus()[s].first==POISON && v_caseField[f]->getFieldStatus()[s].second>get<1>(effect[i])){
-										test_poison=false;
-										break;
-									}
-								}
-								if(test_poison){
-									cout<<"La case "<<v_caseField[f]->getFieldType()<<" empoisonnera pendant "<<get<1>(effect[i])<<" tours"<<endl;
+								if (v_caseField[f]->getFieldStatus()[13].second < get<1>(effect[i])){
+									v_caseField[f]->updateFieldStatus({POISON,get<1>(effect[i])});
+									//cout<<"La case "<<v_caseField[f]->getFieldType()<<" brulera pendant "<<get<1>(effect[i])<<" tours"<<endl;
 								}
 							}
 						}
@@ -362,7 +347,6 @@ void Attack::execute (state::State& state){
 						bool touche = true;						
 						Field *caseTarget = state.getGrid()[targetPlayer[p]->getY()][targetPlayer[p]->getX()];
 						if (caseTarget!=caseCible){
-							srand(time(NULL));
 							chanceEsquive=rand()%100 + 1;
 							int esquive= skill_precision*target_Dodge[p];
 							if(chanceEsquive<=esquive){
@@ -384,7 +368,6 @@ void Attack::execute (state::State& state){
 								//POISON
 								if(get<0>(effect[i])==POISON_CHAR){
 									//fait passer l'etat du perso a POISON
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet<=get<2>(effect[i])){
 										cout << "Effet POISON rate "<< endl;
@@ -407,10 +390,9 @@ void Attack::execute (state::State& state){
 								//BURN
 								if(get<0>(effect[i])==BURN_CHAR){
 									//fait passer l'etat du perso a BURN
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
-										cout << "Effet BURN rate "<< endl;
+										cout << "Effet BURN rate"<< endl;
 									}else{
 										cout << "Joueur brulé"<< endl;
 										bool test_fc=true;
@@ -430,7 +412,6 @@ void Attack::execute (state::State& state){
 								//FEAR
 								if(get<0>(effect[i])==FEAR_CHAR){
 									//fait passer l'etat du perso a FEAR
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet FEAR rate "<< endl;
@@ -453,7 +434,7 @@ void Attack::execute (state::State& state){
 								//DAZZLE
 								if(get<0>(effect[i])==DAZZLE_CHAR){
 									//fait passer l'etat du perso a DAZZLE
-									srand(time(NULL));
+
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet DAZZLE rate "<< endl;
@@ -476,7 +457,6 @@ void Attack::execute (state::State& state){
 								//Heal status
 								if(get<0>(effect[i])==HEAL_STATUS){
 									//soigne les status
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL STATUS rate "<< endl;
@@ -490,7 +470,6 @@ void Attack::execute (state::State& state){
 								//HEAL Medium
 								if(get<0>(effect[i])==HEAL_MEDIUM){
 									//soigne les PV
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(M) rate "<< endl;
@@ -507,7 +486,6 @@ void Attack::execute (state::State& state){
 								//HEAL LOW
 								if(get<0>(effect[i])==HEAL_LOW){
 									//soigne les PV
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(L) rate "<< endl;
@@ -524,7 +502,6 @@ void Attack::execute (state::State& state){
 								//HEAL HIGH
 								if(get<0>(effect[i])==HEAL_HIGH){
 									//soigne les PV
-									srand(time(NULL));
 									chanceEffet=rand()%100 + 1;
 									if(chanceEffet>=get<2>(effect[i])){
 										cout << "Effet HEAL(H) rate "<< endl;
@@ -579,10 +556,8 @@ void Attack::execute (state::State& state){
 									}
 									
 									int horizontal;
-									srand(time(NULL));
 									horizontal=rand()%1;
 									int mf;
-									srand(time(NULL));
 									mf=rand()%1;
 									
 									
