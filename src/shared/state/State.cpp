@@ -31,12 +31,19 @@ void State::setRound(int newRound){
 
 void State::initCursor(){
 	cursor = new Cursor();
+	cursorInfo = new Cursor();
 	cursor->setCursorX(0);
 	cursor->setCursorY(0);
+	cursorInfo->setCursorX(0);
+	cursorInfo->setCursorY(0);
 }
 
 Cursor* State::getCursor(){
 	return cursor;
+}
+
+Cursor* State::getCursorInfo(){
+	return cursorInfo;
 }
 
 void State::initPlayers(int nbPlayers){
@@ -129,3 +136,10 @@ void State::sortPlayers(){
 	setPlaying(players[0]);
 }
 
+CommandModeId State::getCommandMode(){
+	return commandMode;
+}
+
+void State::setCommandMode(CommandModeId newCM){
+	commandMode = newCM;
+}

@@ -12,6 +12,7 @@ namespace state {
   class Field;
 }
 
+#include "CommandModeId.h"
 #include "Observable.h"
 #include "Field.h"
 #include "Cursor.h"
@@ -29,6 +30,8 @@ namespace state {
     int round;
     Cursor* cursor;
     Player* playing;
+    CommandModeId commandMode;
+    Cursor* cursorInfo;
     // Operations
   public:
     std::vector<std::vector<Field*>>& getGrid ();
@@ -42,6 +45,9 @@ namespace state {
     Player* getPlaying ();
     void setPlaying (Player* newPlaying);
     void sortPlayers ();
+    CommandModeId getCommandMode ();
+    void setCommandMode (CommandModeId newCM);
+    Cursor* getCursorInfo ();
     // Setters and Getters
   };
 
