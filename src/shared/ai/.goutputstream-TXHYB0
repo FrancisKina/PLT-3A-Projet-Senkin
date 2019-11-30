@@ -1,0 +1,165 @@
+#include "ai.h"
+#include "engine.h"
+#include "state.h"
+#include <iostream>
+#include <stdlib.h>
+#include <unistd.h>
+
+using namespace ai;
+using namespace engine;
+using namespace state;
+using namespace std;
+
+
+int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
+	State state = engine.getState();
+	
+	return 0;
+}
+
+std::vector<std::pair<int,int>>  getPositionsAccessible(state::State state, state::Player* player, std::vector<std::pair<int,int>> lmpp, int PM){
+	//renvoie l'ensemble des cases accessibles pour un joueur a partir d'une case donné pour un nombre de PM donné
+	std::vector<std::pair<int,int>>  lmp=lmpp;
+	std::vector<std::pair<int,int>> new_pos;
+	std::pair<int,int> pos_next_case;
+	Field* next_case;
+	for(int d=0;d<4;d++){
+		//definition next_case
+		if(d==0){
+			pos_next_case.first=player->getX()+1;
+			pos_next_case.second=player->getY();
+		}else if(d==1){
+			pos_next_case.first=player->getX()-1;
+			pos_next_case.second=player->getY();
+		}else if(d==2){
+			pos_next_case.first=player->getX();
+			pos_next_case.second=player->getY()-1;
+		}else if(d==3){
+			pos_next_case.first=player->getX();
+			pos_next_case.second=player->getY()+1;
+		}
+		next_case = state.getGrid()[pos_next_case.second][pos_next_case.first];
+		
+		//ajout de cases
+		//todo add f(PM) et presence autre joueur
+		if(next_case->getFieldStatus()[11].second!=0){
+			int PMused=1;
+			bool toadd;
+			new_pos=lmpp;
+			new_pos.push_back(pos_next_case);
+			new_pos = getPositionsAccessible(state,player,new_pos,PM-PMused);
+			for(size_t i=0;i<new_pos.size();i++){
+				toadd=true;
+				for(size_t j=0; j<lmp.size();j++){
+					if(new_pos[i]==lmp[j]){
+						toadd=false;
+					}
+				}
+				if(toadd){
+					lmp.push_back(new_pos[i]);
+				}
+			}
+		}
+	}
+	return lmp;
+}
+
+
+std::vector<std::pair<int,int>> getPosMove (state::Player* player, state::State state){
+	//renvoie l'ensemble des cases accessibles par le joueur
+	int X=player->getX();
+	int Y=player->getY();
+	std::vector<std::pair<int,int>> listPosMove={{X,Y}};
+	listPosMove=getPositionsAccessible(state,player,listPosMove,player->getMovement());
+	
+	return listPosMove;
+}
+
+std::vector<std::pair<int,int>> getTargetAccessible(state::State state, state::Player* player, int skill_num){
+	//renvoie l'ensemble des cases attaquables (tout type) par le joueur pour une attaque donnée
+	state::Skill* attack = player->getSkills()[skill_num];
+	std::vector<std::pair<int,int>> listPosMove = getPosMove(player, state);
+	std::vector<std::pair<int,int>> v_posField;
+	
+	//boucle pour chaque position
+	for (size_t l=0; l<listPosMove.size();l++){
+		
+		//todo ajouter tout les cible target case possible avec range
+		std::pair<int,int> posTarget = listPosMove[l];
+		
+		
+		std::vector<Field*> v_caseField;
+		std::vector<Player*> players = state.getPlayers();
+		std::vector<state::Player*> targets;
+		size_t sizePlayers = players.size();
+		int pos_x;
+		int pos_y;
+		bool is_blocked;
+		
+		//verifier si il n'ya pas de blockattck et si attaque possible
+		for(int d=0;d<4;d++){
+			for(size_t i=0;i<attack->getArea().size();i++){
+				is_blocked=false;
+				//ajoute la zone d'effet de l'attaque
+				if(d==0){
+					pos_y=posTarget.second+attack->getArea()[i].second;
+					pos_x=posTarget.first+attack->getArea()[i].first;
+				}else if(d==1){
+					pos_y=posTarget.second+attack->getArea()[i].first;
+					pos_x=posTarget.first-attack->getArea()[i].second;
+				}else if(d==2){
+					pos_y=posTarget.second-attack->getArea()[i].second;
+					pos_x=posTarget.first-attack->getArea()[i].first;
+				}else if(d==3){
+					pos_y=posTarget.second-attack->getArea()[i].first;
+					pos_x=posTarget.first+attack->getArea()[i].second;
+				}
+				
+				v_caseField.push_back(state.getGrid()[pos_y][pos_x]);
+				std::vector<std::pair<state::FieldStatusId,int>> statusCase = v_caseField[i]->getFieldStatus();
+				for(size_t c=0; c<statusCase.size();c++){
+					if (statusCase[c].first==BLOCKATTACK && statusCase[c].second!=0){
+						is_blocked=true;
+					}
+				}
+				if(!is_blocked){
+					//cout << "Attaque non bloquee par un obstacle" << endl;
+					//todo verifier si case pas déja presente dans liste
+					v_posField.push_back({pos_x,pos_y});
+					for(size_t p = 0; p<sizePlayers;p++){
+						if(players[p]->getX()==pos_x && players[p]->getY()==pos_y ){
+							targets.push_back(players[p]);
+						}
+					}
+				}
+
+			}
+		}
+		
+	}
+	return v_posField;
+}
+
+std::vector<std::pair<int,int>> getPosAttack (state::Player* player, state::State state){
+	//renvoie l'ensemble des joueurs etcases attaquables (dégats) par le joueur
+	std::vector<std::pair<int,int>> listPosSkill;
+	for(size_t s=0; s<player->getSkills().size();s++){
+		if(player->getSkills()[s]->getCooldown()==0 && player->getSkills()[s]->getDamage()>0){
+			std::vector<std::pair<int,int>>  targets = getTargetAccessible(state,player,s);
+			listPosSkill.insert(listPosSkill.end(),targets.begin(), targets.end());
+		}
+	}
+	return listPosSkill;
+}
+
+std::vector<std::pair<int,int>> getPosSkill (state::Player* player, state::State state){
+	//renvoie l'ensemble des joueurs et cases attaquables (tout type) et par le joueur
+	std::vector<std::pair<int,int>> listPosSkill;
+	for(size_t s=0; s<player->getSkills().size();s++){
+		if(player->getSkills()[s]->getCooldown()==0){
+			std::vector<std::pair<int,int>> targets = getTargetAccessible(state,player,s);
+			listPosSkill.insert(listPosSkill.end(),targets.begin(), targets.end());
+		}
+	}
+	return listPosSkill;
+}
