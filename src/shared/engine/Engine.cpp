@@ -111,38 +111,46 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 	switch (event.key.code){
 		//FLECHE GAUCHE
 		case sf::Keyboard::Left:
-			if (currentState.getCommandMode() == FIELD) {
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorX() > 0) cursor->setCursorX(cursor->getCursorX() - 1);
 				else cursor->setCursorX(0);	
 			}
 			break;
 		//FLECHE HAUT
 		case sf::Keyboard::Up:
-			if (currentState.getCommandMode() == FIELD) {
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorY() > 0) cursor->setCursorY(cursor->getCursorY() - 1);
 				else cursor->setCursorY(0);	
 			}
 			else if (currentState.getCommandMode() == COMMAND) {
-				if (cursorinfo->getCursorY() > 20) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
-				else cursorinfo->setCursorY(20);	
+				if (cursorinfo->getCursorY() > 21) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
+				else cursorinfo->setCursorY(21);	
+			}
+			else if (currentState.getCommandMode() == SKILL) {
+				if (cursorinfo->getCursorY() > 6) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
+				else cursorinfo->setCursorY(6);	
 			}
 			break;
 		//FLECHE DROITE
 		case sf::Keyboard::Right:
-			if (currentState.getCommandMode() == FIELD) {
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorX() < (int)currentState.getGrid()[0].size()-1) cursor->setCursorX(cursor->getCursorX() + 1);
 				else cursor->setCursorX(currentState.getGrid()[0].size()-1);	
 			}
 			break;
 		//FLECHE BAS	
 		case sf::Keyboard::Down:
-			if (currentState.getCommandMode() == FIELD) {
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorY() < (int)currentState.getGrid().size()-1) cursor->setCursorY(cursor->getCursorY() + 1);
 				else cursor->setCursorY(currentState.getGrid().size()-1);
 			}
 			else if (currentState.getCommandMode() == COMMAND) {
-				if (cursorinfo->getCursorY() < 22) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
-				else cursorinfo->setCursorY(22);	
+				if (cursorinfo->getCursorY() < 23) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				else cursorinfo->setCursorY(23);	
+			}
+			else if (currentState.getCommandMode() == SKILL) {
+				if (cursorinfo->getCursorY() < 7) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				else cursorinfo->setCursorY(7);	
 			}
 			break;
 			
@@ -151,32 +159,52 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 		case sf::Keyboard::Return:
 			if (currentState.getCommandMode() == FIELD) {
 				currentState.setCommandMode(COMMAND);
-				cursorinfo->setCursorY(20);
-				break;
+				cursorinfo->setCursorY(21);
 			}
 			else if (currentState.getCommandMode() == COMMAND) {
-				//EndActions* endactions = new EndActions();
-				if (cursorinfo->getCursorY() == 20){
+				if (cursorinfo->getCursorY() == 21){
+					cursor->setCursorX(currentState.getPlaying()->getX());
+					cursor->setCursorY(currentState.getPlaying()->getY());
 					currentState.setCommandMode(MOVEMENT);
 				}
-				else if (cursorinfo->getCursorY() == 21){ 
+				else if (cursorinfo->getCursorY() == 22){ 
 					currentState.setCommandMode(SKILL);
+					cursorinfo->setCursorY(6);
 				}
-				else if (cursorinfo->getCursorY() == 22) {
+				else if (cursorinfo->getCursorY() == 23) {
 					currentState.setCommandMode(FIELD);
 					executeCommand(new EndActions(), currentWindow);
 				}
-				break;
 			}
+			else if (currentState.getCommandMode() == SKILL) {
+				cursor->setCursorX(currentState.getPlaying()->getX());
+				cursor->setCursorY(currentState.getPlaying()->getY());
+				currentState.setCommandMode(SKILLTARGET);
+			}
+			else if (currentState.getCommandMode() == SKILLTARGET) {
+				executeCommand(new Attack(std::make_pair (cursor->getCursorX(),cursor->getCursorY()) , cursorinfo->getCursorY()-6), currentWindow);
+				currentState.setCommandMode(SKILL);
+			}
+			else if (currentState.getCommandMode() == MOVEMENT) {
+				executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())), currentWindow);
+				currentState.setCommandMode(COMMAND);
+			}
+			break;
+	
+		case sf::Keyboard::Escape:
+			if (currentState.getCommandMode() == COMMAND) {
+				currentState.setCommandMode(FIELD);
+			}
+			else if (currentState.getCommandMode() == SKILL || currentState.getCommandMode() == MOVEMENT) {
+				currentState.setCommandMode(COMMAND);
+				cursorinfo->setCursorY(21);
+			}
+			else if (currentState.getCommandMode() == SKILLTARGET) {
+				currentState.setCommandMode(SKILL);
+				cursorinfo->setCursorY(6);
+			}
+			break;
 			
-			/*
-				for (Player* player: currentState.getPlayers()){
-					if (cursor->getCursorX() == player->getX() && cursor->getCursorY() == player->getY())
-				}
-
-				break;
-			*/
-				
 		default:
 			break;
 	}
