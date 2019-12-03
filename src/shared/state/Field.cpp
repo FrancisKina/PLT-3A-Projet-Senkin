@@ -46,6 +46,7 @@ void Field::updateFieldStatus(std::pair<FieldStatusId,int> newStatus){
 	for(std::pair<FieldStatusId,int>& status : fieldStatus){
 		if(newStatus.first == status.first){
 			status.second = newStatus.second;
+			break;
 		}
 	}
 }

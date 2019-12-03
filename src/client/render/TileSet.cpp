@@ -24,9 +24,9 @@ TileSet::TileSet(LayerId newIdLayer){
 		cellHeight=20;
 		imageFile="res/Char/iconeffect.png";
 	} else if (id==LAYERCURSOR){
-		cellWidth=500;
-		cellHeight=500;
-		imageFile="res/curseur.png";
+		cellWidth=20;
+		cellHeight=20;
+		imageFile="res/curseur2.png";
 	} else if (id==LAYERINFOS){
 		cellWidth=21;
 		cellHeight=24;

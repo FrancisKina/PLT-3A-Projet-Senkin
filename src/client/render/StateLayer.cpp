@@ -62,7 +62,7 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 	
 	layerFieldMeteo.loadFieldEffect(state, tilesets[1].getTexture(), sf::Vector2u(tilesets[1].getCellWidth(), tilesets[1].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize, 1);
 	
-	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 1, 1, tileSize);
+	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 2, 1, tileSize);
 	
 	layerInfos.loadInfos(state, tilesets[5].getTexture(), sf::Vector2u(tilesets[5].getCellWidth(), tilesets[5].getCellHeight()), 1, 1, tileSize);
 

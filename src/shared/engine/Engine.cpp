@@ -1,12 +1,14 @@
 #include "Engine.h"
 #include <iostream>
 #include <unistd.h>
+#include "engine.h"
 
 using namespace state;
 using namespace engine;
 using namespace std;
 
 Engine::Engine(){
+
 }
 
 void Engine::executeCommand(Command* command, sf::RenderWindow& window){
@@ -31,13 +33,18 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 }
 
 state::State& Engine::getState(){
-	state::State& refState=currentState;
-	return refState;
+	return currentState;
+}
+
+sf::RenderWindow& Engine::getWindow(){
+	//currentWindow = new sf::RenderWindow(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
+	return currentWindow;
 }
 
 void Engine::startGame (state::State& state){
 		//Initialisation du curseur
 	currentState.initCursor();
+	currentState.setCommandMode(FIELD);
 
 	cout<<"Lancement du jeu"<<endl;
 	currentState.setRound(1);
@@ -53,114 +60,7 @@ void Engine::startGame (state::State& state){
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
 	//------------------------changment aléatoire d'état du terrain-----------------------
-	/*
-	bool new_case;
-	int proba_new_case= 80;
-	int chanceNewCase=rand()%100+1;
-	if(proba_new_case>chanceNewCase){
-		new_case=true;
-	}else{
-		new_case=false;
-	}
-	
-	
-	int cx,cy; //aléatoire equiprobable
-	int nb_player = state.getPlayers().size();
-	int nb_tour_max=6;
-	int nb_tour; //aléatoire de 1 à bcp decroissant
-	int status_id_test;
-	FieldStatusId status_id; //aléatoire equiprobable
-	Field* case_field;
-	std::vector<std::pair<FieldStatusId,int>> case_field_status;
-	FieldTypeId case_field_type;
-	bool meteo=true;
-	
-	while(new_case){
-		chanceNewCase=rand()%100+1;
-		if(proba_new_case>chanceNewCase){
-			new_case=true;
-		}else{
-			new_case=false;
-		}
-		//def cx et cy
-		cy=rand()%field_grid.size();
-		cx=rand()%field_grid[1].size();
-		//def nb_tour
-		int chanceTour =rand()%nb_tour_max*(nb_tour_max+1)+1;//de 1 a nbtourmax
-		int nb_tour_test=nb_tour_max*(nb_tour_max+1)/2;
-		for(int u=1;u<nb_tour_max;u++){
-			if(chanceTour<nb_tour_test){
-				nb_tour = u*nb_player;
-				break;
-			}else{
-				nb_tour_test=nb_tour_test+nb_tour_max*(nb_tour_max+1)/2-u*(nb_tour_max-1);
-				
-			}
-		}
-		
-		case_field = field_grid[cy][cx];
-		case_field_status = case_field->getFieldStatus();
-		case_field_type = case_field->getFieldType();
-		//calcul des probas de chaque status meteo
-		std::vector<Field*> case_field_prox ={field_grid[cy+1][cx],field_grid[cy-1][cx],field_grid[cy][cx+1],field_grid[cy][cx-1]};
-		for(int p=0;p<4;p++){
-			if((case_field_prox[p]->getFieldType()==WATER || case_field_prox[p]->getFieldType()==SWAMP || case_field_prox[p]->getFieldType()==MOUNTAIN ) && case_field_type!=MOUNTAIN){
-				chanceRain=60;
-				chanceMist=35;
-			}else if(case_field_type==MOUNTAIN){
-				chanceRain=25;
-				chanceSnow=40;
-				chanceMist=35;
-			}else if(case_field_type==SAND){
-				chanceRain=1;
-				chanceSnow=1;
-				chanceMist=5;
-			}
-		}
-		
-		//def status_id
-		cout<<"Il ";
-		status_id_test=rand()%100 + 1;
-		if(status_id_test<chanceRain){
-			status_id=RAIN;
-			cout<<"pleut";
-		}else if(status_id_test<chanceRain+chanceMist){
-			status_id=MIST;
-			cout<<"brume";
-		}else if(status_id_test<chanceRain+chanceMist+chanceSnow){
-			status_id=SNOW;
-			cout<<"neige";
-		}else{
-			meteo=false;
-			cout<<"ne se passe rien";
-		}
-		if(meteo){
-			//verfication status case
-			if(case_field_status[status_id].second>0){
-				//intensifie l'état
-				case_field->updateFieldStatus({status_id,nb_tour+case_field_status[status_id].second});
-				cout<<" encore plus fort pendant "<<nb_tour+case_field_status[status_id].second<<" tour(s)";
-			}else{
-				//change l'état
-				for(int m=1;m<10;m++){//m<10 => état météo
-					if(m!=status_id){
-						std::pair<FieldStatusId,int> newFieldStatus={static_cast<FieldStatusId>(m),0};
-						case_field->updateFieldStatus(newFieldStatus);
-					}
-				}
-				case_field->updateFieldStatus({status_id,nb_tour});
-				cout<<" pendant "<<nb_tour<<" tour(s)";
-			}
-		}else{
-			//change l'état
-			for(int m=1;m<10;m++){
-				std::pair<FieldStatusId,int> newFieldStatus={static_cast<FieldStatusId>(m),0};
-				case_field->updateFieldStatus(newFieldStatus);
-			}
-		}
-		cout<<" sur la case ("<<cx<<","<<cy<<")."<<endl;
-	}
-	*/
+
 	cout << "Evenements aléatoires" << endl;
 	int nzone = rand()%3+1;
 	
@@ -199,4 +99,116 @@ void Engine::startGame (state::State& state){
 	
 	cout << endl << "[ Début de round "<< currentState.getRound() <<"]" << endl;
 	cout << endl << "---------- Tour du joueur " << currentState.getPlaying()->getName() << " ----------" << endl;
+}
+
+void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
+	
+	if (currentState.getPlaying()->getIa() == true) return;
+
+	Cursor* cursor = currentState.getCursor();
+	Cursor* cursorinfo = currentState.getCursorInfo();
+	
+	switch (event.key.code){
+		//FLECHE GAUCHE
+		case sf::Keyboard::Left:
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
+				if (cursor->getCursorX() > 0) cursor->setCursorX(cursor->getCursorX() - 1);
+				else cursor->setCursorX(0);	
+			}
+			break;
+		//FLECHE HAUT
+		case sf::Keyboard::Up:
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
+				if (cursor->getCursorY() > 0) cursor->setCursorY(cursor->getCursorY() - 1);
+				else cursor->setCursorY(0);	
+			}
+			else if (currentState.getCommandMode() == COMMAND) {
+				if (cursorinfo->getCursorY() > 21) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
+				else cursorinfo->setCursorY(21);	
+			}
+			else if (currentState.getCommandMode() == SKILL) {
+				if (cursorinfo->getCursorY() > 6) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
+				else cursorinfo->setCursorY(6);	
+			}
+			break;
+		//FLECHE DROITE
+		case sf::Keyboard::Right:
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
+				if (cursor->getCursorX() < (int)currentState.getGrid()[0].size()-1) cursor->setCursorX(cursor->getCursorX() + 1);
+				else cursor->setCursorX(currentState.getGrid()[0].size()-1);	
+			}
+			break;
+		//FLECHE BAS	
+		case sf::Keyboard::Down:
+			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
+				if (cursor->getCursorY() < (int)currentState.getGrid().size()-1) cursor->setCursorY(cursor->getCursorY() + 1);
+				else cursor->setCursorY(currentState.getGrid().size()-1);
+			}
+			else if (currentState.getCommandMode() == COMMAND) {
+				if (cursorinfo->getCursorY() < 23) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				else cursorinfo->setCursorY(23);	
+			}
+			else if (currentState.getCommandMode() == SKILL) {
+				if (cursorinfo->getCursorY() < 7) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				else cursorinfo->setCursorY(7);	
+			}
+			break;
+			
+		//ESPACE OU ENTREE
+		case sf::Keyboard::Space:	
+		case sf::Keyboard::Return:
+			if (currentState.getCommandMode() == FIELD) {
+				currentState.setCommandMode(COMMAND);
+				cursorinfo->setCursorY(21);
+			}
+			else if (currentState.getCommandMode() == COMMAND) {
+				if (cursorinfo->getCursorY() == 21){
+					cursor->setCursorX(currentState.getPlaying()->getX());
+					cursor->setCursorY(currentState.getPlaying()->getY());
+					currentState.setCommandMode(MOVEMENT);
+				}
+				else if (cursorinfo->getCursorY() == 22){ 
+					currentState.setCommandMode(SKILL);
+					cursorinfo->setCursorY(6);
+				}
+				else if (cursorinfo->getCursorY() == 23) {
+					currentState.setCommandMode(FIELD);
+					executeCommand(new EndActions(), currentWindow);
+				}
+			}
+			else if (currentState.getCommandMode() == SKILL) {
+				cursor->setCursorX(currentState.getPlaying()->getX());
+				cursor->setCursorY(currentState.getPlaying()->getY());
+				currentState.setCommandMode(SKILLTARGET);
+			}
+			else if (currentState.getCommandMode() == SKILLTARGET) {
+				executeCommand(new Attack(std::make_pair (cursor->getCursorX(),cursor->getCursorY()) , cursorinfo->getCursorY()-6), currentWindow);
+				currentState.setCommandMode(SKILL);
+			}
+			else if (currentState.getCommandMode() == MOVEMENT) {
+				executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())), currentWindow);
+				currentState.setCommandMode(COMMAND);
+			}
+			break;
+	
+		case sf::Keyboard::Escape:
+			if (currentState.getCommandMode() == COMMAND) {
+				currentState.setCommandMode(FIELD);
+			}
+			else if (currentState.getCommandMode() == SKILL || currentState.getCommandMode() == MOVEMENT) {
+				currentState.setCommandMode(COMMAND);
+				cursorinfo->setCursorY(21);
+			}
+			else if (currentState.getCommandMode() == SKILLTARGET) {
+				currentState.setCommandMode(SKILL);
+				cursorinfo->setCursorY(6);
+			}
+			break;
+			
+		default:
+			break;
+	}
+	
+	currentState.notifyObservers(currentState, window);
+
 }

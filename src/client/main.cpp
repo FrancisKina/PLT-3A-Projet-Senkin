@@ -234,7 +234,7 @@ int main(int argc,char* argv[])
 			state.initPlayers(4);
 			
 					//Definition en IA
-			state.getPlayers()[0]->setIa(true);
+			state.getPlayers()[0]->setIa(false);
 			state.getPlayers()[1]->setIa(true);
 			state.getPlayers()[2]->setIa(true);
 			state.getPlayers()[3]->setIa(true);
@@ -274,11 +274,13 @@ int main(int argc,char* argv[])
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
 			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
+			//sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
+			sf::RenderWindow& window = engine.getWindow();
+			window.create(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
 			statelayer.draw(window);
+			window.setKeyRepeatEnabled(false);
 			
 			RandomIA ai;
-			
 			
 			while (window.isOpen())
 			{
@@ -287,6 +289,9 @@ int main(int argc,char* argv[])
 				{
 					if(event.type == sf::Event::Closed){
 						window.close();
+					}
+					if (event.type == sf::Event::KeyPressed){
+						engine.keyCommand(event, window);
 					}
 				}
 				ai.run(engine,window);
