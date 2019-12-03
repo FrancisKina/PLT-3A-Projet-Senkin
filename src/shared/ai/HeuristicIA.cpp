@@ -44,7 +44,6 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 		std::vector<std::pair<FieldStatusId,int>> player_field_status;
 		
 		bool dangerousfield;
-		bool move_done;
 		bool move_from_danger;
 		bool move_to_foe;
 		bool move_run_away;
@@ -316,7 +315,6 @@ std::tuple<state::Player*,int,std::pair<int,int>> HeuristicIA::getMainTarget(sta
 	std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> direct;
 	std::vector<int> inter;
 	std::vector<Player*> inter_p;
-	int d_x_max,d_y_max, sens_x, sens_y;
 	Skill* skill;
 	int score_min;
 	std::pair<int,int> main_skill_range;

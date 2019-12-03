@@ -212,3 +212,19 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 	currentState.notifyObservers(currentState, window);
 
 }
+
+state::State& Engine::getNextState (state::State& state, Command* command){
+	state::State& nextState=state;
+	command->execute(nextState);
+		//Verification joueur mort
+	std::vector<state::Player*> players = nextState.getPlayers();
+	for(size_t i=0; i<players.size(); i++) {
+		if(players[i]->getHp() <= 0){
+			players[i]->setX(-1);
+			players[i]->setY(-1);
+			//cout << endl << players[i]->getName() <<  " est mort." << endl;
+			players.erase(players.begin()+i);
+		}
+	}
+}
+    
