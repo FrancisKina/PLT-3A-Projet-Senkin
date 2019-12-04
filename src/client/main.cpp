@@ -6,6 +6,7 @@
 #include <memory>
 #include <time.h>
 #include <unistd.h>
+#include <ctime>
 
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
@@ -368,6 +369,96 @@ int main(int argc,char* argv[])
 				window.display();
 			}
 		}
+		/*rollback: retour arrière*/
+		else if(strcmp(argv[1],"rollback")==0){
+			
+			srand(time(NULL));
+			//Initialisation générale
+				//Initialisation de la grille par le moteur
+			Engine engine;
+			State& state = engine.getState();
+			state.initGrid("res/maptest.txt");
+			
+				//Initialisation des personnages
+			CharacterFactory cf;
+			state.initPlayers(4);
+			
+					//Definition en IA
+			state.getPlayers()[0]->setIa(true);
+			state.getPlayers()[1]->setIa(true);
+			state.getPlayers()[2]->setIa(true);
+			state.getPlayers()[3]->setIa(true);
+					//Classes
+			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
+			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
+			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
+			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
+					//Positions
+			state.getPlayers()[0]->setX(10);
+			state.getPlayers()[0]->setY(10);
+			state.getPlayers()[1]->setX(10);
+			state.getPlayers()[1]->setY(14);
+			state.getPlayers()[2]->setX(14);
+			state.getPlayers()[2]->setY(14);
+			state.getPlayers()[3]->setX(14);
+			state.getPlayers()[3]->setY(10);
+				//Initialisation des skills
+			SkillFactory sf;
+			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(PIETINEMENT)});
+			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(SOIN_LEGER)});
+			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
+			
+			//debut du jeu
+			engine.startGame(state);
+			
+				//Initialisation de la liste des différents layers avec texture
+			int SIZE = 35;	
+			
+			state.getGrid()[12][11]->updateFieldStatus({TOWER,999});
+			state.getGrid()[12][13]->updateFieldStatus({TENT,999});
+			state.getGrid()[12][15]->updateFieldStatus({FORT,999});
+				
+			StateLayer statelayer;
+			statelayer.initLayers(state, SIZE);
+			state.registerObserver(&statelayer);
+				//Creation puis affichage de la fenêtre
+			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
+			//sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
+			sf::RenderWindow& window = engine.getWindow();
+			window.create(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
+			statelayer.draw(window);
+			window.setKeyRepeatEnabled(false);
+			
+			RandomIA ai;
+			clock_t begin = clock();
+			clock_t end = clock();
+			bool stoprollback=false;
+			while (window.isOpen())
+			{
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if(event.type == sf::Event::Closed){
+						window.close();
+					}
+					if (event.type == sf::Event::KeyPressed){
+						engine.keyCommand(event, window);
+					}
+				}
+				if((end - begin)/ CLOCKS_PER_SEC<1){
+					ai.run(engine,window);
+					end = clock();
+					cout<<endl<<endl<<"---------------------------------------------------"<<endl;
+					cout<<"         temps clock = "<<(end - begin)/ CLOCKS_PER_SEC<<endl<<"-----------------------------------------"<<endl<<endl;
+				}else if(!stoprollback){
+					stoprollback=engine.rollBack();
+					sleep(1);
+				}
+				window.display();
+			}
+		}
+		
     cout << argv[1] << endl;
 	}
     return 0;
