@@ -12,7 +12,7 @@ Engine::Engine(){
 }
 
 void Engine::executeCommand(Command* command, sf::RenderWindow& window){
-	cout<<"execute appelé"<<endl;
+	//cout<<"execute appel"<<endl;
 	std::vector<int> inter;
 	std::vector<std::vector<int>> inter_b;
 	std::vector<std::vector<std::vector<int>>> inter_c;
@@ -28,6 +28,7 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 		inter_c.push_back(inter_b);
 	}
 	previousGridStatus.push_back(inter_c);
+	
 	
 	std::vector<int> interX;
 	std::vector<int> interY;
@@ -83,6 +84,81 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
 	currentState.notifyObservers(currentState, window);
+}
+
+void Engine::simulateCommand(Command* command){
+	//cout<<"simulate appel"<<endl;
+	std::vector<int> inter;
+	std::vector<std::vector<int>> inter_b;
+	std::vector<std::vector<std::vector<int>>> inter_c;
+	for(size_t i=0;i<currentState.getGrid().size();i++){
+		inter_b={};
+		for(size_t j=0;j<currentState.getGrid()[i].size();j++){
+			inter={};
+			for(size_t k=0;k<currentState.getGrid()[i][j]->getFieldStatus().size();k++){
+				inter.push_back(currentState.getGrid()[i][j]->getFieldStatus()[k].second);
+			}
+			inter_b.push_back(inter);
+		}
+		inter_c.push_back(inter_b);
+	}
+	previousGridStatus.push_back(inter_c);
+	
+	
+	std::vector<int> interX;
+	std::vector<int> interY;
+	std::vector<state::DirectionId> interDirection;
+	std::vector<int> interHp;
+	std::vector<int> interMovement;
+	std::vector<int> interInitiative;
+	std::vector<int> interSkillCount;
+	std::vector<std::vector<std::pair<state::CharStatusId,int>>> interStatus;
+	std::vector<bool> interIa;
+	std::vector<state::Character*> interCharacter;
+	std::vector<int> interCoolDown;
+	std::vector<std::vector<int>> interSkillsCoolDown;
+	std::vector<std::string> interName;
+	Player* player;
+	for(size_t i=0;i<currentState.getPlayers().size();i++){
+		player = currentState.getPlayers()[i];
+		interX.push_back(player->getX());
+		interY.push_back(player->getY());
+		interDirection.push_back(player->getDirection());
+		interHp.push_back(player->getHp());
+		interMovement.push_back(player->getMovement());
+		interInitiative.push_back(player->getInitiative());
+		interSkillCount.push_back(player->getSkillCount());
+		interStatus.push_back(player->getStatus());
+		interIa.push_back(player->getIa());
+		interCharacter.push_back(player->getCharacter());
+		interCoolDown={};
+		for(size_t s=0; s<player->getSkills().size();s++){
+			Skill* skill =player->getSkills()[s];
+			interCoolDown.push_back(skill->getCooldown());
+		}
+		interSkillsCoolDown.push_back(interCoolDown);
+		interName.push_back(player->getName());
+	}
+	previousPlayersStatsX.push_back(interX);
+	previousPlayersStatsY.push_back(interY);
+	previousPlayersStatsDirection.push_back(interDirection);
+	previousPlayersStatsHp.push_back(interHp);
+	previousPlayersStatsMovement.push_back(interMovement);
+	previousPlayersStatsInitiative.push_back(interInitiative);
+	previousPlayersStatsSkillCount.push_back(interSkillCount);
+	previousPlayersStatsStatus.push_back(interStatus);
+	previousPlayersStatsIa.push_back(interIa);
+	previousPlayersStatsCharacter.push_back(interCharacter);
+	previousPlayersStatsSkillsCoolDown.push_back(interSkillsCoolDown);
+	previousPlayersStatsName.push_back(interName);
+	
+	previousStates.push_back(currentState);
+	currentState = getNextState(currentState,command);
+	//Placement du curseur le joueur qui joue
+	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
+	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
+	
+	//currentState.notifyObservers(currentState, window);
 }
 
 state::State& Engine::getState(){
@@ -297,19 +373,30 @@ state::State Engine::getPreviousState (int previous){
 
 bool Engine::rollBack(){
 	bool first;
-	if(previousStates.size()>1){
-		cout<<"Etat restant : "<<previousStates.size()<<endl;
-		currentState=getPreviousState(1);
-		previousStates.erase(previousStates.end());
+	/*
+	for(size_t i=0;i<previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1].size();i++){ 
+		for(size_t j=0;j<previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1][i].size();j++){
+			cout << previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1][i][j] << " ";
+		}
+		cout << endl;
+	}
+	*/
+	if(previousStates.size()>0){
+		//cout<<"Etat restant : "<<previousStates.size()<<endl;
+		currentState=previousStates[previousStates.size()-1];
+		previousStates.pop_back();
 		state::Player* player;
+		
 		for(size_t i=0;i<currentState.getPlayers().size();i++){
 			player = currentState.getPlayers()[i];
+			/*
 			cout<<"Joueur "<<previousPlayersStatsName[previousPlayersStatsName.size()-1][i]<<":";
 			cout<<" X="<<previousPlayersStatsX[previousPlayersStatsX.size()-1][i];
 			cout<<" Y="<<previousPlayersStatsY[previousPlayersStatsY.size()-1][i];
 			cout<<" HP="<<previousPlayersStatsHp[previousPlayersStatsHp.size()-1][i];
 			cout<<" PA="<<previousPlayersStatsSkillCount[previousPlayersStatsSkillCount.size()-1][i];
 			cout<<" PM="<<previousPlayersStatsMovement[previousPlayersStatsMovement.size()-1][i]<<endl;
+			*/
 			player->setX(previousPlayersStatsX[previousPlayersStatsX.size()-1][i]);
 			player->setY(previousPlayersStatsY[previousPlayersStatsY.size()-1][i]);
 			player->setDirection(previousPlayersStatsDirection[previousPlayersStatsDirection.size()-1][i]);
@@ -319,16 +406,18 @@ bool Engine::rollBack(){
 			player->setSkillCount(previousPlayersStatsSkillCount[previousPlayersStatsSkillCount.size()-1][i]);
 			player->setStatus(previousPlayersStatsStatus[previousPlayersStatsStatus.size()-1][i]);
 			player->setIa(previousPlayersStatsIa[previousPlayersStatsIa.size()-1][i]);
-			player->setCharacter(previousPlayersStatsCharacter[previousPlayersStatsCharacter.size()-1][i]);
+			//player->setCharacter(previousPlayersStatsCharacter[previousPlayersStatsCharacter.size()-1][i]);
+			/*
 			cout<<"Test j "<<player->getName()<<":";
 			cout<<" X="<<player->getX();
 			cout<<" Y="<<player->getY();
 			cout<<" HP="<<player->getHp();
 			cout<<" PA="<<player->getSkillCount();
 			cout<<" PM="<<player->getMovement()<<endl;
+			*/
 			for(size_t s=0;s<player->getSkills().size();s++){
 				Skill* skill =player->getSkills()[s];
-				skill->setCooldown(previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1][s][i]);
+				skill->setCooldown(previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1][i][s]);
 			}
 			player->setName(previousPlayersStatsName[previousPlayersStatsName.size()-1][i]);
 		}
@@ -339,19 +428,19 @@ bool Engine::rollBack(){
 				}
 			}
 		}
-		previousGridStatus.erase(previousGridStatus.end());
-		previousPlayersStatsX.erase(previousPlayersStatsX.end());
-		previousPlayersStatsY.erase(previousPlayersStatsY.end());
-		previousPlayersStatsDirection.erase(previousPlayersStatsDirection.end());
-		previousPlayersStatsHp.erase(previousPlayersStatsHp.end());
-		previousPlayersStatsMovement.erase(previousPlayersStatsMovement.end());
-		previousPlayersStatsInitiative.erase(previousPlayersStatsInitiative.end());
-		previousPlayersStatsSkillCount.erase(previousPlayersStatsSkillCount.end());
-		previousPlayersStatsStatus.erase(previousPlayersStatsStatus.end());
-		previousPlayersStatsIa.erase(previousPlayersStatsIa.end());
-		previousPlayersStatsCharacter.erase(previousPlayersStatsCharacter.end());
-		previousPlayersStatsSkillsCoolDown.erase(previousPlayersStatsSkillsCoolDown.end());
-		previousPlayersStatsName.erase(previousPlayersStatsName.end());
+		previousGridStatus.pop_back();
+		previousPlayersStatsX.pop_back();
+		previousPlayersStatsY.pop_back();
+		previousPlayersStatsDirection.pop_back();
+		previousPlayersStatsHp.pop_back();
+		previousPlayersStatsMovement.pop_back();
+		previousPlayersStatsInitiative.pop_back();
+		previousPlayersStatsSkillCount.pop_back();
+		previousPlayersStatsStatus.pop_back();
+		previousPlayersStatsIa.pop_back();
+		previousPlayersStatsCharacter.pop_back();
+		previousPlayersStatsSkillsCoolDown.pop_back();
+		previousPlayersStatsName.pop_back();
 		//Placement du curseur le joueur qui joue
 		currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 		currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());

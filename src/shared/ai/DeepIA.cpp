@@ -23,6 +23,14 @@ int DeepIA::run (engine::Engine& engine, sf::RenderWindow& window){
 	cout << "===================== MOUVEMENT OPTIMAL  " <<optimalaction->getCommandID() << endl;
 	engine.executeCommand(optimalaction, window);
 	
+	for(size_t i=0; i<actionsList.size(); i++){
+		actionsList.pop_back();
+	}
+	
+	for(size_t i=0; i<actionsScoreList.size(); i++){
+		actionsScoreList.pop_back();
+	}
+	
 	return 0;
 }
 
@@ -33,8 +41,6 @@ std::vector<engine::Command*> DeepIA::possibleActions (engine::Engine& engine){
 	
 	int x,y;
 	Player* playing = state.getPlaying();
-	
-	cout << playing->getName() << endl;
 	
 	//DEPLACEMENTS
 	if (playing->getMovement() > 0){ // Si le joueur a encore des PM
@@ -63,7 +69,8 @@ std::vector<engine::Command*> DeepIA::possibleActions (engine::Engine& engine){
 	
 	//ATTAQUES
 	if (playing->getSkillCount() > 0){ // Si le joueur a encore des PA
-		for (Skill* skill : playing->getSkills()){ //Pour chaque skill
+		for (size_t s=0; s<playing->getSkills().size(); s++){ //Pour chaque skill
+			Skill* skill = playing->getSkills()[s];
 			if (skill->getCooldown() == 0){ //Si le skill n'est pas en rechargement
 				for (int range = skill->getRange().first; range<=skill->getRange().second; range++){ //Pour chaque portee
 					for(int d=0; d<4; d++){ //Pour chaque direction
@@ -84,7 +91,7 @@ std::vector<engine::Command*> DeepIA::possibleActions (engine::Engine& engine){
 							y = playing->getY()-range;
 						}
 						if (state.getGrid()[y][x]->getFieldStatus()[10].second==0){ //Si pas de BLOCKATTACK
-							actionslist.push_back(new Attack(std::make_pair (x,y), 1));
+							actionslist.push_back(new Attack(std::make_pair (x,y), s));
 						}
 					}
 				}
@@ -107,45 +114,70 @@ void DeepIA::actionEvaluation (engine::Engine& engine, sf::RenderWindow& window)
 	//Simulation avec des attaques qui touchent obligatoirement : precision a 100
 	std::vector<int> backPrecision;
 	for (Skill* skill : state.getPlaying()->getSkills()){
+		backPrecision.push_back(skill->getPrecision());
 		skill->setPrecision(100);
 	}
 	std::vector<engine::Command*> playingActions = possibleActions(engine);
+	
+	engine.simulateCommand(new engine::EndActions());
+	Player* player = state.getPlaying();
+	engine.rollBack();
 	
 	//Parcourir les actions possibles
 	for(Command* action : actionsList){
 		std::vector<int> actionScore;
 		
 		//Simulation de l'action du joueur
-		engine.executeCommand(action,window);
+		engine.simulateCommand(action);
 
 		//Simulation des actions des adversaires
-		for(Player* player : state.getPlayers()){
+		/*
+		for(size_t p=0; p<state.getPlayers().size(); p++){
+			Player* player = state.getPlayers()[p];
 			if (player != playing){
 				state.setPlaying(player);
 				std::vector<engine::Command*> playerActions = possibleActions(engine); //Toutes les actions possibles de l'adversaire
+				//cout << "playerActions " << playerActions.size() << endl;;
 				for(Command* playeraction : playerActions){
 					
 					//Simulation d'une action
-					engine.executeCommand(playeraction,window);
+					state.setPlaying(player);
+					engine.simulateCommand(playeraction);
 					actionScore.push_back(stateScore(state));
 					
 					//Rollback adversaire
-					state.setPlaying(player);
 					engine.rollBack();
 				}
 			}
 		}
+		*/
+		
+		if (player != playing){
+			state.setPlaying(player);
+			std::vector<engine::Command*> playerActions = possibleActions(engine); //Toutes les actions possibles de l'adversaire
+			cout << "playerActions " << playerActions.size() << endl;;
+			for(Command* playeraction : playerActions){
+				
+				//Simulation d'une action
+				state.setPlaying(player);
+				engine.simulateCommand(playeraction);
+				actionScore.push_back(stateScore(state));
+				
+				//Rollback adversaire
+				engine.rollBack();
+			}
+		}
+		
 		//Rollback joueur
 		engine.rollBack();
 		actionsScoreList.push_back(actionScore);
 	}
-	
+
 	//Remise aux valeurs de base de la precision des skills
 	for (size_t i=0; i<state.getPlaying()->getSkills().size(); i++){
 		Skill* skill = state.getPlaying()->getSkills()[i];
 		skill->setPrecision(backPrecision[i]);
 	}
-	cout << "owo" << endl;
 }
 
 int DeepIA::stateScore (state::State& state){
@@ -164,6 +196,7 @@ int DeepIA::stateScore (state::State& state){
 int DeepIA::minmax(){
 	//MIN
 	std::vector<int> minlist;
+	//cout << "actionsScoreList.size()" << actionsScoreList.size() << endl;
 	for(size_t i=0; i<actionsScoreList.size(); i++){
 		int min = 9999;
 		for(size_t j=0; j<actionsScoreList[i].size(); j++){
@@ -177,6 +210,7 @@ int DeepIA::minmax(){
 	//MAX
 	int max = -9999;
 	int optimal = 0;
+	//cout << "minlist.size()" << minlist.size() << endl;
 	for(size_t i=0; i<minlist.size(); i++){
 		 if(minlist[i] > max){
 			 max = minlist[i];
