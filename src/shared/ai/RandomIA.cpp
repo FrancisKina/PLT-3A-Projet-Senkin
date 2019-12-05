@@ -29,7 +29,9 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			
 			
 		while ((bot->getHp() > 0) && actionPossible){
-			sleep(1);
+			clock_t start_time = clock();
+			while(clock()<start_time+1000000);
+			//sleep(1);
 			if(premierEssai == true){
 				cout<< "\t [Controle par le CPU] " << endl;
 				premierEssai = false;

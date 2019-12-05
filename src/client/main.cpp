@@ -446,14 +446,16 @@ int main(int argc,char* argv[])
 						engine.keyCommand(event, window);
 					}
 				}
-				if((end - begin)/ CLOCKS_PER_SEC<1){
+				if((end - begin)/ CLOCKS_PER_SEC<10){
 					ai.run(engine,window);
 					end = clock();
 					cout<<endl<<endl<<"---------------------------------------------------"<<endl;
 					cout<<"         temps clock = "<<(end - begin)/ CLOCKS_PER_SEC<<endl<<"-----------------------------------------"<<endl<<endl;
 				}else if(!stoprollback){
 					stoprollback=engine.rollBack();
-					sleep(1);
+					clock_t start_time = clock();
+					while(clock()<start_time+1000000);
+					//sleep(1);
 				}
 				window.display();
 			}
