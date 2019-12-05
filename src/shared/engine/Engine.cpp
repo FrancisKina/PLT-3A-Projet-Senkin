@@ -12,6 +12,7 @@ Engine::Engine(){
 }
 
 void Engine::executeCommand(Command* command, sf::RenderWindow& window){
+	cout<<"execute appelé"<<endl;
 	std::vector<int> inter;
 	std::vector<std::vector<int>> inter_b;
 	std::vector<std::vector<std::vector<int>>> inter_c;
@@ -300,22 +301,15 @@ bool Engine::rollBack(){
 		cout<<"Etat restant : "<<previousStates.size()<<endl;
 		currentState=getPreviousState(1);
 		previousStates.erase(previousStates.end());
-		previousGridStatus.erase(previousGridStatus.end());
-		previousPlayersStatsX.erase(previousPlayersStatsX.end());
-		previousPlayersStatsY.erase(previousPlayersStatsY.end());
-		previousPlayersStatsDirection.erase(previousPlayersStatsDirection.end());
-		previousPlayersStatsHp.erase(previousPlayersStatsHp.end());
-		previousPlayersStatsMovement.erase(previousPlayersStatsMovement.end());
-		previousPlayersStatsInitiative.erase(previousPlayersStatsInitiative.end());
-		previousPlayersStatsSkillCount.erase(previousPlayersStatsSkillCount.end());
-		previousPlayersStatsStatus.erase(previousPlayersStatsStatus.end());
-		previousPlayersStatsIa.erase(previousPlayersStatsIa.end());
-		previousPlayersStatsCharacter.erase(previousPlayersStatsCharacter.end());
-		previousPlayersStatsSkillsCoolDown.erase(previousPlayersStatsSkillsCoolDown.end());
-		previousPlayersStatsName.erase(previousPlayersStatsName.end());
 		state::Player* player;
 		for(size_t i=0;i<currentState.getPlayers().size();i++){
 			player = currentState.getPlayers()[i];
+			cout<<"Joueur "<<previousPlayersStatsName[previousPlayersStatsName.size()-1][i]<<":";
+			cout<<" X="<<previousPlayersStatsX[previousPlayersStatsX.size()-1][i];
+			cout<<" Y="<<previousPlayersStatsY[previousPlayersStatsY.size()-1][i];
+			cout<<" HP="<<previousPlayersStatsHp[previousPlayersStatsHp.size()-1][i];
+			cout<<" PA="<<previousPlayersStatsSkillCount[previousPlayersStatsSkillCount.size()-1][i];
+			cout<<" PM="<<previousPlayersStatsMovement[previousPlayersStatsMovement.size()-1][i]<<endl;
 			player->setX(previousPlayersStatsX[previousPlayersStatsX.size()-1][i]);
 			player->setY(previousPlayersStatsY[previousPlayersStatsY.size()-1][i]);
 			player->setDirection(previousPlayersStatsDirection[previousPlayersStatsDirection.size()-1][i]);
@@ -326,6 +320,12 @@ bool Engine::rollBack(){
 			player->setStatus(previousPlayersStatsStatus[previousPlayersStatsStatus.size()-1][i]);
 			player->setIa(previousPlayersStatsIa[previousPlayersStatsIa.size()-1][i]);
 			player->setCharacter(previousPlayersStatsCharacter[previousPlayersStatsCharacter.size()-1][i]);
+			cout<<"Test j "<<player->getName()<<":";
+			cout<<" X="<<player->getX();
+			cout<<" Y="<<player->getY();
+			cout<<" HP="<<player->getHp();
+			cout<<" PA="<<player->getSkillCount();
+			cout<<" PM="<<player->getMovement()<<endl;
 			for(size_t s=0;s<player->getSkills().size();s++){
 				Skill* skill =player->getSkills()[s];
 				skill->setCooldown(previousPlayersStatsSkillsCoolDown[previousPlayersStatsSkillsCoolDown.size()-1][s][i]);
@@ -339,6 +339,19 @@ bool Engine::rollBack(){
 				}
 			}
 		}
+		previousGridStatus.erase(previousGridStatus.end());
+		previousPlayersStatsX.erase(previousPlayersStatsX.end());
+		previousPlayersStatsY.erase(previousPlayersStatsY.end());
+		previousPlayersStatsDirection.erase(previousPlayersStatsDirection.end());
+		previousPlayersStatsHp.erase(previousPlayersStatsHp.end());
+		previousPlayersStatsMovement.erase(previousPlayersStatsMovement.end());
+		previousPlayersStatsInitiative.erase(previousPlayersStatsInitiative.end());
+		previousPlayersStatsSkillCount.erase(previousPlayersStatsSkillCount.end());
+		previousPlayersStatsStatus.erase(previousPlayersStatsStatus.end());
+		previousPlayersStatsIa.erase(previousPlayersStatsIa.end());
+		previousPlayersStatsCharacter.erase(previousPlayersStatsCharacter.end());
+		previousPlayersStatsSkillsCoolDown.erase(previousPlayersStatsSkillsCoolDown.end());
+		previousPlayersStatsName.erase(previousPlayersStatsName.end());
 		//Placement du curseur le joueur qui joue
 		currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 		currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
