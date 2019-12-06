@@ -24,22 +24,7 @@ void Move::execute (state::State& state){
 	int dx = destination.first, dy = destination.second;
 	
 	//Cout du deplacement en fonction du type de mouvement et de la destination
-	FieldTypeId destinationtype = state.getGrid()[dy][dx]->getFieldType();
-	MovementId movementtype = player->getCharacter()->getMovementType();
-	int distance;
-	switch (movementtype){
-		case NORMAL:
-			distance = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == MOUNTAIN) + (destinationtype == FOREST) + (destinationtype == SAND);
-			break;
-		case AGILE:
-			distance = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == SAND) + (destinationtype == MOUNTAIN);
-			break;
-		case NATURE:	
-			distance = 1 + 2 * (destinationtype == SAND) + 2 * (destinationtype == CITY) + (destinationtype == SWAMP);
-			break;
-		case RIDING:	
-			distance = 1 + 2 * (destinationtype == SWAMP);
-	}
+	int distance = PMcost(dx,dy,state);
 	
 	//Test PM suffisant
 	if (player->getMovement() - distance < 0){
@@ -95,4 +80,24 @@ void Move::execute (state::State& state){
 			}
 		}
 	}
+}
+
+int Move::PMcost(int dx, int dy, state::State& state){
+	FieldTypeId destinationtype = state.getGrid()[dy][dx]->getFieldType();
+	MovementId movementtype = player->getCharacter()->getMovementType();
+	int distance;
+	switch (movementtype){
+		case NORMAL:
+			distance = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == MOUNTAIN) + (destinationtype == FOREST) + (destinationtype == SAND);
+			break;
+		case AGILE:
+			distance = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == SAND) + (destinationtype == MOUNTAIN);
+			break;
+		case NATURE:	
+			distance = 1 + 2 * (destinationtype == SAND) + 2 * (destinationtype == CITY) + (destinationtype == SWAMP);
+			break;
+		case RIDING:	
+			distance = 1 + 2 * (destinationtype == SWAMP);
+	}
+	return distance;
 }

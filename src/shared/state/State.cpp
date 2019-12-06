@@ -17,8 +17,9 @@ std::vector<std::vector<Field*>>& State::getGrid(){
 	return refGrid;
 }
 
-std::vector<Player*> State::getPlayers(){
-	return players;
+std::vector<Player*>& State::getPlayers(){
+	std::vector<Player*>& refPlayers = players;
+	return refPlayers;
 }
 
 int State::getRound(){

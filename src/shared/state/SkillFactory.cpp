@@ -38,7 +38,7 @@ std::pair<int,int> range_ARC=std::make_pair(2,5);
 std::vector<std::pair<int,int>> area_ARC={std::make_pair(0,0)};
 int precision_ARC=90;
 std::vector<std::tuple<EffectId,int,int>> effect_ARC={};
-int cooldown_ARC=0;
+int cooldown_ARC=1;
 bool special_ARC=0;
 
 //Stat ARC_EN_CIEL
@@ -56,7 +56,7 @@ std::pair<int,int> range_SOIN=std::make_pair(0,1);
 std::vector<std::pair<int,int>> area_SOIN={std::make_pair(0,0)};
 int precision_SOIN=80;
 std::vector<std::tuple<EffectId,int,int>> effect_SOIN={std::make_tuple(HEAL_MEDIUM,0,100),std::make_tuple(HEAL_STATUS,0,50)};
-int cooldown_SOIN=0;
+int cooldown_SOIN=2;
 bool special_SOIN=1;
 
 //Stat SOIN_LEGER
@@ -65,7 +65,7 @@ std::pair<int,int> range_SOIN_LEGER=std::make_pair(0,1);
 std::vector<std::pair<int,int>> area_SOIN_LEGER={std::make_pair(0,0)};
 int precision_SOIN_LEGER=75;
 std::vector<std::tuple<EffectId,int,int>> effect_SOIN_LEGER={std::make_tuple(HEAL_LOW,0,100),std::make_tuple(HEAL_STATUS,0,30)};
-int cooldown_SOIN_LEGER=-1;
+int cooldown_SOIN_LEGER=1;
 bool special_SOIN_LEGER=1;
 
 //Stat ENTAILLE
@@ -87,12 +87,12 @@ int cooldown_TRANCHARGE=0;
 bool special_TRANCHARGE=0;
 
 //Stat PIETINEMENT
-int damage_PIETINEMENT=4;
+int damage_PIETINEMENT=10;
 std::pair<int,int> range_PIETINEMENT=std::make_pair(1,1);
 std::vector<std::pair<int,int>> area_PIETINEMENT={std::make_pair(0,0)};
 int precision_PIETINEMENT=90;
 std::vector<std::tuple<EffectId,int,int>> effect_PIETINEMENT={std::make_tuple(FEAR_CHAR,1,50)};
-int cooldown_PIETINEMENT=0;
+int cooldown_PIETINEMENT=2;
 bool special_PIETINEMENT=0;
 
 //Stat FEU_D_ENFER

@@ -242,9 +242,9 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 		infos[6] += "PA " + to_string(state.getPlaying()->getSkillCount());
 		infos[10] += "SKILLS";
 		infos[12] += state.getPlaying()->getSkills()[0]->getName();
-		if(state.getPlaying()->getSkills()[0]->getCooldown()>0) infos[12] =+ " " + to_string(state.getPlaying()->getSkills()[0]->getCooldown());
+		if(state.getPlaying()->getSkills()[0]->getCooldown()>0) infos[12] += " " + to_string(state.getPlaying()->getSkills()[0]->getCooldown());
 		infos[14] += state.getPlaying()->getSkills()[1]->getName();
-		if(state.getPlaying()->getSkills()[0]->getCooldown()>0) infos[14] =+ " " + to_string(state.getPlaying()->getSkills()[1]->getCooldown());
+		if(state.getPlaying()->getSkills()[1]->getCooldown()>0) infos[14] += " " + to_string(state.getPlaying()->getSkills()[1]->getCooldown());
 
 		
 		infos[18] += "TERRAIN";
