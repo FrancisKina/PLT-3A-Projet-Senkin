@@ -35,7 +35,7 @@ namespace state {
     // Operations
   public:
     std::vector<std::vector<Field*>>& getGrid ();
-    std::vector<Player*> getPlayers ();
+    std::vector<Player*>& getPlayers ();
     int getRound ();
     void setRound (int newRound);
     bool initGrid (std::string maptxt);
