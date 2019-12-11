@@ -53,14 +53,14 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 		int dist_min;
 		int dist_cf;
 		
-		std::tuple<Player*,int,std::pair<int,int>,bool> gmt;
+		std::tuple<Player*,int,std::pair<int,int>,bool,bool> gmt;
 		
 			move_from_danger=true;
 			move_to_foe=true;
 			//move_run_away=true;
 		while (player->getHp() > 0){
 			clock_t start_time = clock();
-			while(clock()<start_time+1000000);
+			while(clock()<start_time+100000);//1000000);
 			cout<<"new time"<<endl;
 			//sleep(1);
 			idskill={};
@@ -73,7 +73,6 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			targetsdirect={};
 			Field* player_field = grid[player_position.second][player_position.first];
 			//cout<<"fonction HeuristicIA::run : appel getPosMove"<<endl;
-			listPosMove = getPosMove(player, state);
 			//players = state.getPlayers();
 			players={};
 			for(size_t p = 0; p< state.getPlayers().size(); p++){
@@ -151,16 +150,19 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 					dist_min=dist_cf;
 				}
 			}
-			gmt = getMainTarget(state);
+			gmt = getMainTarget(engine);
 			bool direct_attack = get<3>(gmt);
 			id_skill = get<1>(gmt);
 			aimed_position = get<2>(gmt);
+			bool can_attack = get<4>(gmt);
 			cout<<"direct attaque : "<<direct_attack<<endl;
 			cout<<"id_skill : "<<id_skill<<endl;
 			cout<<"aimed position : ("<<aimed_position.first<<","<<aimed_position.second<<")"<<endl;
+			cout<<"can attaque : "<<can_attack<<endl;
 			
+			cout<<"move_to_foe"<<move_to_foe<<endl;
 			//-------------------------COMPORTEMENT-----------------------------------
-			cout<<"IA Action:";
+			cout<<endl<<"IA Action:";
 			//si peu de pv et sort de soin dispo
 			if(player->getHp()<player->getCharacter()->getHpBase()*0.2 and gotheal){
 				cout<<"soin urgent"<<endl;
@@ -170,6 +172,7 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			//si aucune attaque degat(cooldown porté general) et terrain dangereux, fuite vers case safe (si existe)
 			}else if(!gotattack && dangerousfield && move_from_danger){
 				cout<<"terrain dangereux"<<endl;
+				listPosMove = getPosMove(player, engine);
 				for(size_t c = 0; c<listPosMove.size();c++){
 					field_status=grid[listPosMove[c].second][listPosMove[c].first]->getFieldStatus();
 					if(field_status[12].second>0 || field_status[13].second>0){
@@ -188,27 +191,27 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 				cout<<"randomWay fuite"<<endl;
 				move_run_away=randomWay(aimed_position, state, player, engine, window);
 				//si ennemi a porté direct, attaque (au meilleur socre si plusieur)*/
-			}else if(direct_attack && aimed_position!=std::make_pair(0,0)){
+			}else if(direct_attack){
 			//}else if(gotrangedirect){
-				cout<<"attaque direct"<<endl;
-				/*gmt = getMainTarget(state, targetsdirect,idattackrangedirect);
-				id_skill = get<1>(gmt);
-				aimed_position = get<2>(gmt);*/
-				//std::make_tuple(main_target,id_skill,aimed_position) = getMainTarget(state, targetsdirect,idattackrangedirect); //getMainTarget=> choissi la cible qui finira avecles pv les plus bas avec l'attaque la mieux adapté (aussi en fct de precision
-				Attack* attack = new Attack(aimed_position , id_skill);
+				cout<<"attaque direct"<<endl;Attack* attack = new Attack(aimed_position , id_skill);
 				cout<<"skill lancé :"<<id_skill<<endl;
 				engine.executeCommand(attack, window);
 				
-			//sinon, avancé vers ennemi (le plus faible si pas de porté, au meilleur socre sinon)
-			//}else if(player->getMovement()>0 && move_to_foe){
-			}else if(!direct_attack && aimed_position!=std::make_pair(0,0) && move_to_foe){
+			//sinon, avancé vers l'ennemi le plus proche
+			}else if(!direct_attack && can_attack && move_to_foe && !(player->getX()==aimed_position.first && player->getY()==aimed_position.second)){
 				cout<<"rapproche ennemi"<<endl;
-				//std::make_tuple(main_target,id_skill,aimed_position) = getMainTarget(state, players,idskill);
-				/*gmt = getMainTarget(state, players,idskill);
-				id_skill = get<1>(gmt);
-				aimed_position = get<2>(gmt);*/
+				cout<<"position d'origine "<<player->getX()<<","<<player->getY()<<endl;
 				cout<<"randomWay vers ennemi :"<<aimed_position.first<<","<<aimed_position.second<<endl;
-				move_to_foe=randomWay(aimed_position, state, player, engine, window);
+				//move_to_foe=randomWay(aimed_position, state, player, engine, window);
+				Move* move = new Move(aimed_position);
+				engine.executeCommand(move, window);
+				if(player->getX()==aimed_position.first && player->getY()==aimed_position.second){
+					move_to_foe=true;
+					cout<<"Mouvement réussi"<<endl<<endl;
+				}else{
+					move_to_foe=false;
+					cout<<"Mouvement raté"<<endl;
+				}
 				cout<<"move done : "<<move_to_foe<<endl;
 			//sinon si attaque de soin et pv<0.9*pvbase, soin
 			}else if(player->getHp()<player->getCharacter()->getHpBase()*0.9 and gotheal){
@@ -235,7 +238,7 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 }
 
 bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, state::Player* player, engine::Engine& engine, sf::RenderWindow& window){
-	//cout<<"fonction HeuristicIA::randomWay : début d'execution"<<endl;
+	cout<<"fonction HeuristicIA::randomWay : début d'execution"<<endl;
 	int H, V, X, Xf, Xp, Y, Yf, Yp, ax,ay,bx,by;
 	std::pair<int,int> position;
 	X=player->getX();
@@ -246,8 +249,10 @@ bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, 
 	V=Yf-Y;
 	bool move_possible=true;
 	int direction;
+	cout<<"Mouvement total : "<<H<<" horizontal, "<<V<<" vertical"<<endl;
 	if(H==0 && V==0){
 		move_possible=false;
+		cout<<"Mouvement sur place"<<endl;
 	}
 	while(move_possible && !(H==0 && V==0)){
 		direction =rand()%2;
@@ -294,6 +299,7 @@ bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, 
 			Xp=X+bx;
 			Yp=Y+by;
 		}
+		cout<<"Mouvement de ("<<X<<","<<Y<<") vers ("<<Xp<<","<<Yp<<")"<<endl;
 		position={Xp,Yp};
 		
 		Move* move = new Move(position);
@@ -303,15 +309,17 @@ bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, 
 			Y=player->getY();
 			H=Xf-X;
 			V=Yf-Y;
+			cout<<"Mouvement réussi"<<endl<<endl;
 		}else{
 			move_possible=false;
+			cout<<"Mouvement raté"<<endl;
 		}
 	}
-	//cout<<"fonction HeuristicIA::randomWay : fin d'execution"<<endl;
+	cout<<"fonction HeuristicIA::randomWay : fin d'execution"<<endl;
 	return move_possible;
 }
 
-std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarget(state::State state){
+std::tuple<state::Player*,int,std::pair<int,int>,bool,bool> HeuristicIA::getMainTarget(engine::Engine& engine){
 	//renvoie le meilleur cible pour le joueur et pour une liste d'attaque, sur l'ennemi le plus proche (renvoie alors la position a attaquer), sinon la cible optimal( la case pour etre a porté/se rapprocher de la cible optimal)
 	cout<<"fonction HeuristicIA::getMainTarget : début d'execution"<<endl;
 	//attention postion en sortie=aimed_position!=position target sortie (si attaque en zone)
@@ -321,6 +329,7 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 	std::vector<int> distance;
 	std::vector<int> id_skills={};
 	std::vector<int> id_direct_skills={};
+	state::State state=engine.getState();	
 	int id_skill;
 	Player* main_target;
 	//std::vector<std::vector<Player*>> target;
@@ -353,18 +362,12 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 	}
 	cout<<"size players "<<players.size()<<endl;
 	//test cible plus proche
-	int a;
-	if(players[0]==player){
-		a=1;
-	}else{
-		a=0;
-	}
 	Player* closest_foe;
-	closest_foe=players[a];
+	closest_foe=players[0];
 	int dist_min;
-	dist_min=(player->getX()-players[a]->getX())*(player->getX()-players[a]->getX())+(player->getY()-players[a]->getY())*(player->getY()-players[a]->getY());
+	dist_min=(player->getX()-players[0]->getX())*(player->getX()-players[0]->getX())+(player->getY()-players[0]->getY())*(player->getY()-players[0]->getY());
 	int dist_cf;
-	for(size_t cf=0; cf<players.size();cf++){
+	for(size_t cf=1; cf<players.size();cf++){
 		dist_cf =(player->getX()-players[cf]->getX())*(player->getX()-players[cf]->getX())+(player->getY()-players[cf]->getY())*(player->getY()-players[cf]->getY());
 		if(dist_min>dist_cf){
 			closest_foe=players[cf];
@@ -373,6 +376,7 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 	}
 	main_target=closest_foe;
 	hp=main_target->getHp();
+	bool can_attack=false;
 	//test attaque degat direct ou deplacement
 	if(player->getSkillCount()>0){
 		cout<<"fonction HeuristicIA::getMainTarget : test type d'action : debut boucle skills"<<endl;
@@ -380,13 +384,18 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 		for(size_t s=0; s<player->getSkills().size(); s++){
 			skill = player->getSkills()[s];
 			cout<<"fonction HeuristicIA::getMainTarget : test type d'action : boucle skills n#"<<s<<endl;
-			if(skill->getDamage()>0 && skill->getCooldown()==0){
+			//attaques de degat
+			if(skill->getDamage()>0){
 				cout<<"fonction HeuristicIA::getTargetDirect : appelé par getMainTarget"<<endl;
 				id_skills.push_back(s);
 				skills.push_back(skill);
 				direct = getTargetDirect(state, player, s);
+				cout<<endl<<endl<<"Attaque "<<skill->getName();
+				cout<<" a "<<direct.second.size()<<" cibles directes pour "<<direct.first.size()<<" cases visable"<<endl<<endl<<endl;
+				can_attack=true;
 				for(size_t d=0;d<direct.second.size();d++){
-					if(direct.second[d]==closest_foe){
+					//attaque de dégat lancable tout de suite
+					if(direct.second[d]==closest_foe && skill->getCooldown()<1){
 						direct_attack=true;
 						direct_skills.push_back(skill);
 						id_direct_skills.push_back(s);
@@ -399,126 +408,72 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 	cout<<"fonction HeuristicIA::getMainTarget : test type d'action : fin boucle skills"<<endl;
 	cout<<"resultat test: directe attaque= "<<direct_attack<<endl;
 	//calcul des scores
-	if(direct_attack){
-		skills=direct_skills;
-		id_skills=id_direct_skills;
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): attaque directe"<<endl;
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): debut boucle skills"<<endl;
-		for(size_t s=0; s<skills.size(); s++){
-			skill=player->getSkills()[id_skills[s]];
-			cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): boucle skill n#"<<s<<endl;
-			//si ennemi a porté direct, attaque
-				//vpt:calcul precision
-				score.push_back(hp-skill->getDamage());//(hp-skill->getDamage())*num_target/precision vpt change en float
-			cout<<"score attaque directe n#"<<s<<"="<<hp-skill->getDamage()<<endl;
-		}
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): fin boucle skills"<<endl;
-	}else{
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score: aucun ennemie à porte "<<endl;
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score: debut boucle skills"<<endl;
-		for(size_t s=0; s<skills.size(); s++){
-			skill=player->getSkills()[id_skills[s]];
-			cout<<"fonction HeuristicIA::getMainTarget : calcul de score: boucle skill n#"<<s<<endl;
-			//vpt:calcul precision
-				dist=(main_target->getX()-player->getX())*(main_target->getX()-player->getX())+(main_target->getY()-player->getY())*(main_target->getY()-player->getY());
-				cout<<"dist="<<dist<<endl;
-				cout<<"hp="<<hp<<endl;
-				score.push_back((hp-skill->getDamage())*dist);//(hp-skill->getDamage())*num_target*dist/precision vpt change en float 
-			//cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin calcul"<<endl;
-			cout<<"score attaque n#"<<s<<"="<<hp-skill->getDamage()<<endl;
-		}
-		cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin boucle player"<<endl;
-	}
-	cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin boucle skills"<<endl;
-	//comparaison des scores
-	if(skills.size()!=0){
-		score_min = score[0];
-	}
-	cout<<"fonction HeuristicIA::getMainTarget : definition main_taget: debut boucle skill"<<endl;
-	for(size_t s=0; s<skills.size(); s++){
-		cout<<"fonction HeuristicIA::getMainTarget : definition main_taget: boucle skill n#"<<s<<endl;
-		
-			cout<<"score min="<<score_min<<endl;
-			cout<<"Score attaque n#"<<id_skills[s]<<" = "<<score[id_skills[s]]<<endl;
-			if(score_min>=score[s] ){
-				cout<<"nouveau score min"<<endl;
-				score_min=score[s];
-				id_skill=id_skills[s];
-			}
-			cout<<endl;
-			cout<<"skill_id.size()"<<id_skills.size()<<endl<<endl;
-		
-	}
-	//definition cible
-	if(id_skills.size()!=0){
-		main_skill_range=player->getSkills()[id_skill]->getRange();
-		main_skill_area=player->getSkills()[id_skill]->getArea();
-		cout<<"fonction HeuristicIA::getMainTarget : definition case ciblé:"<<endl;
+	if(can_attack){
 		if(direct_attack){
-			aimed={player->getX()+main_skill_range.first,player->getY()};
-			//verifier dans quel direction et range est l'attaque
-			for(size_t d=0; d<4;d++){
-				if(main_skill_range.first==0){
-					r_init=1;
-				}else{
-					r_init=main_skill_range.first;
-				}
-				for(int r=r_init;r<main_skill_range.second+1;r++){
-					for(size_t a=0;a<main_skill_area.size();a++){
-						if(d==0){
-							//nord
-							x_area=-main_skill_area[a].first;
-							y_area=-main_skill_area[a].second;
-							x_range=0;
-							y_range=-r;
-						}else if(d==1){
-							//sud
-							x_area=main_skill_area[a].first;
-							y_area=main_skill_area[a].second;
-							x_range=0;
-							y_range=r;
-						}else if(d==2){
-							//est
-							x_area=-main_skill_area[a].second;
-							y_area=main_skill_area[a].first;
-							x_range=r;
-							y_range=0;
-						}else if(d==3){
-							//ouest
-							x_area=main_skill_area[a].second;
-							y_area=-main_skill_area[a].first;
-							x_range=-r;
-							y_range=0;
-						}
-						cout<<"position cible ("<<main_target->getX()<<","<<main_target->getY()<<endl;
-						cout<<"position attaquant ("<<player->getX()<<","<<player->getY()<<endl;
-						cout<<"position central attaque = ("<<main_target->getX()+x_range<<","<<main_target->getY()+y_range<<")"<<endl;
-						cout<<"ajout area ("<<x_area<<","<<y_area<<endl;
-						cout<<"case selectionner ("<<player->getX()+x_area+x_range<<","<<player->getY()+y_area+y_range;
-						if(main_target->getX()==(player->getX()+x_area+x_range) && main_target->getY()==(player->getY()+y_area+y_range)){
-							aimed={player->getX()+x_range,player->getY()+y_range};
-							cout<<"Cible prinipal:"<<main_target->getName()<<endl;
-							cout<<"position visé à attaqué = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
-							cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(directe)"<<endl;
-							return std::make_tuple(main_target,id_skill,aimed,direct_attack);
-						}
-					}
-				}
+			skills=direct_skills;
+			id_skills=id_direct_skills;
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): attaque directe"<<endl;
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): debut boucle skills"<<endl;
+			for(size_t s=0; s<skills.size(); s++){
+				skill=player->getSkills()[id_skills[s]];
+				cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): boucle skill n#"<<s<<endl;
+				//si ennemi a porté direct, attaque
+					//vpt:calcul precision
+					score.push_back(hp-skill->getDamage());//(hp-skill->getDamage())*num_target/precision vpt change en float
+				cout<<"score attaque directe n#"<<s<<"="<<hp-skill->getDamage()<<endl;
 			}
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score (direct): fin boucle skills"<<endl;
 		}else{
-			//todo modifié avec getposMove
-			listPos = getPosMove(player, state);
-			aimed=listPos[0];
-			cout<<"taille listposmove"<<listPos.size()<<endl;
-			cout<<"position main target "<<main_target->getX()<<","<<main_target->getY()<<endl;
-			for(size_t l=0;l<listPos.size();l++){
-				if(main_skill_range.first==0){
-					r_init=1;
-				}else{
-					r_init=main_skill_range.first;
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score: aucun ennemie à porte "<<endl;
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score: debut boucle skills"<<endl;
+			for(size_t s=0; s<skills.size(); s++){
+				skill=player->getSkills()[id_skills[s]];
+				cout<<"fonction HeuristicIA::getMainTarget : calcul de score: boucle skill n#"<<s<<endl;
+				//vpt:calcul precision
+					dist=(main_target->getX()-player->getX())*(main_target->getX()-player->getX())+(main_target->getY()-player->getY())*(main_target->getY()-player->getY());
+					cout<<"dist="<<dist<<endl;
+					cout<<"hp="<<hp<<endl;
+					score.push_back((hp-skill->getDamage())*dist);//(hp-skill->getDamage())*num_target*dist/precision vpt change en float 
+				//cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin calcul"<<endl;
+				cout<<"score attaque n#"<<s<<"="<<hp-skill->getDamage()<<endl;
+			}
+			cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin boucle player"<<endl;
+		}
+		cout<<"fonction HeuristicIA::getMainTarget : calcul de score: fin boucle skills"<<endl;
+		//comparaison des scores
+		if(skills.size()!=0){
+			score_min = score[0];
+		}
+		cout<<"fonction HeuristicIA::getMainTarget : definition main_taget: debut boucle skill"<<endl;
+		for(size_t s=0; s<skills.size(); s++){
+			cout<<"fonction HeuristicIA::getMainTarget : definition main_taget: boucle skill n#"<<s<<endl;
+			
+				cout<<"score min="<<score_min<<endl;
+				cout<<"Score attaque n#"<<id_skills[s]<<" = "<<score[id_skills[s]]<<endl;
+				if(score_min>=score[s] ){
+					cout<<"nouveau score min"<<endl;
+					score_min=score[s];
+					id_skill=id_skills[s];
 				}
-				for(int r=r_init;r<main_skill_range.second+1;r++){
-					for(size_t d=0; d<4;d++){
+				cout<<endl;
+				cout<<"skill_id.size()"<<id_skills.size()<<endl<<endl;
+			
+		}
+		//definition cible
+		if(id_skills.size()!=0){
+			main_skill_range=player->getSkills()[id_skill]->getRange();
+			main_skill_area=player->getSkills()[id_skill]->getArea();
+			cout<<"fonction HeuristicIA::getMainTarget : definition case ciblé:"<<endl;
+			if(direct_attack){
+				aimed={player->getX()+main_skill_range.first,player->getY()};
+				//verifier dans quel direction et range est l'attaque
+				for(size_t d=0; d<4;d++){
+					if(main_skill_range.first==0){
+						r_init=1;
+					}else{
+						r_init=main_skill_range.first;
+					}
+					for(int r=r_init;r<main_skill_range.second+1;r++){
 						for(size_t a=0;a<main_skill_area.size();a++){
 							if(d==0){
 								//nord
@@ -534,61 +489,181 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool> HeuristicIA::getMainTarge
 								y_range=r;
 							}else if(d==2){
 								//est
-								x_area=main_skill_area[a].second;
-								y_area=-main_skill_area[a].first;
+								x_area=-main_skill_area[a].second;
+								y_area=main_skill_area[a].first;
 								x_range=r;
 								y_range=0;
 							}else if(d==3){
 								//ouest
-								x_area=-main_skill_area[a].second;
-								y_area=main_skill_area[a].first;
+								x_area=main_skill_area[a].second;
+								y_area=-main_skill_area[a].first;
 								x_range=-r;
 								y_range=0;
 							}
-							cout<<"l = "<<l<<endl;
-							cout<<"d = "<<d<<endl;
-							cout<<"r = "<<r<<endl;
-							cout<<"a = "<<a<<endl;
-							if(l==0 && d==0 && a==0 && r==main_skill_range.first){
-								dist=((x_area+x_range+listPos[l].first)-main_target->getX())*((x_area+x_range+listPos[l].first)-main_target->getX())+((y_area+y_range+listPos[l].second)-main_target->getY())*((y_area+y_range+listPos[l].second)-main_target->getY());
-								aimed=listPos[l];
-								cout<<"initialisation aimed"<<endl;
-							}
-							if(main_target->getX()==(x_area+x_range+listPos[l].first) && main_target->getY()==(y_area+y_range+listPos[l].second)){
-								aimed=listPos[l];
+							/*cout<<"position cible ("<<main_target->getX()<<","<<main_target->getY()<<endl;
+							cout<<"position attaquant ("<<player->getX()<<","<<player->getY()<<endl;
+							cout<<"position central attaque = ("<<main_target->getX()+x_range<<","<<main_target->getY()+y_range<<")"<<endl;
+							cout<<"ajout area ("<<x_area<<","<<y_area<<endl;
+							cout<<"case selectionner ("<<player->getX()+x_area+x_range<<","<<player->getY()+y_area+y_range;
+							*/if(main_target->getX()==(player->getX()+x_area+x_range) && main_target->getY()==(player->getY()+y_area+y_range)){
+								aimed={player->getX()+x_range,player->getY()+y_range};
 								cout<<"Cible prinipal:"<<main_target->getName()<<endl;
-								cout<<"position optimal pour attaquer = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
-								cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(ditance)"<<endl;
-								return std::make_tuple(main_target,id_skill,aimed,direct_attack);
-							}else{
-								if(dist>=((x_area+x_range+listPos[l].first)-main_target->getX())*((x_area+x_range+listPos[l].first)-main_target->getX())+((y_area+y_range+listPos[l].second)-main_target->getY())*((y_area+y_range+listPos[l].second)-main_target->getY())){
-									dist=((x_area+x_range+listPos[l].first)-main_target->getX())*((x_area+x_range+listPos[l].first)-main_target->getX())+((y_area+y_range+listPos[l].second)-main_target->getY())*((y_area+y_range+listPos[l].second)-main_target->getY());
-									aimed=listPos[l];
-									cout<<"nouveau aimed"<<endl;
-								}
+								cout<<"position visé à attaqué = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+								cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(directe)"<<endl;
+								return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
 							}
 						}
 					}
 				}
+			}else{
+				int H, V, X, Xf, Xp, Y, Yf, Yp, ax,ay,bx,by;
+				X=player->getX();
+				Y=player->getY();
+				Xf=main_target->getX();
+				Yf=main_target->getY();
+				H=Xf-X;
+				V=Yf-Y;
+				if((abs(Xp-X)==0 && abs(Yp-Y)==1) || (abs(Xp-X)==1 && abs(Yp-Y)==0)){
+					cout<<"Cible prinipal:"<<main_target->getName()<<endl;
+					cout<<"position aléatoir pour ce raprocher de l'ennemi = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+					cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(a une case de la cible)"<<endl;
+					return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
+				}
+				int direction;
+				direction =rand()%2;
+				if(V<0){
+					by=-1;
+					bx=0;
+				}else if(V>0){
+					by=1;
+					bx=0;
+				}
+				if(H<0){
+					ax=-1;
+					ay=0;
+				}else if(H>0){
+					ay=0;
+					ax=1;
+				}
+				if(V==0){
+					ay=0;
+					by=0;
+					if(H<0){
+						ax=-1;
+						bx=-1;
+					}else{
+						ax=1;
+						bx=1;
+					}
+				}else if(H==0){
+					ax=0;
+					bx=0;
+					if(V<0){
+						ay=-1;
+						by=-1;
+					}else{
+						ay=1;
+						by=1;
+					}
+				}
+				
+				if(direction==0){
+					Xp=X+ax;
+					Yp=Y+ay;
+				}else{
+					Xp=X+bx;
+					Yp=Y+by;
+				}
+				aimed={Xp,Yp};
+				cout<<"Cible prinipal:"<<main_target->getName()<<endl;
+				cout<<"position aléatoir pour ce raprocher de l'ennemi = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+				cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(ditance)"<<endl;
+				return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
+				//todo modifié avec getposMove
+				/*listPos = getPosMove(player, engine);
+				cout<<"taille listposmove"<<listPos.size()<<endl;
+				cout<<"position main target "<<main_target->getX()<<","<<main_target->getY()<<endl;
+				for(size_t l=0;l<listPos.size();l++){
+					if(main_skill_range.first==0){
+						r_init=1;
+					}else{
+						r_init=main_skill_range.first;
+					}
+					for(int r=r_init;r<main_skill_range.second+1;r++){
+						for(size_t d=0; d<4;d++){
+							for(size_t a=0;a<main_skill_area.size();a++){
+								if(d==0){
+									//nord
+									x_area=-main_skill_area[a].first;
+									y_area=-main_skill_area[a].second;
+									x_range=0;
+									y_range=-r;
+								}else if(d==1){
+									//sud
+									x_area=main_skill_area[a].first;
+									y_area=main_skill_area[a].second;
+									x_range=0;
+									y_range=r;
+								}else if(d==2){
+									//est
+									x_area=main_skill_area[a].second;
+									y_area=-main_skill_area[a].first;
+									x_range=r;
+									y_range=0;
+								}else if(d==3){
+									//ouest
+									x_area=-main_skill_area[a].second;
+									y_area=main_skill_area[a].first;
+									x_range=-r;
+									y_range=0;
+								}
+								cout<<"l = "<<l<<endl;
+								cout<<"d = "<<d<<endl;
+								cout<<"r = "<<r<<endl;
+								cout<<"a = "<<a<<endl;
+								if(main_target->getX()==(x_area+x_range+listPos[l].first) && main_target->getY()==(y_area+y_range+listPos[l].second)){
+									aimed=listPos[l];
+									cout<<"Cible prinipal:"<<main_target->getName()<<endl;
+									cout<<"position optimal pour attaquer = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+									cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(ditance)"<<endl;
+									return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
+								}else{
+									if(dist>=((x_area+x_range+listPos[l].first)-main_target->getX())*((x_area+x_range+listPos[l].first)-main_target->getX())+((y_area+y_range+listPos[l].second)-main_target->getY())*((y_area+y_range+listPos[l].second)-main_target->getY())){
+										dist=((x_area+x_range+listPos[l].first)-main_target->getX())*((x_area+x_range+listPos[l].first)-main_target->getX())+((y_area+y_range+listPos[l].second)-main_target->getY())*((y_area+y_range+listPos[l].second)-main_target->getY());
+										aimed=listPos[l];
+										cout<<"nouveau aimed"<<endl;
+									}
+								}
+							}
+						}
+					}
+				}*/
 			}
+			cout<<"Cible prinipal:"<<main_target->getName()<<endl;
+			cout<<"position pour se rapprocher de l'ennemi = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+			cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(cible trop loin)"<<endl;
+			return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
 		}
+	}else{
+		cout<<"Cible prinipal:"<<main_target->getName()<<endl;
+		cout<<"position pour se rapprocher de l'ennemi = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
+		cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(pas d'attaque possible)"<<endl;
+		return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
 	}
-	aimed=std::make_pair(0,0);
-	cout<<"Cible prinipal:"<<main_target->getName()<<endl;
-	cout<<"position pour se rapprocher de l'ennemi = ("<<aimed.first<<","<<aimed.second<<")"<<endl;
-	cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(erreur)"<<endl;
-	return std::make_tuple(main_target,id_skill,aimed,direct_attack);
 }
 
-std::vector<std::pair<int,int>>  HeuristicIA::getPositionsAccessible(state::State state, state::Player* player, std::vector<std::pair<int,int>> lmpp, int PM){
+std::vector<std::pair<int,int>>  HeuristicIA::getPositionsAccessible(engine::Engine& engine, state::Player* player, std::vector<std::pair<int,int>> lmpp, int PM){
 	//cout<<"fonction HeuristicIA::getPositionsAccessible : début d'execution"<<endl;
 	//renvoie l'ensemble des cases accessibles pour un joueur a partir d'une case donné pour un nombre de PM donné
 	std::vector<std::pair<int,int>>  lmp=lmpp;
+	state::State state=engine.getState();
 	std::vector<std::pair<int,int>> new_pos;
 	std::pair<int,int> pos_next_case;
 	Field* next_case;
 	if(PM>0){
+		//cout<<"PM > 0"<<endl;
 		for(int d=0;d<4;d++){
+			//cout<<"d="<<d<<endl;
 			//definition next_case
 			if(d==0){
 				pos_next_case.first=player->getX()+1;
@@ -607,13 +682,29 @@ std::vector<std::pair<int,int>>  HeuristicIA::getPositionsAccessible(state::Stat
 			
 			//ajout de cases
 			//todo add f(PM) et presence autre joueur
-			if(next_case->getFieldStatus()[11].second!=0){
-				int PMused=1;
+			//cout<<"status bloqué de la case ajouté = "<<next_case->getFieldStatus()[11].second<<" tours"<<endl;
+			if(next_case->getFieldStatus()[11].second==0){
+				int PMused;
+				FieldTypeId destinationtype = state.getGrid()[pos_next_case.second][pos_next_case.first]->getFieldType();
+				MovementId movementtype = player->getCharacter()->getMovementType();
+				switch (movementtype){
+					case NORMAL:
+						PMused = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == MOUNTAIN) + (destinationtype == FOREST) + (destinationtype == SAND);
+						break;
+					case AGILE:
+						PMused = 1 + 2 * (destinationtype == SWAMP) + 2 * (destinationtype == SAND) + (destinationtype == MOUNTAIN);
+						break;
+					case NATURE:	
+						PMused = 1 + 2 * (destinationtype == SAND) + 2 * (destinationtype == CITY) + (destinationtype == SWAMP);
+						break;
+					case RIDING:	
+						PMused = 1 + 2 * (destinationtype == SWAMP);
+				}
 				bool toadd;
 				new_pos=lmpp;
 				new_pos.push_back(pos_next_case);
 				//cout<<"fonction HeuristicIA::getPositionsAccessible : appelé par lui même avec "<<PM<<" PM restant"<<endl;
-				new_pos = getPositionsAccessible(state,player,new_pos,PM-PMused);
+				new_pos = getPositionsAccessible(engine,player,new_pos,PM-PMused);
 				for(size_t i=0;i<new_pos.size();i++){
 					toadd=true;
 					for(size_t j=0; j<lmp.size();j++){
@@ -633,25 +724,27 @@ std::vector<std::pair<int,int>>  HeuristicIA::getPositionsAccessible(state::Stat
 }
 
 
-std::vector<std::pair<int,int>> HeuristicIA::getPosMove (state::Player* player, state::State state){
+std::vector<std::pair<int,int>> HeuristicIA::getPosMove (state::Player* player, engine::Engine& engine){
 	//cout<<"fonction HeuristicIA::getPosMove : début d'execution"<<endl;
 	//renvoie l'ensemble des cases accessibles par le joueur
 	int X=player->getX();
 	int Y=player->getY();
-	std::vector<std::pair<int,int>> listPosMove={{X,Y}};
+	std::vector<std::pair<int,int>> listPosMoveA={{X,Y}};
+	//cout<<"fonction HeuristicIA::getPositionsAccessible : PM="<<player->getMovement()<<endl;
 	//cout<<"fonction HeuristicIA::getPositionsAccessible : appelé par getPosMove"<<endl;
-	listPosMove=getPositionsAccessible(state,player,listPosMove,player->getMovement());
+	std::vector<std::pair<int,int>> listPosMove=getPositionsAccessible(engine,player,listPosMoveA,player->getMovement());
 	//cout<<"fonction HeuristicIA::getPosMove : fin d'execution"<<endl;
 	return listPosMove;
 }
 
-std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getTargetAccessible(state::State state, state::Player* player, int skill_num){
+std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getTargetAccessible(engine::Engine& engine, state::Player* player, int skill_num){
 	cout<<"fonction HeuristicIA::getTargetAccessible : début d'execution"<<endl;
 	//renvoie l'ensemble des cases attaquables (tout type) par le joueur pour une attaque donnée
 	state::Skill* attack = player->getSkills()[skill_num];
 	//cout<<"fonction HeuristicIA::getPosMove : appel par getTargetAccessible"<<endl;
-	std::vector<std::pair<int,int>> listPosMove = getPosMove(player, state);
+	std::vector<std::pair<int,int>> listPosMove = getPosMove(player, engine);
 	std::vector<std::pair<int,int>> v_posField;
+	state::State state=engine.getState();
 	std::vector<state::Player*> targets;
 			int pos_x;
 			int pos_y;
@@ -756,12 +849,18 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 	//renvoie l'ensemble des cases attaquables directement par le joueur pour une attaque donnée (tout type)
 	state::Skill* attack = player->getSkills()[skill_num];
 	std::pair<int,int> pos_player = {player->getX(),player->getY()};
-	std::vector<std::pair<int,int>> v_posField;
-	std::vector<state::Player*> targets;
+	std::vector<std::pair<int,int>> v_posField={};
+	std::vector<state::Player*> targets={};
+	std::vector<std::pair<state::FieldStatusId,int>> statusCase;
+	std::vector<state::Player*> players = state.getPlayers();
+	size_t sizePlayers = players.size();
+	int pos_x;
+	int pos_y;
+	bool is_blocked;
 
 	
 	//ajoute tout les cible target case possible avec range
-	std::vector<std::pair<int,int>> posTargets;
+	std::vector<std::pair<int,int>> posTargets={};
 	std::pair<int,int> posTarget;
 	for(size_t d=0;d<4;d++){
 		int r_init;
@@ -771,7 +870,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 		}else{
 			r_init =attack->getRange().first;
 		}
-		for(int r= r_init;r<attack->getRange().second;r++){
+		for(int r= r_init;r<attack->getRange().second+1;r++){
 			if(d==0){
 				posTarget.first=player->getX()+r;
 				posTarget.second=player->getY();
@@ -789,19 +888,15 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 		}
 		
 	}
-	cout<<"posTargets défini (td)"<<endl;
+	cout<<"taille area "<<attack->getArea().size()<<endl;
+	cout<<"taille posTargets "<<posTargets.size()<<endl;
 	for (size_t p=0; p<posTargets.size();p++){
-		
-		std::vector<Field*> v_caseField;
-		std::vector<state::Player*> players = state.getPlayers();
-		size_t sizePlayers = players.size();
-		int pos_x;
-		int pos_y;
-		bool is_blocked;
+		cout<<"boucle de postargets n"<<p<<endl;
 		
 		//verifier si il n'ya pas de blockattck et si attaque possible
-		for(int d=0;d<4;d++){
-			for(size_t i=0;i<attack->getArea().size();i++){
+		for(size_t i=0;i<attack->getArea().size();i++){
+			cout<<"boucle de area n"<<i<<endl;
+			for(int d=0;d<4;d++){
 				is_blocked=false;
 				//ajoute la zone d'effet de l'attaque
 				if(d==0){
@@ -821,9 +916,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 					pos_y=posTargets[p].second-attack->getArea()[i].first;
 					pos_x=posTargets[p].first+attack->getArea()[i].second;
 				}
-				
-				v_caseField.push_back(state.getGrid()[pos_y][pos_x]);
-				std::vector<std::pair<state::FieldStatusId,int>> statusCase = v_caseField[i]->getFieldStatus();
+				statusCase = state.getGrid()[pos_y][pos_x]->getFieldStatus();
 				for(size_t c=0; c<statusCase.size();c++){
 					if (statusCase[c].first==BLOCKATTACK && statusCase[c].second!=0){
 						is_blocked=true;
@@ -849,7 +942,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 	return {v_posField,targets};
 }
 
-std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getPosAttack (state::Player* player, state::State state){
+std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getPosAttack (state::Player* player, engine::Engine& engine){
 	cout<<"fonction HeuristicIA::getPosAttack : début d'execution"<<endl;
 	//renvoie l'ensemble des joueurs etcases attaquables (dégats) par le joueur
 	std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> listPosSkill;
@@ -857,7 +950,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 	for(size_t s=0; s<player->getSkills().size();s++){
 		if(player->getSkills()[s]->getCooldown()==0 && player->getSkills()[s]->getDamage()>0){
 	cout<<"fonction HeuristicIA::getTargetAccessible : appelé par getPosAttack"<<endl;
-			targets = getTargetAccessible(state,player,s);
+			targets = getTargetAccessible(engine,player,s);
 			listPosSkill.first.insert(listPosSkill.first.end(),targets.first.begin(), targets.first.end());
 			listPosSkill.second.insert(listPosSkill.second.end(),targets.second.begin(), targets.second.end());
 		}
@@ -866,7 +959,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 	return listPosSkill;
 }
 
-std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getPosSkill (state::Player* player, state::State state){
+std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getPosSkill (state::Player* player, engine::Engine& engine){
 	cout<<"fonction HeuristicIA::getPosSkill : début d'execution"<<endl;
 	//renvoie l'ensemble des joueurs et cases attaquables (tout type) et par le joueur
 	std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> listPosSkill;
@@ -874,7 +967,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 	for(size_t s=0; s<player->getSkills().size();s++){
 		if(player->getSkills()[s]->getCooldown()==0){
 	cout<<"fonction HeuristicIA::getTargetAccessible : appelé par getPosSkill"<<endl;
-			targets = getTargetAccessible(state,player,s);
+			targets = getTargetAccessible(engine,player,s);
 			listPosSkill.first.insert(listPosSkill.first.end(),targets.first.begin(), targets.first.end());
 			listPosSkill.second.insert(listPosSkill.second.end(),targets.second.begin(), targets.second.end());
 		}
