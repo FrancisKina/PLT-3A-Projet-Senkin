@@ -97,9 +97,9 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 	
 	currentState.notifyObservers(currentState, window);
 	
+	//Fin de jeu
 	if (currentState.getPlayers().size() == 1){
 		cout << "#################### " << players[0]->getName() <<  " A GAGNE ####################" << endl;
-		while(1){}
 	}
 }
 
