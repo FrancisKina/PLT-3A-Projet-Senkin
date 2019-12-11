@@ -524,6 +524,9 @@ int main(int argc,char* argv[])
 					if(event.type == sf::Event::Closed){
 						window.close();
 					}
+					if (event.type == sf::Event::KeyPressed){
+						engine.keyCommand(event, window);
+					}
 				}
 				deepAi.run(engine,window);
 				window.display();

@@ -13,7 +13,9 @@ using namespace std;
 
 Attack::Attack (std::pair<int,int> newPosTarget, int newnSkill){
 	id = ATTACK;
+	n = newnSkill;
 	nSkill = newnSkill;
+	pos = newPosTarget;
 	posTarget = newPosTarget;
 	attaque_possible = false;
 	direction_skill = SOUTH;

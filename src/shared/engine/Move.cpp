@@ -12,6 +12,7 @@ int sgn(int val){
 
 Move::Move(std::pair<int,int> newDestination){
 	id = MOVE;
+	pos = newDestination;
 	destination = newDestination;
 }
 
