@@ -528,7 +528,9 @@ int main(int argc,char* argv[])
 						engine.keyCommand(event, window);
 					}
 				}
-				deepAi.run(engine,window);
+				if (state.getPlayers().size()>1){
+					deepAi.run(engine,window);
+				}
 				window.display();
 			}
 		}
