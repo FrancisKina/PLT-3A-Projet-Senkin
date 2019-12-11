@@ -4,9 +4,9 @@
 
 using namespace state;
 
-//type de zone d'application : decrit dans le cas d'une attque vers le heut
+//type de zone d'application : decrit dans le cas d'une attque vers le sud
 //CROIX ALLONGÉ
-std::vector<std::pair<int,int>> area_type_long_cross={std::make_pair(0,0),std::make_pair(1,0),std::make_pair(-1,0),std::make_pair(0,1),std::make_pair(0,-1),std::make_pair(0,2)};
+std::vector<std::pair<int,int>> area_type_long_cross={std::make_pair(0,0),std::make_pair(1,0),std::make_pair(-1,0),std::make_pair(0,1),std::make_pair(0,-1),std::make_pair(0,-2)};
 
 //CROIX
 std::vector<std::pair<int,int>> area_type_cross={std::make_pair(0,0),std::make_pair(1,0),std::make_pair(-1,0),std::make_pair(0,1),std::make_pair(0,-1)};

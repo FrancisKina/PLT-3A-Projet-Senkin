@@ -127,6 +127,24 @@ void EndActions::execute(state::State& state){
 					cout << "Diminution des PM"<< endl;
 					player->setMovement(player->getMovement()-2);
 				}
+				chanceEffet=rand()%100 + 1;
+				if(chanceEffet>=50){
+					cout << "Effet Poison rate "<< endl;
+				}else{
+					cout << "Joueur empoisonne"<< endl;
+					bool test_fc=true;
+					for(size_t s=0; s<status.size();s++){
+						if ((status[s].first==POISONED) && (status[s].second>2)){
+							test_fc=false;
+							break;
+						}
+					}
+					if(test_fc){
+						std::pair<CharStatusId, int> newStatus = {POISONED,2};
+						player->updateStatus(newStatus);
+						cout<<"Le joueur "<<player->getName()<<" sera emposionné pendant "<<2<<" tours"<<endl;
+					}
+				}
 			}
 			//Desert
 			if(current_field_type==SAND){

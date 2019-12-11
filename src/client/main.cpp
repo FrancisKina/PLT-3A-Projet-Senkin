@@ -325,14 +325,14 @@ int main(int argc,char* argv[])
 			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
 			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
 					//Positions
-			state.getPlayers()[0]->setX(2);
-			state.getPlayers()[0]->setY(2);
-			state.getPlayers()[1]->setX(2);
-			state.getPlayers()[1]->setY(21);
-			state.getPlayers()[2]->setX(21);
-			state.getPlayers()[2]->setY(21);
-			state.getPlayers()[3]->setX(21);
-			state.getPlayers()[3]->setY(2);
+			state.getPlayers()[0]->setX(10);
+			state.getPlayers()[0]->setY(10);
+			state.getPlayers()[1]->setX(10);
+			state.getPlayers()[1]->setY(14);
+			state.getPlayers()[2]->setX(14);
+			state.getPlayers()[2]->setY(14);
+			state.getPlayers()[3]->setX(14);
+			state.getPlayers()[3]->setY(10);
 				//Initialisation des skills
 			SkillFactory sf;
 			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(PIETINEMENT)});
