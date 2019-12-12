@@ -295,7 +295,9 @@ int main(int argc,char* argv[])
 						engine.keyCommand(event, window);
 					}
 				}
-				ai.run(engine,window);
+				if(state.getPlayers().size()>1){
+					ai.run(engine,window);
+				}
 				window.display();
 			}
 		}
@@ -365,7 +367,9 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 				}
-				heuristicAi.run(engine,window);
+				if(state.getPlayers().size()>1){
+					heuristicAi.run(engine,window);
+				}
 				window.display();
 			}
 		}
