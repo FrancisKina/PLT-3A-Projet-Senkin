@@ -29,21 +29,24 @@ namespace render {
     std::vector<TileSet> tilesets;
     std::vector<Layer> layers;
     int tileSize;
+    sf::RenderWindow window;
     // Operations
   public:
     StateLayer ();
     std::vector<TileSet>& getTilesets ();
     std::vector<Layer>& getLayers ();
-    void initLayers (state::State& state, int tileSize);
+    void initLayers (state::State& state, int tileSize = 30);
     void displayLayers (state::State& state);
-    void stateChanged (state::State& state, sf::RenderWindow& window);
+    void stateChanged (state::State& state);
     void draw (sf::RenderWindow& window);
-    void setWindow (sf::RenderWindow& newWindow);
+    sf::RenderWindow& getWindow ();
+    void initWindow (state::State& state);
     // Setters and Getters
     void setTilesets(const std::vector<TileSet>& tilesets);
     void setLayers(const std::vector<Layer>& layers);
     int getTileSize() const;
     void setTileSize(int tileSize);
+    void setWindow(const sf::RenderWindow& window);
   };
 
 };

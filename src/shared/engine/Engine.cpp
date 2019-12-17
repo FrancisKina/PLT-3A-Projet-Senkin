@@ -11,7 +11,7 @@ Engine::Engine(){
 
 }
 
-void Engine::executeCommand(Command* command, sf::RenderWindow& window){
+void Engine::executeCommand(Command* command){
 	//cout<<"execute appel"<<endl;
 	std::vector<int> inter;
 	std::vector<std::vector<int>> inter_b;
@@ -95,7 +95,7 @@ void Engine::executeCommand(Command* command, sf::RenderWindow& window){
 	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
-	currentState.notifyObservers(currentState, window);
+	currentState.notifyObservers(currentState);
 	
 	//Fin de jeu
 	if (currentState.getPlayers().size() == 1){
@@ -174,7 +174,7 @@ void Engine::startGame (state::State& state){
 	cout << endl << "---------- Tour du joueur " << currentState.getPlaying()->getName() << " ----------" << endl;
 }
 
-void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
+void Engine::keyCommand (sf::Event event){
 	
 	if (currentState.getPlaying()->getIa() == true) return;
 
@@ -246,7 +246,7 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 				}
 				else if (cursorinfo->getCursorY() == 23) {
 					currentState.setCommandMode(FIELD);
-					executeCommand(new EndActions(), currentWindow);
+					executeCommand(new EndActions());
 				}
 			}
 			else if (currentState.getCommandMode() == SKILL) {
@@ -255,11 +255,11 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 				currentState.setCommandMode(SKILLTARGET);
 			}
 			else if (currentState.getCommandMode() == SKILLTARGET) {
-				executeCommand(new Attack(std::make_pair (cursor->getCursorX(),cursor->getCursorY()) , cursorinfo->getCursorY()-6), currentWindow);
+				executeCommand(new Attack(std::make_pair (cursor->getCursorX(),cursor->getCursorY()) , cursorinfo->getCursorY()-6));
 				currentState.setCommandMode(SKILL);
 			}
 			else if (currentState.getCommandMode() == MOVEMENT) {
-				executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())), currentWindow);
+				executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
 				currentState.setCommandMode(COMMAND);
 			}
 			break;
@@ -282,7 +282,7 @@ void Engine::keyCommand (sf::Event event, sf::RenderWindow& window){
 			break;
 	}
 	
-	currentState.notifyObservers(currentState, window);
+	currentState.notifyObservers(currentState);
 
 }
 
@@ -377,7 +377,7 @@ bool Engine::rollBack(){
 		//Placement du curseur le joueur qui joue
 		currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 		currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
-		currentState.notifyObservers(currentState, currentWindow);
+		currentState.notifyObservers(currentState);
 		first= false;
 	}else{
 		cout<<"Etat initial atteint"<<endl;

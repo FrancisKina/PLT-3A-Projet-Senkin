@@ -11,7 +11,7 @@ using namespace state;
 using namespace std;
 
 
-int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
+int RandomIA::run (engine::Engine& engine){
 	// L'IA effectue ces actions uniquement si c'est son tour
 	State state = engine.getState();
 	if(state.getPlaying()->getIa()==true){
@@ -75,7 +75,7 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 					randomPosition = {bot->getX()-1,bot->getY()};
 				}
 				Move* move = new Move(randomPosition);
-				engine.executeCommand(move, window);
+				engine.executeCommand(move);
 				
 			}
 			// 1 : Cas de l'attaque
@@ -126,7 +126,7 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 					// Commande d'attaque
 					
 					Attack* attack = new Attack(randomPosition , randomAttaque);
-					engine.executeCommand(attack, window);
+					engine.executeCommand(attack);
 					
 					
 				}else{
@@ -139,7 +139,7 @@ int RandomIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			else if (randomAction == 2){
 				//cout<<" fin de tour"<<endl;
 				EndActions* endactions = new EndActions();
-				engine.executeCommand(endactions, window);
+				engine.executeCommand(endactions);
 				actionPossible=false;
 				return 0;
 			}

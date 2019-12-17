@@ -11,20 +11,22 @@ using namespace state;
 using namespace std;
 
 
-int DeepIA::run (engine::Engine& engine, sf::RenderWindow& window){
+
+
+int DeepIA::run (engine::Engine& engine){
 	
 	if(!engine.getState().getPlaying()->getIa()) return 0;
 	
 	actionsList = possibleActions(engine); //Liste des actions possibles
 	//cout << "actionsList " << actionsList.size() << endl;
 	
-	actionEvaluation(engine, window);
+	actionEvaluation(engine);
 	
 	int minmaxout = minmax();
 	Command* optimalaction = actionsList[minmaxout];
 	
 	cout << "===================== MOUVEMENT OPTIMAL  " << optimalaction->getCommandID() << endl;
-	engine.executeCommand(optimalaction, window);
+	engine.executeCommand(optimalaction);
 	
 	while (actionsList.size()>0){
 		actionsList.pop_back();
@@ -149,7 +151,7 @@ std::vector<engine::Command*> DeepIA::possibleActions (engine::Engine& engine){
 }
 
 /* Evaluation du score final de chaque action en fonction des coups suivants de l'adversaire*/ 
-void DeepIA::actionEvaluation (engine::Engine& engine, sf::RenderWindow& window){
+void DeepIA::actionEvaluation (engine::Engine& engine){
 	State& state = engine.getState();
 	Player* playing = state.getPlaying();
 	

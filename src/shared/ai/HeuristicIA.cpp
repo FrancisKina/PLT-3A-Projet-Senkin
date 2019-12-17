@@ -11,7 +11,7 @@ using namespace state;
 using namespace std;
 
 
-int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
+int HeuristicIA::run (engine::Engine& engine){
 	cout<<"----------------------------------------------"<<endl;
 	cout<<"fonction HeuristicIA::run : début d'execution"<<endl;
 	State state = engine.getState();
@@ -117,13 +117,13 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			if(player->getHp()<player->getCharacter()->getHpBase()*0.2 and gotheal){
 				cout<<"soin urgent"<<endl;
 				Attack* attack = new Attack(player_position , idheal);
-				engine.executeCommand(attack, window);
+				engine.executeCommand(attack);
 				//si ennemi a porté direct, attaque (au meilleur socre si plusieur)*/
 			}else if(direct_attack){
 			//}else if(gotrangedirect){
 				cout<<"attaque direct"<<endl;Attack* attack = new Attack(aimed_position , id_skill);
 				cout<<"skill lancé :"<<id_skill<<endl;
-				engine.executeCommand(attack, window);
+				engine.executeCommand(attack);
 				
 			//sinon, avancé vers l'ennemi le plus proche
 			}else if(!direct_attack && can_attack && move_to_foe && !(player->getX()==aimed_position.first && player->getY()==aimed_position.second)){
@@ -132,7 +132,7 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 				cout<<"Movement vers ennemi :"<<aimed_position.first<<","<<aimed_position.second<<endl;
 				//move_to_foe=randomWay(aimed_position, state, player, engine, window);
 				Move* move = new Move(aimed_position);
-				engine.executeCommand(move, window);
+				engine.executeCommand(move);
 				if(player->getX()==aimed_position.first && player->getY()==aimed_position.second){
 					move_to_foe=true;
 					cout<<"Mouvement réussi"<<endl<<endl;
@@ -145,12 +145,12 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 			}else if(player->getHp()<player->getCharacter()->getHpBase()*0.9 and gotheal){
 				cout<<"soin"<<endl;
 				Attack* attack = new Attack(player_position ,idheal);
-				engine.executeCommand(attack, window);
+				engine.executeCommand(attack);
 			}else{
 				cout<<"fin action"<<endl;
 				//si a porté ennemi et pas attaque ou plus pm et pa, fin de tour
 				EndActions* endactions = new EndActions();
-				engine.executeCommand(endactions, window);
+				engine.executeCommand(endactions);
 				cout<<"fonction HeuristicIA::run : fin d'execution"<<endl;
 	cout<<"----------------------------------------------"<<endl;
 				return 0;
@@ -165,7 +165,7 @@ int HeuristicIA::run (engine::Engine& engine, sf::RenderWindow& window){
 	return 0;
 }
 
-bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, state::Player* player, engine::Engine& engine, sf::RenderWindow& window){
+bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, state::Player* player, engine::Engine& engine){
 	cout<<"fonction HeuristicIA::randomWay : début d'execution"<<endl;
 	int H, V, X, Xf, Xp, Y, Yf, Yp, ax,ay,bx,by;
 	std::pair<int,int> position;
@@ -231,7 +231,7 @@ bool HeuristicIA::randomWay(std::pair<int,int> destination, state::State state, 
 		position={Xp,Yp};
 		
 		Move* move = new Move(position);
-		engine.executeCommand(move, window);
+		engine.executeCommand(move);
 		if(player->getX()==position.first && player->getY()==position.second){
 			X=player->getX();
 			Y=player->getY();

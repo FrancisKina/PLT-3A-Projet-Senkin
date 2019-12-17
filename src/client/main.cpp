@@ -115,7 +115,7 @@ int main(int argc,char* argv[])
 			
 			engine.startGame(state);
 			/*
-			state.sortPlayers(); // Trier les personnages par initiative pour l'ordre d'action et donner le tour d'action au premier joueur
+			state.sortPlayers(); // Trier les personnages par initiative podowsize * (state.getGrid()[0].size() + 8), windowsize * state.getGrid().size()),ur l'ordre d'action et donner le tour d'action au premier joueur
 			
 				//Initialisation du curseur
 			state.initCursor();
@@ -204,7 +204,7 @@ int main(int argc,char* argv[])
 				if(go){
 					sleep(1);
 					if (commandList.size() > 0){
-						engine.executeCommand(commandList[0],window);
+						engine.executeCommand(commandList[0]);
 						go = !(commandList[0] == endactions); //Mettre en pause si fin d'action
 						commandList.erase(commandList.begin());
 					}
@@ -292,11 +292,11 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 					if (event.type == sf::Event::KeyPressed){
-						engine.keyCommand(event, window);
+						engine.keyCommand(event);
 					}
 				}
 				if(state.getPlayers().size()>1){
-					ai.run(engine,window);
+					ai.run(engine);
 				}
 				window.display();
 			}
@@ -368,7 +368,7 @@ int main(int argc,char* argv[])
 					}
 				}
 				if(state.getPlayers().size()>1){
-					heuristicAi.run(engine,window);
+					heuristicAi.run(engine);
 				}
 				window.display();
 			}
@@ -447,11 +447,11 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 					if (event.type == sf::Event::KeyPressed){
-						engine.keyCommand(event, window);
+						engine.keyCommand(event);
 					}
 				}
 				if((end - begin)/ CLOCKS_PER_SEC<60){
-					ai.run(engine,window);
+					ai.run(engine);
 					end = clock();
 					cout<<endl<<endl<<"---------------------------------------------------"<<endl;
 					cout<<"         temps clock = "<<(end - begin)/ CLOCKS_PER_SEC<<endl<<"-----------------------------------------"<<endl<<endl;
@@ -508,15 +508,14 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			int SIZE = 30;	
+			//int SIZE = 30;	
 				
 			StateLayer statelayer;
-			statelayer.initLayers(state, SIZE);
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
-			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			statelayer.draw(window);
+			sf::RenderWindow& window = statelayer.getWindow(); 
 			
 			DeepIA deepAi;
 			
@@ -529,11 +528,11 @@ int main(int argc,char* argv[])
 						window.close();
 					}
 					if (event.type == sf::Event::KeyPressed){
-						engine.keyCommand(event, window);
+						engine.keyCommand(event);
 					}
 				}
 				if (state.getPlayers().size()>1){
-					deepAi.run(engine,window);
+					deepAi.run(engine);
 				}
 				window.display();
 			}

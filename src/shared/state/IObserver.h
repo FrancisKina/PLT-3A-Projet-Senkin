@@ -2,7 +2,6 @@
 #ifndef STATE__IOBSERVER__H
 #define STATE__IOBSERVER__H
 
-#include <SFML/Graphics.hpp>
 
 namespace state {
   class State;
@@ -15,7 +14,7 @@ namespace state {
   class IObserver {
     // Operations
   public:
-    virtual void stateChanged (State& state, sf::RenderWindow& window) = 0;
+    virtual void stateChanged (State& state) = 0;
     // Setters and Getters
   };
 
