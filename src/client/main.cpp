@@ -264,21 +264,12 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			int SIZE = 35;	
-			
-			state.getGrid()[12][11]->updateFieldStatus({TOWER,999});
-			state.getGrid()[12][13]->updateFieldStatus({TENT,999});
-			state.getGrid()[12][15]->updateFieldStatus({FORT,999});
-				
 			StateLayer statelayer;
-			statelayer.initLayers(state, SIZE);
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
-			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			//sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			sf::RenderWindow& window = engine.getWindow();
-			window.create(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			statelayer.draw(window);
+			sf::RenderWindow& window = statelayer.getWindow(); 
 			window.setKeyRepeatEnabled(false);
 			
 			RandomIA ai;
@@ -346,15 +337,13 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			int SIZE = 30;	
-				
 			StateLayer statelayer;
-			statelayer.initLayers(state, SIZE);
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
-			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			statelayer.draw(window);
+			sf::RenderWindow& window = statelayer.getWindow(); 
+			window.setKeyRepeatEnabled(false);
 			
 			HeuristicIA heuristicAi;
 			
@@ -417,21 +406,12 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			int SIZE = 35;	
-			
-			state.getGrid()[12][11]->updateFieldStatus({TOWER,999});
-			state.getGrid()[12][13]->updateFieldStatus({TENT,999});
-			state.getGrid()[12][15]->updateFieldStatus({FORT,999});
-				
 			StateLayer statelayer;
-			statelayer.initLayers(state, SIZE);
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
 			state.registerObserver(&statelayer);
 				//Creation puis affichage de la fenêtre
-			int tilesize = statelayer.getLayers()[0].getQuads()[1].position.x - statelayer.getLayers()[0].getQuads()[0].position.x;
-			//sf::RenderWindow window(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			sf::RenderWindow& window = engine.getWindow();
-			window.create(sf::VideoMode(tilesize * (state.getGrid()[0].size() + 8), tilesize * state.getGrid().size()), "Test");
-			statelayer.draw(window);
+			sf::RenderWindow& window = statelayer.getWindow(); 
 			window.setKeyRepeatEnabled(false);
 			
 			RandomIA ai;
@@ -508,8 +488,6 @@ int main(int argc,char* argv[])
 			engine.startGame(state);
 			
 				//Initialisation de la liste des différents layers avec texture
-			//int SIZE = 30;	
-				
 			StateLayer statelayer;
 			statelayer.initLayers(state);
 			statelayer.initWindow(state);
