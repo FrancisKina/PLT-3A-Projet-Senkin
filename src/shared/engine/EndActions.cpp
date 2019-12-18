@@ -221,3 +221,12 @@ void EndActions::execute(state::State& state){
 	return;
 }
 
+
+Json::Value EndActions::serialize(){
+
+	Json::Value newCmd;	
+	newCmd["id"] = this->id;
+	newCmd["joueur"] = this->player->getName();
+	
+	return newCmd;
+}

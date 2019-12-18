@@ -748,3 +748,13 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 	//-----------------------------------
 }
 
+Json::Value Attack::serialize(){
+	Json::Value newCmd;
+	newCmd["id"] = this->id;
+	newCmd["joueur"] = this->player->getName();;
+	newCmd["xDestination"] = this->posTarget.first;
+	newCmd["yDestination"] = this->posTarget.second;
+	newCmd["attaque"] = this->nSkill;
+	
+	return newCmd;
+}
