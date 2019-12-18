@@ -22,12 +22,14 @@ void testSFML() {
 #include "render.h"
 #include "engine.h"
 #include "ai.h"
+#include "client.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
 using namespace engine;
 using namespace ai;
+using namespace client;
 
 
 int main(int argc,char* argv[])
@@ -514,6 +516,11 @@ int main(int argc,char* argv[])
 				}
 				window.display();
 			}
+		}
+		
+		else if(strcmp(argv[1],"thread")==0){
+			Client client;
+			client.run();
 		}
 		
     cout << argv[1] << endl;

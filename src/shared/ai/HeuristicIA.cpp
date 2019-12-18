@@ -24,7 +24,6 @@ int HeuristicIA::run (engine::Engine& engine){
 		bool gotheal=false;
 		int idheal;
 		int id_skill;
-		bool gotattack=false;
 		std::vector<int> idskill;
 		std::vector<Player*> targets;
 		std::vector<Player*> targetsdirect;
@@ -36,8 +35,6 @@ int HeuristicIA::run (engine::Engine& engine){
 		std::vector<Player*> gtd;
 		std::vector<std::pair<FieldStatusId,int>> player_field_status;
 		
-		bool dangerousfield;
-		bool move_from_danger;
 		bool move_to_foe;
 			
 		std::vector<std::pair<FieldStatusId, int>> field_status;
@@ -45,7 +42,6 @@ int HeuristicIA::run (engine::Engine& engine){
 		
 		std::tuple<Player*,int,std::pair<int,int>,bool,bool> gmt;
 	
-		move_from_danger=true;
 		move_to_foe=true;
 		
 		while (player->getHp() > 0){
@@ -76,7 +72,6 @@ int HeuristicIA::run (engine::Engine& engine){
 				cout<< "\t [Controle par le CPU heuristique] " << endl;
 				premierEssai = false;
 			}
-			gotattack = false;
 			gotheal = false;
 			//test attaques
 			if(player->getSkillCount()>0){
@@ -92,14 +87,8 @@ int HeuristicIA::run (engine::Engine& engine){
 					}
 				}
 			}
-			dangerousfield=false;
 			player_field_status=player_field->getFieldStatus();
-			//test : terrain dangereux
-			if(player->getMovement()>0 && (player_field_status[12].second>0 || player_field_status[13].second>0)){
-				dangerousfield=true;
-			}
-		
-			
+					
 			gmt = getMainTarget(engine);
 			bool direct_attack = get<3>(gmt);
 			id_skill = get<1>(gmt);
@@ -514,6 +503,7 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool,bool> HeuristicIA::getMain
 		cout<<"fonction HeuristicIA::getMainTarget : fin d'execution(pas d'attaque possible)"<<endl;
 		return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
 	}
+	return std::make_tuple(main_target,id_skill,aimed,direct_attack,can_attack);
 }
 
 std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> HeuristicIA::getTargetDirect(state::State state, state::Player* player, int skill_num){
@@ -588,7 +578,7 @@ std::pair<std::vector<std::pair<int,int>>,std::vector<state::Player*>> Heuristic
 					pos_y=posTargets[p].second-attack->getArea()[i].first;
 					pos_x=posTargets[p].first+attack->getArea()[i].second;
 				}
-				if(pos_x>=0 && pos_x<state.getGrid()[0].size() && pos_y>=0 && pos_y<state.getGrid().size()){
+				if(pos_x>=0 && pos_x<(int)state.getGrid()[0].size() && pos_y>=0 && pos_y<(int)state.getGrid().size()){
 					statusCase = state.getGrid()[pos_y][pos_x]->getFieldStatus();
 					for(size_t c=0; c<statusCase.size();c++){
 						if (statusCase[c].first==BLOCKATTACK && statusCase[c].second!=0){
