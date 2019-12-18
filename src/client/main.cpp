@@ -517,6 +517,253 @@ int main(int argc,char* argv[])
 				window.display();
 			}
 		}
+		/*record: enregistre les commandes*/
+		else if(strcmp(argv[1],"record")==0){
+			
+			srand(time(NULL));
+			//Initialisation générale
+				//Initialisation de la grille par le moteur
+			Engine engine;
+			State& state = engine.getState();
+			state.initGrid("res/maptest.txt");
+			
+				//Initialisation des personnages
+			CharacterFactory cf;
+			state.initPlayers(4);
+			
+					//Definition en IA
+			state.getPlayers()[0]->setIa(true);
+			state.getPlayers()[1]->setIa(true);
+			state.getPlayers()[2]->setIa(true);
+			state.getPlayers()[3]->setIa(true);
+					//Classes
+			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
+			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
+			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
+			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
+					//Positions
+			state.getPlayers()[0]->setX(10);
+			state.getPlayers()[0]->setY(10);
+			state.getPlayers()[1]->setX(10);
+			state.getPlayers()[1]->setY(14);
+			state.getPlayers()[2]->setX(14);
+			state.getPlayers()[2]->setY(14);
+			state.getPlayers()[3]->setX(14);
+			state.getPlayers()[3]->setY(10);
+				//Initialisation des skills
+			SkillFactory sf;
+			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(PIETINEMENT)});
+			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(SOIN_LEGER)});
+			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
+			
+			//debut du jeu
+			engine.setEnableRecord(true);
+			engine.startGame(state);
+			
+				//Initialisation de la liste des différents layers avec texture
+			StateLayer statelayer;
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
+			state.registerObserver(&statelayer);
+				//Creation puis affichage de la fenêtre
+			sf::RenderWindow& window = statelayer.getWindow(); 
+			window.setKeyRepeatEnabled(false);
+			
+			
+			Json::StyledWriter styledWriter;
+			std::ofstream file_id;
+			file_id.open("res/replay.txt");
+			
+			RandomIA ai;
+			clock_t begin = clock();
+			clock_t end = clock();
+			while (window.isOpen())
+			{
+				sf::Event event;
+				while (window.pollEvent(event))
+				{
+					if(event.type == sf::Event::Closed){
+						window.close();
+					}
+					if (event.type == sf::Event::KeyPressed){
+						engine.keyCommand(event);
+					}
+				}
+				if((end - begin)/ CLOCKS_PER_SEC<60){
+					engine.getRecord();
+					ai.run(engine);
+					end = clock();
+					cout<<endl<<endl<<"---------------------------------------------------"<<endl;
+					cout<<"         temps clock = "<<(end - begin)/ CLOCKS_PER_SEC<<endl<<"-----------------------------------------"<<endl<<endl;
+				}else{
+					window.close();
+				}
+				window.display();
+			}
+			file_id << styledWriter.write(engine.getRecord());
+
+			file_id.close();
+		}
+		
+		/*play : rejoue la partie enregistrée dans replay*/
+		else if(strcmp(argv[1],"play")==0){
+			
+			srand(time(NULL));
+			//Initialisation générale
+				//Initialisation de la grille par le moteur
+			Engine engine;
+			State& state = engine.getState();
+			state.initGrid("res/maptest.txt");
+			
+				//Initialisation des personnages
+			CharacterFactory cf;
+			state.initPlayers(4);
+			
+					//Definition en IA
+			state.getPlayers()[0]->setIa(false);
+			state.getPlayers()[1]->setIa(true);
+			state.getPlayers()[2]->setIa(true);
+			state.getPlayers()[3]->setIa(true);
+					//Classes
+			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
+			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
+			state.getPlayers()[2]->setCharacter(cf.createCharacter(ARCHER));
+			state.getPlayers()[3]->setCharacter(cf.createCharacter(DWARF));
+					//Positions
+			state.getPlayers()[0]->setX(10);
+			state.getPlayers()[0]->setY(10);
+			state.getPlayers()[1]->setX(10);
+			state.getPlayers()[1]->setY(14);
+			state.getPlayers()[2]->setX(14);
+			state.getPlayers()[2]->setY(14);
+			state.getPlayers()[3]->setX(14);
+			state.getPlayers()[3]->setY(10);
+				//Initialisation des skills
+			SkillFactory sf;
+			state.getPlayers()[0]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(PIETINEMENT)});
+			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(SOIN_LEGER)});
+			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
+			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
+			
+			//debut du jeu
+			engine.startGame(state);
+			
+				//Initialisation de la liste des différents layers avec texture
+			StateLayer statelayer;
+			statelayer.initLayers(state);
+			statelayer.initWindow(state);
+			state.registerObserver(&statelayer);
+				//Creation puis affichage de la fenêtre
+			sf::RenderWindow& window = statelayer.getWindow(); 
+			window.setKeyRepeatEnabled(false);
+			
+			
+			std::string fichier_commandes = "res/replay.txt";
+			std::ifstream file_id(fichier_commandes);
+			//file_id.open("res/replay.txt");
+			
+			bool partie_rejouee = false;
+			sf::Event event;
+			while (window.isOpen()){				
+				// Au premier appui sur P, on ouvre le fichier et on execute les commandes
+				if(partie_rejouee == false){// && sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
+					
+					cout << "--> Debut de la lecture <--" << endl;
+					
+					//Ouverture du fichier en lecture
+					//std::ifstream commandes_txt(fichier_commandes);
+					if (file_id){//commandes_txt){
+						Json::Value root;
+						Json::Reader reader;
+						if(!reader.parse(file_id,root)){//commandes_txt, root)){
+							cout 	<< "Failed to parse commandes\n"
+									<< reader.getFormattedErrorMessages();
+							return 0;
+						}
+						// Fermeture du fichier en lecture
+						//commandes_txt.close();
+						file_id.close();
+						
+						cout << "Taille du tableau de commandes de "<< fichier_commandes << " : " << root["tabCmd"].size() << endl;
+											
+						std::pair<int,int> pos;
+						int n;
+						std::string player;
+						bool good_player=false;
+						// Conversion en commandes
+						for (unsigned int i = 0; i < root["tabCmd"].size(); i++){
+							cout<<"test joueur"<<endl;
+							// Recherche du joueur
+							player=root["tabCmd"][i]["joueur"].asString();
+							cout<<"test joueur"<<endl<<"joueur = "<<state.getPlaying()->getName()<<endl<<"commade = "<<player<<endl;
+							if(root["tabCmd"][i]["joueur"].asString() == state.getPlaying()->getName()){
+								good_player=true;
+							}
+						}
+						if(good_player){
+							for (unsigned int i = 0; i < root["tabCmd"].size(); i++){
+								// Cas du deplacement
+								if(root["tabCmd"][i]["id"].asUInt() == 1){
+									cout<<"deplacement"<<endl;
+								
+									pos.first=root["tabCmd"][i]["xDestination"].asUInt();
+									pos.second=root["tabCmd"][i]["yDestination"].asUInt();
+									
+									Move* move = new Move(pos);
+									
+									engine.executeCommand(move);
+								}
+								// Cas de l'attaque
+								else if(root["tabCmd"][i]["id"].asUInt() == 2){
+									cout<<"attaquz"<<endl;
+								
+									pos.first=root["tabCmd"][i]["xDestination"].asUInt();
+									pos.second=root["tabCmd"][i]["yDestination"].asUInt();
+									n=root["tabCmd"][i]["attaque"].asUInt();
+									
+									Attack* attack=new Attack(pos , n);
+									
+									engine.executeCommand(attack);
+									
+								}
+								// Cas de la fin d'actions
+								else if(root["tabCmd"][i]["id"].asUInt() == 3){
+									cout<<"fin de tour"<<endl;
+									
+									EndActions* endactions = new EndActions();
+									
+									engine.executeCommand(endactions);
+								}
+								else{
+									cout << "La commande " << i << " est inconnue" << endl;
+								}						
+							}								
+						}else{
+							cout<<"pas le bon joueur:"<<endl<<"ordre de "<<state.getPlaying()->getName()<<" sur "<<good_player<<endl;
+						}
+					}
+					
+					else{
+						cerr << "Impossible d'ouvrir le fichier des commandes enregistrées (lecture)." << endl;
+						return 0;
+					}
+										
+					cout << "--> Lecture Terminée <--" << endl;
+					partie_rejouee = true;
+				}
+					
+				
+				while (window.pollEvent(event)){
+					// Fermeture de la fenetre
+					if (event.type == sf::Event::Closed){
+						window.close();
+					}
+				}					
+			}
+				
+		
+		}
 		
 		else if(strcmp(argv[1],"thread")==0){
 			Client client;

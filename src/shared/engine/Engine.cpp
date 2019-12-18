@@ -1,7 +1,9 @@
 #include "Engine.h"
 #include <iostream>
 #include <unistd.h>
+#include "../../../extern/jsoncpp-1.8.0/jsoncpp.cpp"
 #include "engine.h"
+
 
 using namespace state;
 using namespace engine;
@@ -28,7 +30,6 @@ void Engine::executeCommand(Command* command){
 		inter_c.push_back(inter_b);
 	}
 	previousGridStatus.push_back(inter_c);
-	
 	
 	std::vector<int> interX;
 	std::vector<int> interY;
@@ -101,6 +102,13 @@ void Engine::executeCommand(Command* command){
 	if (currentState.getPlayers().size() == 1){
 		cout << "#################### " << players[0]->getName() <<  " A GAGNE ####################" << endl;
 	}
+	
+	if (record_enable){
+		Json::Value newCmd = command->serialize();
+		record["tabCmd"][record["tailleReelle"].asUInt()] = newCmd;
+		record["tailleReelle"] = record["tailleReelle"].asUInt() + 1;
+	}
+	
 }
 
 
@@ -118,6 +126,11 @@ void Engine::startGame (state::State& state){
 	currentState.initCursor();
 	currentState.setCommandMode(FIELD);
 	previousStates={};
+	
+	
+	record["tailleReelle"] = 0;
+	record["tabCmd"][0] = "";
+	
 
 	cout<<"Lancement du jeu"<<endl;
 	currentState.setRound(1);
@@ -384,4 +397,12 @@ bool Engine::rollBack(){
 		first = true;
 	}
 	return first;
+}
+
+Json::Value Engine::getRecord(){
+	return record;
+}
+
+void Engine::setEnableRecord(bool val){
+	record_enable = val;
 }

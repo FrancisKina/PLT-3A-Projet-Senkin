@@ -102,3 +102,14 @@ int Move::PMcost(int dx, int dy, state::State& state){
 	}
 	return distance;
 }
+
+Json::Value Move::serialize(){
+
+	Json::Value newCmd;
+	newCmd["id"] = this->id;
+	newCmd["joueur"] = this->player->getName();
+	newCmd["xDestination"] = this->destination.first;
+	newCmd["yDestination"] = this->destination.second;
+	
+	return newCmd;
+}

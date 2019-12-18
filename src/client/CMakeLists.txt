@@ -31,3 +31,5 @@ endif()
 
 # vim: set sw=2 sts=2 et:
 
+#jsoncpp
+include_directories ("${PROJECT_SOURCE_DIR}/extern/jsoncpp-1.8.0")
