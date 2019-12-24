@@ -56,10 +56,10 @@ void Attack::execute (state::State& state){
 			v_caseField.push_back(state.getGrid()[v_casePos[i].second][v_casePos[i].first]);
 		}
 		
-		//effet gravité
 		int range_first=attack->getRange().first;
 		int range_second=attack->getRange().second;
 		if(!attack->getSpecial() && attack->getRange().second>1){
+		//effet gravité
 			if (casePlayer->getFieldStatus()[14].second>0){
 				range_second = attack->getRange().second-1;
 				if(attack->getRange().first>1){
@@ -68,6 +68,13 @@ void Attack::execute (state::State& state){
 				attack->setRange({range_first,range_second});
 				cout<<"La gravité diminue la porté de l'attaque."<<endl;
 			}
+		}
+		//effet tour
+		if (casePlayer->getFieldStatus()[21].second>0){
+			range_second = attack->getRange().second+1;
+				range_first = attack->getRange().first;
+			attack->setRange({range_first,range_second});
+			cout<<"La tour augmente la porté de l'attaque."<<endl;
 		}
 		
 		//VPT effet attaque passe-muraille (attaque_possible = true)
@@ -110,12 +117,19 @@ void Attack::execute (state::State& state){
 					skill_precision=skill_precision*0.75;
 					cout<<"La brume diminiue la precision de l'attaque (attaquant)."<<endl;
 				}
-				//faire condition distance gravite
+				//gravite
 				if (casePlayer->getFieldStatus()[i].first==GRAVITY && casePlayer->getFieldStatus()[i].second!=0){
 					if(range_first==0 && range_second==0 && !skill_special){
 						skill_damage=skill_damage*1.5;
 						cout<<"La gravite augemente les degats de l'attaque au corps a corps (attaquant)."<<endl;
 					}
+				}
+				//fort
+				if (casePlayer->getFieldStatus()[i].first==FORT && casePlayer->getFieldStatus()[i].second!=0){
+					
+						skill_damage=skill_damage*1.25;
+						cout<<"Le chateau augemente les degats de l'attaque (attaquant)."<<endl;
+					
 				}
 			}
 			//terrain cible
@@ -125,6 +139,11 @@ void Attack::execute (state::State& state){
 				if (caseCible->getFieldStatus()[i].first==MIST && caseCible->getFieldStatus()[i].second!=0){
 					skill_precision=skill_precision*0.75;
 					cout<<"La brume diminiue la precision de l'attaque (case cible)."<<endl;
+				}
+				//Fort
+				if (caseCible->getFieldStatus()[i].first==FORT && caseCible->getFieldStatus()[i].second!=0){
+					skill_precision=skill_precision*0.75;
+					cout<<"La chateaux diminiue la precision de l'attaque (case cible)."<<endl;
 				}
 			}
 			//type
@@ -681,8 +700,18 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 	int X = attacker->getX();
 	int Y = attacker->getY();
 	DirectionId direction_skill;
-	if((Y-attack->getRange().first)>=posTarget.second &&(Y-attack->getRange().second)<=posTarget.second && X==posTarget.first){
-		for(int j = attack->getRange().first; j<attack->getRange().second +1; j++){
+	int range_first=attack->getRange().first;
+	int range_second=attack->getRange().second;
+	Field *casePlayer = state.getGrid()[Y][X];
+	//effet tour
+	if (casePlayer->getFieldStatus()[21].second>0){
+		range_second = attack->getRange().second+1;
+		range_first = attack->getRange().first;
+		attack->setRange({range_first,range_second});
+		cout<<"La tour augmente la porté de l'attaque."<<endl;
+	}
+	if((Y-range_first)>=posTarget.second &&(Y-range_second)<=posTarget.second && X==posTarget.first){
+		for(int j = range_first; j<range_second +1; j++){
 			std::vector<std::pair<FieldStatusId, int>> statusCase = state.getGrid()[Y-j][X]->getFieldStatus();
 			for(size_t i=0; i<statusCase.size();i++){
 				if (statusCase[i].first==BLOCKATTACK && statusCase[i].second!=0){
@@ -696,8 +725,8 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 				}
 			}
 		}
-	}else if((Y+attack->getRange().first)<=posTarget.second && (Y+attack->getRange().second)>=posTarget.second && X==posTarget.first){
-		for(int j = attack->getRange().first; j<attack->getRange().second +1; j++){
+	}else if((Y+range_first)<=posTarget.second && (Y+range_second)>=posTarget.second && X==posTarget.first){
+		for(int j = range_first; j<range_second +1; j++){
 			std::vector<std::pair<FieldStatusId, int>> statusCase = state.getGrid()[Y+j][X]->getFieldStatus();
 			for(size_t i=0; i<statusCase.size();i++){
 				if (statusCase[i].first==BLOCKATTACK && statusCase[i].second!=0){
@@ -711,8 +740,8 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 				}
 			}
 		}
-	}else if((X-attack->getRange().first)>=posTarget.first && (X-attack->getRange().second)<=posTarget.first && Y==posTarget.second){
-		for(int j = attack->getRange().first; j<attack->getRange().second +1; j++){
+	}else if((X-range_first)>=posTarget.first && (X-range_second)<=posTarget.first && Y==posTarget.second){
+		for(int j = range_first; j<range_second +1; j++){
 			std::vector<std::pair<FieldStatusId, int>> statusCase = state.getGrid()[Y][X-j]->getFieldStatus();
 			for(size_t i=0; i<statusCase.size();i++){
 				if (statusCase[i].first==BLOCKATTACK && statusCase[i].second!=0){
@@ -726,8 +755,8 @@ std::pair<bool,state::DirectionId> Attack::checkDirection(state::State& state){
 				}
 			}
 		}
-	}else if((X+attack->getRange().first)<=posTarget.first && (X+attack->getRange().second)>=posTarget.first && Y==posTarget.second){
-		for(int j = attack->getRange().first; j<attack->getRange().second +1; j++){
+	}else if((X+range_first)<=posTarget.first && (X+range_second)>=posTarget.first && Y==posTarget.second){
+		for(int j = range_first; j<range_second +1; j++){
 			std::vector<std::pair<FieldStatusId, int>> statusCase = state.getGrid()[Y][X+j]->getFieldStatus();
 			for(size_t i=0; i<statusCase.size();i++){
 				if (statusCase[i].first==BLOCKATTACK && statusCase[i].second!=0){

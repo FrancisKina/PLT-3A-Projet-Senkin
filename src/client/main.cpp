@@ -112,6 +112,9 @@ int main(int argc,char* argv[])
 			
 			//test gravité
 			state.getGrid()[12][11]->updateFieldStatus({GRAVITY,999});
+			state.getGrid()[10][10]->updateFieldStatus({BURNING,999});
+			state.getGrid()[10][10]->updateFieldStatus({POISON,999});
+			state.getGrid()[10][10]->updateFieldStatus({TENT,999});
 			
 			engine.startGame(state);
 			/*
@@ -136,7 +139,7 @@ int main(int argc,char* argv[])
 				//Suite de commandes
 				//j2
 			std::vector<Command*> commandList;
-			commandList.push_back(new Move({11,11}));
+			commandList.push_back(new Move({11,14}));
 			commandList.push_back(new Move({11,13}));
 			commandList.push_back(new Move({11,11}));
 			EndActions* endactions = new EndActions();
@@ -200,7 +203,6 @@ int main(int argc,char* argv[])
 						cout << endl;
 					}
 				}
-				
 				if(go){
 					sleep(1);
 					if (commandList.size() > 0){
@@ -235,10 +237,10 @@ int main(int argc,char* argv[])
 			state.initPlayers(4);
 			
 					//Definition en IA
-			state.getPlayers()[0]->setIa(false);
+			state.getPlayers()[0]->setIa(true);
 			state.getPlayers()[1]->setIa(true);
 			state.getPlayers()[2]->setIa(true);
-			state.getPlayers()[3]->setIa(true);
+			state.getPlayers()[3]->setIa(false);
 					//Classes
 			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
 			state.getPlayers()[1]->setCharacter(cf.createCharacter(FROG));
@@ -262,6 +264,14 @@ int main(int argc,char* argv[])
 			
 			//debut du jeu
 			engine.startGame(state);
+			
+			state.getGrid()[12][11]->updateFieldStatus({GRAVITY,999});
+			state.getGrid()[10][10]->updateFieldStatus({BURNING,999});
+			state.getGrid()[10][10]->updateFieldStatus({POISON,999});
+			//state.getGrid()[10][10]->updateFieldStatus({SNOW,999});
+			state.getGrid()[11][11]->updateFieldStatus({TENT,999});
+			state.getGrid()[13][11]->updateFieldStatus({FORT,999});
+			state.getGrid()[13][13]->updateFieldStatus({TOWER,999});
 			
 				//Initialisation de la liste des différents layers avec texture
 			StateLayer statelayer;
@@ -483,6 +493,11 @@ int main(int argc,char* argv[])
 			state.getPlayers()[1]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(SOIN_LEGER)});
 			state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 			state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
+			
+			
+			state.getGrid()[11][11]->updateFieldStatus({TENT,999});
+			state.getGrid()[13][11]->updateFieldStatus({FORT,999});
+			state.getGrid()[13][13]->updateFieldStatus({TOWER,999});
 			
 			//debut du jeu
 			engine.startGame(state);

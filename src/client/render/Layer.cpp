@@ -249,7 +249,7 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 		
 		infos[18] += "TERRAIN";
 		std::vector<std::string> fieldName = {"","PLAINE","ROUTE","FORET","MONTAGNE","EAU","SABLE","VILLE","MARECAGE","MUR"};
-		std::vector<std::string> fieldStatusName = {"","PLUIE","NEIGE","BRUME","","","","","","","","BLOQUE ATT","BLOQUE MOUV","BRULE","POISON","GRAVITE","FORT","TENTE","TOUR"};
+		std::vector<std::string> fieldStatusName = {"","PLUIE","NEIGE","BRUME","","","","","","","","BLOQUE ATT","BLOQUE MOUV","BRULE","POISON","GRAVITE","","","","","FORT","TENTE","TOUR"};
 		state::Field* field = state.getGrid()[state.getCursor()->getCursorY()][state.getCursor()->getCursorX()];
 		infos[20] += fieldName[field->getFieldType()];
 		int k=0;

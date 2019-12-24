@@ -65,22 +65,23 @@ void Move::execute (state::State& state){
 	//Effets de terrain
 	state::Field* field = state.getGrid()[dy][dx];
 	int testEffect;
-	for (size_t j=0; j<field->getFieldStatus().size(); j++){
-		if(field->getFieldStatus()[j].first == POISON && field->getFieldStatus()[j].second > 0){
+	//for (size_t j=0; j<field->getFieldStatus().size(); j++){
+		//if(field->getFieldStatus()[j].first == POISON && field->getFieldStatus()[j].second > 0){
+		if(field->getFieldStatus()[13].second > 0){
 			testEffect = rand()%100 + 1;
 			if (testEffect > 70){
 				cout << "Terrain : le joueur est empoisonne" << endl;
 				player->updateStatus({POISONED,2});
 			}
 		}
-		if(field->getFieldStatus()[j].first == BURNING && field->getFieldStatus()[j].second > 0){
+		if(field->getFieldStatus()[12].second > 0){
 			testEffect = rand()%100 + 1;
 			if (testEffect > 50){
 				cout << "Terrain : le joueur brule" << endl;
 				player->updateStatus({BURNED,2});
 			}
 		}
-	}
+	//}
 }
 
 int Move::PMcost(int dx, int dy, state::State& state){
