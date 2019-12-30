@@ -767,7 +767,7 @@ int main(int argc,char* argv[])
 		
 		else if(strcmp(argv[1],"thread")==0){
 			Client client;
-			client.run();
+			//client.run();
 		}
 		
     cout << argv[1] << endl;

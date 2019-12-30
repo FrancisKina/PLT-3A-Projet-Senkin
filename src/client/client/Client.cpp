@@ -8,6 +8,13 @@
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
 #include <thread>
+*/
+
+#include "Client.h"
+#include <iostream>
+#include <unistd.h>
+#include <SFML/Graphics.hpp>
+#include <thread>
 
 using namespace state;
 using namespace engine;
@@ -15,10 +22,13 @@ using namespace render;
 using namespace std;
 using namespace client;
 using namespace ai;
-*/
 
+
+Client::Client(){
+}
 
 void Client::run(){
+	
 	srand(time(NULL));
 	//Initialisation générale
 		//Initialisation de la grille par le moteur
@@ -67,8 +77,6 @@ void Client::run(){
 		//Creation puis affichage de la fenêtre
 	sf::RenderWindow& window = statelayer.getWindow(); 
 	
-	DeepIA deepAi;
-	
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -81,9 +89,8 @@ void Client::run(){
 				engine.keyCommand(event);
 			}
 		}
-		if (state.getPlayers().size()>1){
-			deepAi.run(engine);
-		}
+
 		window.display();
 	}
+	
 }
