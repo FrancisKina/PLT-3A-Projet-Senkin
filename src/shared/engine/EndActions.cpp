@@ -97,7 +97,7 @@ void EndActions::execute(state::State& state){
 				}
 			}
 			//Incendie
-			if(field_status[12].second>0){
+			if(current_field_status[12].second>0){
 				chanceEffet=rand()%100 + 1;
 				if(chanceEffet>=50){
 					cout << "Effet BURN rate "<< endl;
@@ -114,6 +114,27 @@ void EndActions::execute(state::State& state){
 						std::pair<CharStatusId, int> newStatus = {BURNED,2};
 						player->updateStatus(newStatus);
 						cout<<"Le joueur "<<player->getName()<<" sera brule pendant "<<2<<" tours"<<endl;
+					}
+				}
+			}
+			//poison
+			if(current_field_status[13].second>0 && !(current_field_type==SWAMP)){
+				chanceEffet=rand()%100 + 1;
+				if(chanceEffet>=50){
+					cout << "Effet Poison rate "<< endl;
+				}else{
+					cout << "Joueur empoisonne"<< endl;
+					bool test_fc=true;
+					for(size_t s=0; s<status.size();s++){
+						if ((status[s].first==POISONED) && (status[s].second>2)){
+							test_fc=false;
+							break;
+						}
+					}
+					if(test_fc){
+						std::pair<CharStatusId, int> newStatus = {POISONED,2};
+						player->updateStatus(newStatus);
+						cout<<"Le joueur "<<player->getName()<<" sera emposionné pendant "<<2<<" tours"<<endl;
 					}
 				}
 			}
@@ -154,6 +175,18 @@ void EndActions::execute(state::State& state){
 				}else{
 					cout << "Baisse d'initative du joueur"<< endl;
 					player->setInitiative(player->getInitiative()-1);
+				}
+			}
+			//Hospice
+			if(current_field_status[20].second>0){
+				if(player->getHp()==player->getCharacter()->getHpBase()){
+					cout << "Aucun soin "<< endl;
+				}else if(player->getHp()>player->getCharacter()->getHpBase()-7){
+					cout << "Soin hospice : PV max"<< endl;
+					player->setHp(player->getCharacter()->getHpBase());
+				}else{
+					cout << "Soin hospice : 7 PV récupérer"<< endl;
+					player->setHp(player->getHp()+7);
 				}
 			}
 			
