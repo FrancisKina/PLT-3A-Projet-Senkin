@@ -14,7 +14,7 @@ Engine::Engine(){
 }
 
 void Engine::executeCommand(Command* command){
-	cout<<"execute appel"<<endl;
+	//cout<<"execute appel"<<endl;
 	std::vector<int> inter;
 	std::vector<std::vector<int>> inter_b;
 	std::vector<std::vector<std::vector<int>>> inter_c;
@@ -201,6 +201,10 @@ void Engine::keyCommand (sf::Event event){
 			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorX() > 0) cursor->setCursorX(cursor->getCursorX() - 1);
 				else cursor->setCursorX(0);	
+				
+				if(currentState.getCommandMode() == MOVEMENT){
+					executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
+				}
 			}
 			break;
 		//FLECHE HAUT
@@ -208,6 +212,10 @@ void Engine::keyCommand (sf::Event event){
 			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorY() > 0) cursor->setCursorY(cursor->getCursorY() - 1);
 				else cursor->setCursorY(0);	
+				
+				if(currentState.getCommandMode() == MOVEMENT){
+					executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
+				}
 			}
 			else if (currentState.getCommandMode() == COMMAND) {
 				if (cursorinfo->getCursorY() > 21) cursorinfo->setCursorY(cursorinfo->getCursorY() - 1);
@@ -222,7 +230,11 @@ void Engine::keyCommand (sf::Event event){
 		case sf::Keyboard::Right:
 			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorX() < (int)currentState.getGrid()[0].size()-1) cursor->setCursorX(cursor->getCursorX() + 1);
-				else cursor->setCursorX(currentState.getGrid()[0].size()-1);	
+				else cursor->setCursorX(currentState.getGrid()[0].size()-1);
+				
+				if(currentState.getCommandMode() == MOVEMENT){
+					executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
+				}
 			}
 			break;
 		//FLECHE BAS	
@@ -230,6 +242,10 @@ void Engine::keyCommand (sf::Event event){
 			if (currentState.getCommandMode() == FIELD || currentState.getCommandMode() == SKILLTARGET || currentState.getCommandMode() == MOVEMENT) {
 				if (cursor->getCursorY() < (int)currentState.getGrid().size()-1) cursor->setCursorY(cursor->getCursorY() + 1);
 				else cursor->setCursorY(currentState.getGrid().size()-1);
+				
+				if(currentState.getCommandMode() == MOVEMENT){
+					executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
+				}
 			}
 			else if (currentState.getCommandMode() == COMMAND) {
 				if (cursorinfo->getCursorY() < 23) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
@@ -272,12 +288,15 @@ void Engine::keyCommand (sf::Event event){
 				executeCommand(new Attack(std::make_pair (cursor->getCursorX(),cursor->getCursorY()) , cursorinfo->getCursorY()-6));
 				currentState.setCommandMode(SKILL);
 			}
+			/*
 			else if (currentState.getCommandMode() == MOVEMENT) {
 				executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
 				currentState.setCommandMode(COMMAND);
 			}
+			*/
 			break;
-	
+		
+		//ECHAP
 		case sf::Keyboard::Escape:
 			if (currentState.getCommandMode() == COMMAND) {
 				currentState.setCommandMode(FIELD);
@@ -296,7 +315,7 @@ void Engine::keyCommand (sf::Event event){
 			break;
 	}
 	
-	currentState.notifyObservers(currentState);
+	//currentState.notifyObservers(currentState);
 
 }
 
@@ -416,7 +435,6 @@ void Engine::setNextKeyCommand(sf::Event keycommand){
 void Engine::setNextCommand(Command* command){
 	nextCommand = command;
 	updatedCommand = false;
-	cout << "setNextCommand" << endl;
 }
 
 void Engine::update(){

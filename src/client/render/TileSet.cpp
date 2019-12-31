@@ -26,7 +26,7 @@ TileSet::TileSet(LayerId newIdLayer){
 	} else if (id==LAYERCURSOR){
 		cellWidth=20;
 		cellHeight=20;
-		imageFile="res/curseur2.png";
+		imageFile="res/curseur3.png";
 	} else if (id==LAYERINFOS){
 		cellWidth=21;
 		cellHeight=24;

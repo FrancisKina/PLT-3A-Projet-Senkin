@@ -86,12 +86,14 @@ bool Layer::loadFieldEffect(state::State& state, sf::Texture& textureTileset, sf
 bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
     		
 		texture = textureTileset;
+		clock_t mov = 2;
 		
       	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
 	   	quads.setPrimitiveType(sf::Quads);
        	quads.resize(width * height * 4 + 4); //Joueurs en jeu + le joueur qui joue dans la partie infos
        	
         // on remplit le tableau de vertex, avec un quad par tuile
+        
         for (size_t i = 0; i < width; i++){
               	sf::Vertex* quad = &quads[i * 4];
 				
@@ -102,11 +104,15 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				quad[3].position = sf::Vector2f(tileSize * state.getPlayers()[i]->getX() + tileSize/6.66, tileSize * (state.getPlayers()[i]->getY() + 1) - tileSize/10); //Bas gauche
 				
 				//Position de la texture;
+				
+				if(state.getPlayers()[i] == state.getPlaying()) mov = clock()%3 + 1;
+				else mov = 2;
+				
 				int classId = state.getPlayers()[i]->getCharacter()->getClassId() - 1;		
-				quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
-				quad[1].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
-				quad[2].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
-				quad[3].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
+				quad[0].texCoords = sf::Vector2f(textSize.x * (mov - 1 + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
+				quad[1].texCoords = sf::Vector2f(textSize.x * (mov + 9 * classId), (state.getPlayers()[i]->getDirection() - 1) * textSize.y);
+				quad[2].texCoords = sf::Vector2f(textSize.x * (mov + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
+				quad[3].texCoords = sf::Vector2f(textSize.x * (mov - 1 + 9 * classId), state.getPlayers()[i]->getDirection() * textSize.y);
 		}
 		
 		//INFOS
@@ -132,7 +138,7 @@ bool Layer::loadPlayerEffect(state::State& state, sf::Texture& textureTileset, s
     		
 		texture = textureTileset;
 		
-      	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
+      	// on redimensionne le tableau de vertex 
 	   	quads.setPrimitiveType(sf::Quads);
        	quads.resize((width * height + 1) * 4 * state.getPlayers()[0]->getStatus().size()); // +1 -> Affichage en infos
        	
@@ -229,6 +235,49 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 			quad[3].texCoords = sf::Vector2f(0, textSize.y * 2);
 		}	
 		
+		//Curseur skill
+		if (state.getCommandMode() == SKILLTARGET){
+			state::Player* playing = state.getPlaying();
+			state::Skill* skill = playing->getSkills()[state.getCursorInfo()->getCursorY() - 6];
+			
+			quads.resize(width * height * 4 + (skill->getRange().second - skill->getRange().first + 1) * 4 * 4);
+			
+			int dx,dy;
+			for(int range = skill->getRange().first; range <= skill->getRange().second; range++){
+				for(int d = 0; d < 4; d++){
+					if (d==0){
+						dx = range;
+						dy = 0;
+					}
+					else if (d==1){
+						dx = -range;
+						dy = 0;
+					}
+					else if (d==2){
+						dx = 0;
+						dy = range;
+					}
+					else if (d==3){
+						dx = 0;
+						dy = -range;
+					}
+				
+					quad = &quads[8 + (range - skill->getRange().first + d) * 4];
+					
+					//Position des 4 coins du quad (x, y)
+					quad[0].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx), tileSize * (state.getPlaying()->getY() + dy)); //Haut gauche
+					quad[1].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx + 1), tileSize * (state.getPlaying()->getY() + dy)); //Haut droite
+					quad[2].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx + 1), tileSize * (state.getPlaying()->getY() + dy + 1)); //Bas droite
+					quad[3].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx), tileSize * (state.getPlaying()->getY() + dy + 1)); //Bas gauche
+					
+					//Position de la texture;
+					quad[0].texCoords = sf::Vector2f(textSize.x, 0);
+					quad[1].texCoords = sf::Vector2f(textSize.x * 2, 0);
+					quad[2].texCoords = sf::Vector2f(textSize.x * 2, textSize.y);
+					quad[3].texCoords = sf::Vector2f(textSize.x, textSize.y);
+				}
+			}
+		}
 
 		return true;
 }

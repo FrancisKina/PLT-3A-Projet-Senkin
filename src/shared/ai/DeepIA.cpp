@@ -14,7 +14,6 @@ using namespace std;
 
 
 int DeepIA::run (engine::Engine& engine){
-	cout << "DeepIA run" << endl;
 	if(!engine.getState().getPlaying()->getIa()) return 0;
 	
 	actionsList = possibleActions(engine); //Liste des actions possibles

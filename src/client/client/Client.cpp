@@ -38,8 +38,8 @@ bool updated = true;
 void threadEngine(void* ptr1){
 	Engine* ptr_engine=(Engine*)ptr1;
 	while(1){
+		ptr_engine->update();
 		if(!updated){
-			ptr_engine->update();
 			updated = true;
 		}
 	}
@@ -110,7 +110,7 @@ void Client::run(){
 				window.close();
 			}
 			if (event.type == sf::Event::KeyPressed){
-				engine.keyCommand(event);
+				engine.setNextKeyCommand(event);
 			}
 		}
 		if (updated){
