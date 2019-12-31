@@ -13,6 +13,7 @@ using namespace std;
 
 int RandomIA::run (engine::Engine& engine){
 	// L'IA effectue ces actions uniquement si c'est son tour
+	sleep(5);
 	State state = engine.getState();
 	if(state.getPlaying()->getIa()==true){
 		int randomAction;

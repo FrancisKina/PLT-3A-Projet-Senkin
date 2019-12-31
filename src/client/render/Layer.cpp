@@ -2,6 +2,7 @@
 #include <state.h>
 #include <cstdlib>
 #include <iostream>
+#include <time.h>
 
 using namespace render;
 using namespace state;

@@ -479,7 +479,7 @@ void Attack::execute (state::State& state){
 								if(get<0>(effect[i])==HEAL_STATUS){
 									//soigne les status
 									chanceEffet=rand()%100 + 1;
-									if(chanceEffet>=get<2>(effect[i])){
+									if(chanceEffet<=get<2>(effect[i])){
 										cout << "Effet HEAL STATUS rate "<< endl;
 									}else{
 										cout << "Soin status"<< endl;

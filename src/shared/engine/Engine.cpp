@@ -14,7 +14,7 @@ Engine::Engine(){
 }
 
 void Engine::executeCommand(Command* command){
-	//cout<<"execute appel"<<endl;
+	cout<<"execute appel"<<endl;
 	std::vector<int> inter;
 	std::vector<std::vector<int>> inter_b;
 	std::vector<std::vector<std::vector<int>>> inter_c;
@@ -96,7 +96,7 @@ void Engine::executeCommand(Command* command){
 	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
 	
-	currentState.notifyObservers(currentState);
+	//currentState.notifyObservers(currentState);
 	
 	//Fin de jeu
 	if (currentState.getPlayers().size() == 1){
@@ -126,7 +126,8 @@ void Engine::startGame (state::State& state){
 	currentState.initCursor();
 	currentState.setCommandMode(FIELD);
 	previousStates={};
-	
+	updatedCommand = true;
+	updatedKey = true;
 	
 	record["tailleReelle"] = 0;
 	record["tabCmd"][0] = "";
@@ -405,4 +406,26 @@ Json::Value Engine::getRecord(){
 
 void Engine::setEnableRecord(bool val){
 	record_enable = val;
+}
+
+void Engine::setNextKeyCommand(sf::Event keycommand){
+	nextKeyCommand = keycommand;
+	updatedKey = false;
+}
+
+void Engine::setNextCommand(Command* command){
+	nextCommand = command;
+	updatedCommand = false;
+	cout << "setNextCommand" << endl;
+}
+
+void Engine::update(){
+	if(!updatedKey){
+		keyCommand(nextKeyCommand);
+		updatedKey = true;
+	}
+	if(!updatedCommand){
+		executeCommand(nextCommand);
+		updatedCommand = true;
+	}
 }

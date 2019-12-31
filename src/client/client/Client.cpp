@@ -15,6 +15,15 @@
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
 #include <thread>
+#include "state.h"
+#include "ai.h"
+
+
+#include "../render/StateLayer.h"
+namespace render {
+  class StateLayer;
+};
+
 
 using namespace state;
 using namespace engine;
@@ -23,16 +32,23 @@ using namespace std;
 using namespace client;
 using namespace ai;
 
+render::StateLayer statelayer;
+bool updated = true;
 
-Client::Client(){
+void threadEngine(void* ptr1){
+	Engine* ptr_engine=(Engine*)ptr1;
+	while(1){
+		if(!updated){
+			ptr_engine->update();
+			updated = true;
+		}
+	}
 }
 
-void Client::run(){
-	
+Client::Client(){
 	srand(time(NULL));
 	//Initialisation générale
 		//Initialisation de la grille par le moteur
-	Engine engine;
 	State& state = engine.getState();
 	state.initGrid("res/maptest.txt");
 	
@@ -66,16 +82,24 @@ void Client::run(){
 	state.getPlayers()[2]->setSkills({sf.createSkill(FRAPPE), sf.createSkill(ARC)});
 	state.getPlayers()[3]->setSkills({sf.createSkill(SOIN), sf.createSkill(FEU_D_ENFER)});
 	
-	//debut du jeu
+	//Debut du jeu
 	engine.startGame(state);
 	
-		//Initialisation de la liste des différents layers avec texture
-	StateLayer statelayer;
+		//Initialisation de la liste des différents elements pour l'affichage
+	//StateLayer statelayer;
 	statelayer.initLayers(state);
 	statelayer.initWindow(state);
 	state.registerObserver(&statelayer);
+	
+	ia = new DeepIA;
+}
+
+void Client::run(){
 		//Creation puis affichage de la fenêtre
 	sf::RenderWindow& window = statelayer.getWindow(); 
+	
+	std::thread th(threadEngine, &engine);
+	
 	
 	while (window.isOpen())
 	{
@@ -89,8 +113,16 @@ void Client::run(){
 				engine.keyCommand(event);
 			}
 		}
-
+		if (updated){
+			if (engine.getState().getPlayers().size()>1){
+				ia->run(engine);
+				updated = false;
+			}
+			engine.getState().notifyObservers(engine.getState());
+		}
+		
 		window.display();
 	}
 	
+	th.join();
 }

@@ -14,7 +14,7 @@ using namespace std;
 
 
 int DeepIA::run (engine::Engine& engine){
-	
+	cout << "DeepIA run" << endl;
 	if(!engine.getState().getPlaying()->getIa()) return 0;
 	
 	actionsList = possibleActions(engine); //Liste des actions possibles
@@ -26,7 +26,8 @@ int DeepIA::run (engine::Engine& engine){
 	Command* optimalaction = actionsList[minmaxout];
 	
 	cout << "===================== MOUVEMENT OPTIMAL  " << optimalaction->getCommandID() << endl;
-	engine.executeCommand(optimalaction);
+	//engine.executeCommand(optimalaction);
+	engine.setNextCommand(optimalaction);
 	
 	while (actionsList.size()>0){
 		actionsList.pop_back();
