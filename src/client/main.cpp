@@ -752,7 +752,8 @@ int main(int argc,char* argv[])
 								}
 								else{
 									cout << "La commande " << i << " est inconnue" << endl;
-								}						
+								}
+								engine.getState().notifyObservers(engine.getState());						
 							}								
 						}else{
 							cout<<"pas le bon joueur:"<<endl<<"ordre de "<<state.getPlaying()->getName()<<" sur "<<good_player<<endl;
