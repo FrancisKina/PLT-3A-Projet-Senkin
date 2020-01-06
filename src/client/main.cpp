@@ -301,6 +301,7 @@ int main(int argc,char* argv[])
 				if(state.getPlayers().size()>1){
 					ai.run(engine);
 				}
+				engine.getState().notifyObservers(engine.getState());
 				window.display();
 			}
 		}
@@ -549,7 +550,7 @@ int main(int argc,char* argv[])
 					//Definition en IA
 			state.getPlayers()[0]->setIa(true);
 			state.getPlayers()[1]->setIa(true);
-			state.getPlayers()[2]->setIa(true);
+			state.getPlayers()[2]->setIa(false);
 			state.getPlayers()[3]->setIa(true);
 					//Classes
 			state.getPlayers()[0]->setCharacter(cf.createCharacter(KNIGHT));
@@ -614,6 +615,7 @@ int main(int argc,char* argv[])
 				}else{
 					window.close();
 				}
+				engine.getState().notifyObservers(engine.getState());
 				window.display();
 			}
 			file_id << styledWriter.write(engine.getRecord());
