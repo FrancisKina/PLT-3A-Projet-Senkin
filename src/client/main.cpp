@@ -547,7 +547,7 @@ int main(int argc,char* argv[])
 			state.initPlayers(4);
 			
 					//Definition en IA
-			state.getPlayers()[0]->setIa(true);
+			state.getPlayers()[0]->setIa(false);
 			state.getPlayers()[1]->setIa(true);
 			state.getPlayers()[2]->setIa(true);
 			state.getPlayers()[3]->setIa(true);
@@ -614,6 +614,7 @@ int main(int argc,char* argv[])
 				}else{
 					window.close();
 				}
+				engine.getState().notifyObservers(engine.getState());
 				window.display();
 			}
 			file_id << styledWriter.write(engine.getRecord());
