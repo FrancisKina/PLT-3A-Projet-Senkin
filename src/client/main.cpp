@@ -548,7 +548,7 @@ int main(int argc,char* argv[])
 			state.initPlayers(4);
 			
 					//Definition en IA
-			state.getPlayers()[0]->setIa(true);
+			state.getPlayers()[0]->setIa(false);
 			state.getPlayers()[1]->setIa(true);
 			state.getPlayers()[2]->setIa(false);
 			state.getPlayers()[3]->setIa(true);
