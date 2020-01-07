@@ -252,8 +252,8 @@ void Engine::keyCommand (sf::Event event){
 				else cursorinfo->setCursorY(23);	
 			}
 			else if (currentState.getCommandMode() == SKILL) {
-				if (cursorinfo->getCursorY() < 7) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
-				else cursorinfo->setCursorY(7);	
+				if (cursorinfo->getCursorY() < 6+currentState.getPlaying()->getSkills().size()-1) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				else cursorinfo->setCursorY(6+currentState.getPlaying()->getSkills().size()-1);	
 			}
 			break;
 			

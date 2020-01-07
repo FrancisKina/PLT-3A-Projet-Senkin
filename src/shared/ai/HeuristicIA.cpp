@@ -12,11 +12,13 @@ using namespace std;
 
 
 int HeuristicIA::run (engine::Engine& engine){
-	cout<<"----------------------------------------------"<<endl;
-	cout<<"fonction HeuristicIA::run : début d'execution"<<endl;
+	//cout<<"----------------------------------------------"<<endl;
+	//cout<<"fonction HeuristicIA::run : début d'execution"<<endl;
 	State state = engine.getState();
 	Player* player = state.getPlaying();
 	if(player->getIa()==true){
+		cout<<"----------------------------------------------"<<endl;
+		cout<<"fonction HeuristicIA::run : début d'execution"<<endl;
 		std::pair<int,int> aimed_position;
 		bool premierEssai = true;
 		srand(time(NULL));
@@ -149,8 +151,8 @@ int HeuristicIA::run (engine::Engine& engine){
 	cout<<"----------------------------------------------"<<endl;
 		return 0;
 	}
-	cout<<"fonction HeuristicIA::run : fin d'execution(erreur n#2 : pas une ia)"<<endl;
-	cout<<"----------------------------------------------"<<endl;
+	//cout<<"fonction HeuristicIA::run : fin d'execution(erreur n#2 : pas une ia)"<<endl;
+	//cout<<"----------------------------------------------"<<endl;
 	return 0;
 }
 
