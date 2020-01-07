@@ -285,34 +285,50 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
 
 		texture = textureTileset;
-		
+		//info personnage
 		std::vector<std::string> infos(state.getGrid()[0].size()*2 , " ");
 		infos[2] += "PV " + to_string(state.getPlaying()->getHp());
 		infos[4] += "PM " + to_string(state.getPlaying()->getMovement());
 		infos[6] += "PA " + to_string(state.getPlaying()->getSkillCount());
+		//info attaques
 		infos[10] += "SKILLS";
+		size_t skills_size = state.getPlaying()->getSkills().size();
 		infos[12] += state.getPlaying()->getSkills()[0]->getName();
 		if(state.getPlaying()->getSkills()[0]->getCooldown()>0) infos[12] += " " + to_string(state.getPlaying()->getSkills()[0]->getCooldown());
-		infos[14] += state.getPlaying()->getSkills()[1]->getName();
-		if(state.getPlaying()->getSkills()[1]->getCooldown()>0) infos[14] += " " + to_string(state.getPlaying()->getSkills()[1]->getCooldown());
-
+		if(skills_size>1){
+			infos[14] += state.getPlaying()->getSkills()[1]->getName();
+			if(state.getPlaying()->getSkills()[1]->getCooldown()>0) infos[14] += " " + to_string(state.getPlaying()->getSkills()[1]->getCooldown());
+			if(skills_size>2){
+				infos[16] += state.getPlaying()->getSkills()[2]->getName();
+				if(state.getPlaying()->getSkills()[2]->getCooldown()>0) infos[16] += " " + to_string(state.getPlaying()->getSkills()[2]->getCooldown());
+				if(skills_size>3){
+					infos[18] += state.getPlaying()->getSkills()[3]->getName();
+					if(state.getPlaying()->getSkills()[3]->getCooldown()>0) infos[18] += " " + to_string(state.getPlaying()->getSkills()[3]->getCooldown());
+				}
+			}
+		}
 		
-		infos[18] += "TERRAIN";
+		//info terrain
+		infos[22] += "TERRAIN";
 		std::vector<std::string> fieldName = {"","PLAINE","ROUTE","FORET","MONTAGNE","EAU","SABLE","VILLE","MARECAGE","MUR"};
 		std::vector<std::string> fieldStatusName = {"","PLUIE","NEIGE","BRUME","","","","","","","","BLOQUE ATT","BLOQUE MOUV","BRULE","POISON","GRAVITE","","","","","FORT","TENTE","TOUR"};
 		state::Field* field = state.getGrid()[state.getCursor()->getCursorY()][state.getCursor()->getCursorX()];
-		infos[20] += fieldName[field->getFieldType()];
+		infos[24] += fieldName[field->getFieldType()];
 		int k=0;
 		for(size_t i=0; i < field->getFieldStatus().size(); i++){
 			if (field->getFieldStatus()[i].second > 0){
-				infos[22 + 2*k] += fieldStatusName[field->getFieldStatus()[i].first];
+				infos[26 + 2*k] += fieldStatusName[field->getFieldStatus()[i].first];
 				if (field->getFieldStatus()[i].second < 100){
-					infos[22 + 2*k] += " " + to_string(field->getFieldStatus()[i].second);
+					infos[26 + 2*k] += " " + to_string(field->getFieldStatus()[i].second);
 				}
 				k++;
 			}
 		}
 		
+		//info perso visé
+		//...
+		
+		//info jeu
 		infos[40] += "ROUND " + to_string(state.getRound());
 		
 		if(state.getCommandMode() == COMMAND){
