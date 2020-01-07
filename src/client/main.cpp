@@ -7,7 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <ctime>
-
+#include "../../extern/jsoncpp-1.8.0/jsoncpp.cpp"
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>

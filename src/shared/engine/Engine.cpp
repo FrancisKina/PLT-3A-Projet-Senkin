@@ -1,9 +1,8 @@
 #include "Engine.h"
 #include <iostream>
 #include <unistd.h>
-#include "../../../extern/jsoncpp-1.8.0/jsoncpp.cpp"
 #include "engine.h"
-
+#include <SFML/Graphics.hpp>
 
 using namespace state;
 using namespace engine;
@@ -116,10 +115,7 @@ state::State& Engine::getState(){
 	return currentState;
 }
 
-sf::RenderWindow& Engine::getWindow(){
-	//currentWindow = new sf::RenderWindow(sf::VideoMode(tilesize * state.getGrid()[0].size(), tilesize * state.getGrid().size()), "Test");
-	return currentWindow;
-}
+
 
 void Engine::startGame (state::State& state){
 		//Initialisation du curseur
