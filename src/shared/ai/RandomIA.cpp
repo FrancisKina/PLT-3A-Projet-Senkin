@@ -31,7 +31,7 @@ int RandomIA::run (engine::Engine& engine){
 			
 		while ((bot->getHp() > 0) && actionPossible){
 			clock_t start_time = clock();
-			while(clock()<start_time+1000000);
+			while(clock()<start_time+100000);
 			//sleep(1);
 			if(premierEssai == true){
 				cout<< "\t [Controle par le CPU] " << endl;
