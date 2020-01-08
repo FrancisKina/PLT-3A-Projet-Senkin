@@ -1,36 +1,104 @@
 {
    "tabCmd" : [
       {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 10,
+         "yDestination" : 15
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 11,
+         "yDestination" : 15
+      },
+      {
          "attaque" : 0,
          "id" : 2,
          "joueur" : "J2",
          "xDestination" : 10,
+         "yDestination" : 16
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 11,
          "yDestination" : 15
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 11,
+         "yDestination" : 14
       },
       {
          "id" : 3,
          "joueur" : "J2"
       },
       {
-<<<<<<< HEAD
-         "attaque" : 0,
-         "id" : 2,
-=======
          "id" : 1,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 13
+         "joueur" : "J1",
+         "xDestination" : 10,
+         "yDestination" : 11
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
       },
       {
          "id" : 1,
          "joueur" : "J3",
          "xDestination" : 14,
-=======
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
+         "yDestination" : 15
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 9
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
          "joueur" : "J1",
          "xDestination" : 10,
-         "yDestination" : 11
+         "yDestination" : 10
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 10,
+         "yDestination" : 10
       },
       {
          "id" : 3,
@@ -41,722 +109,52 @@
          "id" : 2,
          "joueur" : "J3",
          "xDestination" : 15,
-         "yDestination" : 14
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
          "yDestination" : 15
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
       },
       {
          "attaque" : 1,
          "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 12,
-<<<<<<< HEAD
-         "yDestination" : 10
+         "joueur" : "J3",
+         "xDestination" : 14,
+         "yDestination" : 11
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 13,
+         "yDestination" : 15
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 13,
+         "yDestination" : 16
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
       },
       {
          "attaque" : 0,
          "id" : 2,
          "joueur" : "J4",
          "xDestination" : 15,
-         "yDestination" : 10
-=======
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-         "yDestination" : 12
-      },
-      {
-         "id" : 1,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 13,
-         "yDestination" : 12
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 12
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 11
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 13
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 13
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 13,
-         "yDestination" : 12
-=======
-         "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 13
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 10,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 10,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 9,
-         "yDestination" : 15
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 15
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 16
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
          "yDestination" : 9
       },
       {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-<<<<<<< HEAD
-         "xDestination" : 11,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 10
-=======
-         "xDestination" : 10,
-         "yDestination" : 15
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 10
-=======
-         "joueur" : "J1",
-<<<<<<< HEAD
-         "xDestination" : 13,
-         "yDestination" : 10
-=======
-         "xDestination" : 11,
-         "yDestination" : 14
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 12
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 10
-=======
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 10
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-<<<<<<< HEAD
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 16
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 16
-=======
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 14,
-<<<<<<< HEAD
-         "yDestination" : 14
-=======
-         "yDestination" : 9
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 9
-<<<<<<< HEAD
-      },
-      {
          "attaque" : 1,
          "id" : 2,
          "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 7
-=======
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 8
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 8
-      },
-      {
-<<<<<<< HEAD
-         "id" : 3,
-         "joueur" : "J4"
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 10,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 10,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 10,
-         "yDestination" : 15
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-<<<<<<< HEAD
-         "attaque" : 0,
-         "id" : 2,
-=======
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-=======
-         "id" : 1,
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-         "joueur" : "J1",
-         "xDestination" : 13,
-         "yDestination" : 10
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-<<<<<<< HEAD
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 9
-=======
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 11,
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-         "yDestination" : 11
-      },
-      {
-         "id" : 1,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 14,
-=======
-         "joueur" : "J1",
-         "xDestination" : 11,
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 13,
-=======
-         "joueur" : "J1",
-         "xDestination" : 12,
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-<<<<<<< HEAD
-         "joueur" : "J3",
-         "xDestination" : 12,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 11,
-         "yDestination" : 10
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-<<<<<<< HEAD
-=======
-         "joueur" : "J3",
-         "xDestination" : 10,
-         "yDestination" : 10
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J3",
-         "xDestination" : 10,
-         "yDestination" : 10
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 11,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 12,
-         "yDestination" : 15
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-=======
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-         "joueur" : "J1",
-         "xDestination" : 13,
-         "yDestination" : 10
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 17
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 17
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 11
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-<<<<<<< HEAD
-         "xDestination" : 12,
-=======
-<<<<<<< HEAD
-         "xDestination" : 10,
-=======
-         "xDestination" : 17,
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-         "yDestination" : 10
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-<<<<<<< HEAD
-         "xDestination" : 12,
-=======
-<<<<<<< HEAD
-         "xDestination" : 10,
-         "yDestination" : 9
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 11,
-         "yDestination" : 9
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J3",
-         "xDestination" : 10,
-         "yDestination" : 9
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 11,
-         "yDestination" : 8
-      }
-   ],
-   "tailleReelle" : 44
-=======
-         "xDestination" : 17,
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
-         "yDestination" : 11
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 11
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 7
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 13,
-         "yDestination" : 10
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 9,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 9,
-         "yDestination" : 16
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 11
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 14
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 13,
-         "yDestination" : 10
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 10
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 11
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 14,
-         "yDestination" : 9
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 13,
-         "yDestination" : 14
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 14
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J3",
          "xDestination" : 14,
          "yDestination" : 13
       },
       {
          "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J4",
-         "xDestination" : 15,
-         "yDestination" : 9
-      },
-      {
-         "id" : 3,
          "joueur" : "J4"
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 15
       },
       {
          "id" : 3,
          "joueur" : "J2"
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 10
       },
       {
          "id" : 3,
@@ -769,136 +167,6 @@
       {
          "id" : 3,
          "joueur" : "J4"
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 9,
-         "yDestination" : 16
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 17
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 10
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 9,
-         "yDestination" : 10
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 9
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 11
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 11
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 8,
-         "yDestination" : 17
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 12
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J3",
-         "xDestination" : 11,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J3",
-         "xDestination" : 14,
-         "yDestination" : 16
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 6,
-         "yDestination" : 16
-      },
-      {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
       },
       {
          "id" : 3,
@@ -916,7 +184,7 @@
          "id" : 1,
          "joueur" : "J4",
          "xDestination" : 15,
-         "yDestination" : 10
+         "yDestination" : 9
       },
       {
          "id" : 3,
@@ -925,31 +193,8 @@
       {
          "id" : 1,
          "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 17
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 11
-      },
-      {
-         "id" : 3,
-         "joueur" : "J1"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
-      },
-      {
-         "id" : 3,
-         "joueur" : "J4"
+         "xDestination" : 12,
+         "yDestination" : 14
       },
       {
          "id" : 3,
@@ -959,8 +204,27 @@
          "attaque" : 1,
          "id" : 2,
          "joueur" : "J1",
-         "xDestination" : 12,
-         "yDestination" : 12
+         "xDestination" : 11,
+         "yDestination" : 11
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 10,
+         "yDestination" : 10
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 10,
+         "yDestination" : 9
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 10
       },
       {
          "id" : 3,
@@ -970,23 +234,42 @@
          "attaque" : 1,
          "id" : 2,
          "joueur" : "J3",
+         "xDestination" : 16,
+         "yDestination" : 15
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J4",
          "xDestination" : 19,
-         "yDestination" : 15
-      },
-      {
-         "id" : 3,
-         "joueur" : "J3"
+         "yDestination" : 9
       },
       {
          "attaque" : 1,
          "id" : 2,
          "joueur" : "J4",
          "xDestination" : 17,
-         "yDestination" : 10
+         "yDestination" : 9
       },
       {
          "attaque" : 0,
          "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 15,
+         "yDestination" : 8
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 15,
+         "yDestination" : 10
+      },
+      {
+         "id" : 1,
          "joueur" : "J4",
          "xDestination" : 15,
          "yDestination" : 11
@@ -996,38 +279,104 @@
          "joueur" : "J4"
       },
       {
-         "attaque" : 1,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
          "id" : 1,
          "joueur" : "J2",
-         "xDestination" : 6,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 6,
-         "yDestination" : 15
-      },
-      {
-         "attaque" : 0,
-         "id" : 2,
-         "joueur" : "J2",
-         "xDestination" : 5,
-         "yDestination" : 15
+         "xDestination" : 11,
+         "yDestination" : 14
       },
       {
          "id" : 3,
          "joueur" : "J2"
       },
       {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 9
+      },
+      {
          "id" : 3,
          "joueur" : "J1"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 10,
+         "yDestination" : 15
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 13,
+         "yDestination" : 16
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 13,
+         "yDestination" : 14
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 14,
+         "yDestination" : 14
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 14,
+         "yDestination" : 14
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 15,
+         "yDestination" : 14
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 15,
+         "yDestination" : 12
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 12
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 8
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 15,
+         "yDestination" : 11
       },
       {
          "id" : 3,
@@ -1040,6 +389,12 @@
       {
          "id" : 3,
          "joueur" : "J2"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 9
       },
       {
          "id" : 3,
@@ -1052,12 +407,6 @@
          "yDestination" : 14
       },
       {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 13,
-         "yDestination" : 14
-      },
-      {
          "id" : 3,
          "joueur" : "J3"
       },
@@ -1074,17 +423,12 @@
          "joueur" : "J1"
       },
       {
-         "id" : 1,
-         "joueur" : "J3",
-         "xDestination" : 12,
-         "yDestination" : 14
-      },
-      {
          "id" : 3,
          "joueur" : "J3"
       },
       {
-         "id" : 1,
+         "attaque" : 1,
+         "id" : 2,
          "joueur" : "J4",
          "xDestination" : 14,
          "yDestination" : 10
@@ -1097,27 +441,15 @@
          "attaque" : 1,
          "id" : 2,
          "joueur" : "J2",
-         "xDestination" : 6,
-         "yDestination" : 15
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 15
+         "xDestination" : 11,
+         "yDestination" : 13
       },
       {
          "attaque" : 0,
          "id" : 2,
          "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
-      },
-      {
-         "id" : 1,
-         "joueur" : "J2",
-         "xDestination" : 7,
-         "yDestination" : 16
+         "xDestination" : 11,
+         "yDestination" : 13
       },
       {
          "id" : 3,
@@ -1126,22 +458,247 @@
       {
          "id" : 1,
          "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 11
+         "xDestination" : 9,
+         "yDestination" : 9
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 10
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 10,
+         "yDestination" : 9
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 9
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 9
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 9
       },
       {
          "id" : 3,
          "joueur" : "J1"
       },
       {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 8
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 7,
+         "yDestination" : 8
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 7,
+         "yDestination" : 8
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 7
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 7
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 7,
+         "yDestination" : 7
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 8
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 14,
+         "yDestination" : 18
+      },
+      {
          "id" : 1,
          "joueur" : "J3",
-         "xDestination" : 12,
+         "xDestination" : 14,
          "yDestination" : 13
       },
       {
          "id" : 3,
          "joueur" : "J3"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 12
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 12
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 16
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 10,
+         "yDestination" : 14
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 11,
+         "yDestination" : 15
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 11,
+         "yDestination" : 13
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 11,
+         "yDestination" : 12
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 12,
+         "yDestination" : 12
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 12
       },
       {
          "id" : 1,
@@ -1154,20 +711,65 @@
          "joueur" : "J4"
       },
       {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 13,
+         "yDestination" : 12
+      },
+      {
          "id" : 1,
          "joueur" : "J2",
+         "xDestination" : 13,
+         "yDestination" : 12
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 9,
+         "yDestination" : 8
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 15,
+         "yDestination" : 13
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 12,
+         "yDestination" : 12
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
          "xDestination" : 7,
-         "yDestination" : 17
-      },
-      {
-         "id" : 3,
-         "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 11,
-         "yDestination" : 12
+         "yDestination" : 8
       },
       {
          "id" : 3,
@@ -1176,6 +778,85 @@
       {
          "id" : 3,
          "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 14,
+         "yDestination" : 12
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J2",
+         "xDestination" : 13,
+         "yDestination" : 12
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 9
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J3",
+         "xDestination" : 14,
+         "yDestination" : 14
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J4"
+      },
+      {
+         "id" : 3,
+         "joueur" : "J2"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 7,
+         "yDestination" : 9
+      },
+      {
+         "id" : 3,
+         "joueur" : "J1"
+      },
+      {
+         "attaque" : 1,
+         "id" : 2,
+         "joueur" : "J3",
+         "xDestination" : 9,
+         "yDestination" : 14
+      },
+      {
+         "id" : 3,
+         "joueur" : "J3"
+      },
+      {
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J4",
+         "xDestination" : 14,
+         "yDestination" : 12
       },
       {
          "id" : 3,
@@ -1184,18 +865,18 @@
       {
          "id" : 1,
          "joueur" : "J2",
-         "xDestination" : 6,
-         "yDestination" : 16
+         "xDestination" : 14,
+         "yDestination" : 12
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 14,
+         "yDestination" : 11
       },
       {
          "id" : 3,
          "joueur" : "J2"
-      },
-      {
-         "id" : 1,
-         "joueur" : "J1",
-         "xDestination" : 10,
-         "yDestination" : 12
       },
       {
          "id" : 3,
@@ -1204,28 +885,50 @@
       {
          "id" : 3,
          "joueur" : "J3"
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 15,
+         "yDestination" : 11
+      },
+      {
+         "id" : 1,
+         "joueur" : "J4",
+         "xDestination" : 15,
+         "yDestination" : 12
       },
       {
          "id" : 3,
          "joueur" : "J4"
       },
       {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 14,
+         "yDestination" : 13
+      },
+      {
+         "id" : 1,
+         "joueur" : "J2",
+         "xDestination" : 15,
+         "yDestination" : 13
+      },
+      {
          "id" : 3,
          "joueur" : "J2"
       },
       {
-         "id" : 3,
-         "joueur" : "J1"
+         "attaque" : 0,
+         "id" : 2,
+         "joueur" : "J1",
+         "xDestination" : 8,
+         "yDestination" : 10
       },
       {
          "id" : 3,
-         "joueur" : "J3"
+         "joueur" : "J1"
       }
    ],
-<<<<<<< HEAD
-   "tailleReelle" : 175
-=======
-   "tailleReelle" : 41
->>>>>>> bb0aaec2446019ff784922fd487902e267e4806c
->>>>>>> 20a933bca53fb0aa2767fba0be8ded2a8b82ea9f
+   "tailleReelle" : 176
 }
