@@ -146,6 +146,6 @@ sf::RenderWindow& StateLayer::getWindow (){
 
 void StateLayer::initWindow(state::State& state){
 	int windowsize = getLayers()[0].getQuads()[1].position.x - getLayers()[0].getQuads()[0].position.x;
-	window.create(sf::VideoMode(windowsize * (state.getGrid()[0].size() + 8), windowsize * state.getGrid().size()), "Test");
+	window.create(sf::VideoMode(windowsize * (state.getGrid()[0].size() + 8), windowsize * (state.getGrid().size() + 3)), "Test");
 	draw(window);
 }

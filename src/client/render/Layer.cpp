@@ -105,7 +105,10 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				
 				//Position de la texture;
 				
-				if(state.getPlayers()[i] == state.getPlaying()) mov = clock()%3 + 1;
+				if(state.getPlayers()[i] == state.getPlaying()){
+					if (state.getCommandMode() == SKILLTARGET) mov = clock()%3 + 4;
+					else mov = clock()%3 + 1;
+				}
 				else mov = 2;
 				
 				int classId = state.getPlayers()[i]->getCharacter()->getClassId() - 1;		
@@ -262,7 +265,7 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 						dy = -range;
 					}
 				
-					quad = &quads[8 + (range - skill->getRange().first + d) * 4];
+					quad = &quads[8 + ((range - skill->getRange().first) * 4 + d) * 4];
 					
 					//Position des 4 coins du quad (x, y)
 					quad[0].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx), tileSize * (state.getPlaying()->getY() + dy)); //Haut gauche
