@@ -128,7 +128,12 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 		quad[3].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + 4) + 3*tileSize/6.66, tileSize * 4 - 3*tileSize/10); //Bas gauche
 		
 		//Position de la texture;
-		int classId = state.getPlaying()->getCharacter()->getClassId() - 1;		
+		int classId = state.getPlaying()->getCharacter()->getClassId() - 1;	
+		for(state::Player* player : state.getPlayers()){
+			if ((player->getX() == state.getCursor()->getCursorX() && player->getY() == state.getCursor()->getCursorY()) && player!=state.getPlaying()){
+				classId = player->getCharacter()->getClassId() - 1;
+			}
+		}	
 		quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
 		quad[1].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
 		quad[2].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), state.getPlaying()->getDirection() * textSize.y);
@@ -288,25 +293,31 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
 
 		texture = textureTileset;
+		state:Player* player=state.getPlaying();
 		//info personnage
 		std::vector<std::string> infos(state.getGrid()[0].size()*2 , " ");
-		infos[2] += "PV " + to_string(state.getPlaying()->getHp());
-		infos[4] += "PM " + to_string(state.getPlaying()->getMovement());
-		infos[6] += "PA " + to_string(state.getPlaying()->getSkillCount());
+		for(state::Player* foe : state.getPlayers()){
+			if ((foe->getX() == state.getCursor()->getCursorX() && foe->getY() == state.getCursor()->getCursorY()) && foe!=state.getPlaying()){
+				player=foe;
+			}
+		}
+		infos[2] += "PV " + to_string(player->getHp());
+		infos[4] += "PM " + to_string(player->getMovement());
+		infos[6] += "PA " + to_string(player->getSkillCount());
 		//info attaques
 		infos[10] += "SKILLS";
-		size_t skills_size = state.getPlaying()->getSkills().size();
-		infos[12] += state.getPlaying()->getSkills()[0]->getName();
-		if(state.getPlaying()->getSkills()[0]->getCooldown()>0) infos[12] += " " + to_string(state.getPlaying()->getSkills()[0]->getCooldown());
+		size_t skills_size = player->getSkills().size();
+		infos[12] += player->getSkills()[0]->getName();
+		if(player->getSkills()[0]->getCooldown()>0) infos[12] += " " + to_string(player->getSkills()[0]->getCooldown());
 		if(skills_size>1){
-			infos[14] += state.getPlaying()->getSkills()[1]->getName();
-			if(state.getPlaying()->getSkills()[1]->getCooldown()>0) infos[14] += " " + to_string(state.getPlaying()->getSkills()[1]->getCooldown());
+			infos[14] += player->getSkills()[1]->getName();
+			if(player->getSkills()[1]->getCooldown()>0) infos[14] += " " + to_string(player->getSkills()[1]->getCooldown());
 			if(skills_size>2){
-				infos[16] += state.getPlaying()->getSkills()[2]->getName();
-				if(state.getPlaying()->getSkills()[2]->getCooldown()>0) infos[16] += " " + to_string(state.getPlaying()->getSkills()[2]->getCooldown());
+				infos[16] += player->getSkills()[2]->getName();
+				if(player->getSkills()[2]->getCooldown()>0) infos[16] += " " + to_string(player->getSkills()[2]->getCooldown());
 				if(skills_size>3){
-					infos[18] += state.getPlaying()->getSkills()[3]->getName();
-					if(state.getPlaying()->getSkills()[3]->getCooldown()>0) infos[18] += " " + to_string(state.getPlaying()->getSkills()[3]->getCooldown());
+					infos[18] += player->getSkills()[3]->getName();
+					if(player->getSkills()[3]->getCooldown()>0) infos[18] += " " + to_string(player->getSkills()[3]->getCooldown());
 				}
 			}
 		}
@@ -328,8 +339,6 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 			}
 		}
 		
-		//info perso visé
-		//...
 		
 		//info jeu
 		infos[40] += "ROUND " + to_string(state.getRound());
