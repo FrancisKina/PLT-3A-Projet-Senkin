@@ -393,7 +393,8 @@ std::tuple<state::Player*,int,std::pair<int,int>,bool,bool> HeuristicIA::getMain
 					}else{
 						r_init=main_skill_range.first;
 					}
-					if (state.getGrid()[player->getY()][player->getX()]->getFieldStatus()[21].second>0){
+					//bonus tour
+					if (casePlayer->getFieldStatus()[21].second>0){
 						r_max=main_skill_range.second+1;
 					}else{
 						r_max=main_skill_range.second;
