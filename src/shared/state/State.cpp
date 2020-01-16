@@ -51,9 +51,7 @@ void State::initPlayers(int nbPlayers){
 	for (int i=0;i<nbPlayers;i++){
 		players.push_back( new Player());
 		players[i]->setName("J" + std::to_string(i+1));
-		//players[i]->setClassId(static_cast<ClassId>(rand()%4));
 	}
-
 }
 
 bool State::initGrid(std::string map_txt){
@@ -143,4 +141,15 @@ CommandModeId State::getCommandMode(){
 
 void State::setCommandMode(CommandModeId newCM){
 	commandMode = newCM;
+}
+
+std::vector<std::string> State::getTextInfo(){
+	return textInfo;
+}
+
+void State::addTextInfo(std::string newText){
+	if(textInfo.size() == 3){
+		textInfo.erase(textInfo.begin());
+	} 
+	textInfo.push_back(newText);
 }

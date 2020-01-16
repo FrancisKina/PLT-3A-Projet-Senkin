@@ -32,6 +32,7 @@ namespace state {
     Player* playing;
     CommandModeId commandMode;
     Cursor* cursorInfo;
+    std::vector<std::string> textInfo;
     // Operations
   public:
     std::vector<std::vector<Field*>>& getGrid ();
@@ -48,6 +49,8 @@ namespace state {
     CommandModeId getCommandMode ();
     void setCommandMode (CommandModeId newCM);
     Cursor* getCursorInfo ();
+    std::vector<std::string> getTextInfo ();
+    void addTextInfo (std::string newText);
     // Setters and Getters
   };
 

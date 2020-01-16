@@ -195,7 +195,6 @@ void EndActions::execute(state::State& state){
 			if(i<state.getPlayers().size()-1){ 
 				state.setPlaying(state.getPlayers()[i+1]);
 				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
-				return;
 			}
 			//Fin de round
 			else{ 
@@ -210,7 +209,9 @@ void EndActions::execute(state::State& state){
 				
 			//------------------------Changement aléatoire d'etat du terrain------------------------
 				cout << "Evenements aléatoires" << endl;
-				int nzone = rand()%3+1;
+				
+				int round = state.getRound() - 1;
+				int nzone = rand()%(3+round); // nombre de zones meteo
 				
 				for(int i=0; i<nzone; i++){
 					unsigned int x = rand()%state.getGrid()[0].size();
@@ -221,7 +222,7 @@ void EndActions::execute(state::State& state){
 					FieldTypeId type = state.getGrid()[y][x]->getFieldType();
 					if(type == MOUNTAIN) chanceRain=25, chanceMist=35, chanceSnow=40, chanceBurn = 0 ;
 					else if (type == SAND) chanceRain=10, chanceMist=5, chanceSnow=5, chanceBurn = 80;
-					else chanceRain=60, chanceMist=30, chanceSnow=10;
+					else chanceRain=60 - round , chanceMist=30 - round, chanceSnow=10 - round, chanceBurn = 3*round;
 					
 					int reffect = rand()%100+1;
 					FieldStatusId effect;
@@ -246,8 +247,11 @@ void EndActions::execute(state::State& state){
 				}
 				cout << endl << "[ Début de round "<< state.getRound() <<"]" << endl;
 				cout << endl << "---------- Tour du joueur " << state.getPlaying()->getName() << " ----------" << endl;
-				return;
 			}
+			//TEXT INFOS
+			state.addTextInfo("TOUR DE " + state.getPlaying()->getName());
+			
+			return;
 		}
 	}
 	cout << "Joueur non trouvé pour la fin d'action" << endl;

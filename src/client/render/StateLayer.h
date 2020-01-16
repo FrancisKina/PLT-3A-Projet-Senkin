@@ -35,7 +35,7 @@ namespace render {
     StateLayer ();
     std::vector<TileSet>& getTilesets ();
     std::vector<Layer>& getLayers ();
-    void initLayers (state::State& state, int tileSize = 32);
+    void initLayers (state::State& state, int tileSize = 30);
     void displayLayers (state::State& state);
     void stateChanged (state::State& state);
     void draw (sf::RenderWindow& window);

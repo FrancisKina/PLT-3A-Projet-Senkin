@@ -49,6 +49,9 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 	Layer layerCursor;
 	Layer layerInfos;
 	Layer layerBuilding;
+	Layer layerInfosBack;
+	
+	layerInfosBack.loadInfosBack(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 	
 	layerField.loadField(state, tilesets[0].getTexture(), sf::Vector2u(tilesets[0].getCellWidth(), tilesets[0].getCellHeight()), state.getGrid()[0].size(), state.getGrid().size(), tileSize);
 	
@@ -65,12 +68,8 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 	layerCursor.loadCursor(state, tilesets[4].getTexture(), sf::Vector2u(tilesets[4].getCellWidth(), tilesets[4].getCellHeight()), 2, 1, tileSize);
 	
 	layerInfos.loadInfos(state, tilesets[5].getTexture(), sf::Vector2u(tilesets[5].getCellWidth(), tilesets[5].getCellHeight()), 1, 1, tileSize);
-
 	
-	//std::unique_ptr<Layer> ptr_surfField (new Layer(surfField));
-	//std::unique_ptr<Layer> ptr_surfPersonnage (new Layer(surfPersonnage));
-	//std::unique_ptr<Layer> ptr_surfCurseur (new Layer(surfCurseur));
-	//std::unique_ptr<Layer> ptr_surfInfos (new Layer(surfInfos));
+	
 	
 	/*Vider layers*/
 	if(layers.size()!=0){
@@ -79,6 +78,7 @@ void StateLayer::initLayers(state::State& state, int newTileSize){
 		}
 	}
 	
+	layers.push_back(layerInfosBack);
 	layers.push_back(layerField);
 	layers.push_back(layerFieldEffect);
 	layers.push_back(layerPlayer);
@@ -145,7 +145,7 @@ sf::RenderWindow& StateLayer::getWindow (){
 }
 
 void StateLayer::initWindow(state::State& state){
-	int windowsize = getLayers()[0].getQuads()[1].position.x - getLayers()[0].getQuads()[0].position.x;
-	window.create(sf::VideoMode(windowsize * (state.getGrid()[0].size() + 8), windowsize * (state.getGrid().size() + 3)), "Test");
+	int windowsize = getLayers()[1].getQuads()[1].position.x - getLayers()[1].getQuads()[0].position.x;
+	window.create(sf::VideoMode(windowsize * (state.getGrid()[0].size() + 8), windowsize * (state.getGrid().size() + 4)), "Test");
 	draw(window);
 }

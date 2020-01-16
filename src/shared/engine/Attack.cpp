@@ -31,6 +31,9 @@ void Attack::execute (state::State& state){
 	
 	if (attacker->getHp()>0 && attack->getCooldown()<=0 && attacker->getSkillCount() > 0){
 		cout << attacker->getName() << " tente d'utiliser " << attack->getName() << endl;
+		
+		state.addTextInfo(attacker->getName() + " UTILISE " + attack->getName());
+		
 		int X = attacker->getX();
 		int Y = attacker->getY();
 		//case
@@ -310,6 +313,7 @@ void Attack::execute (state::State& state){
 			//------------------------echec de l'attaque-------------------------------
 			if(chanceEsquive>=skill_precision){
 				cout << "Attaque ratee "<< endl;
+				state.addTextInfo("ATTAQUE RATEE");
 			
 			//------------------------succes de l'attaque-------------------------------
 			}else{
@@ -383,6 +387,10 @@ void Attack::execute (state::State& state){
 							targetPlayer[p]->setHp(target_HP[p]-degats);
 							cout << "Joueur " << targetPlayer[p]->getName() << " perd " << degats << " PV " << endl;
 							cout << "Il ne lui reste plus que " << targetPlayer[p]->getHp() << " PV"<< endl;
+							
+							if (degats > 0){
+								state.addTextInfo(targetPlayer[p]->getName() + " PERD " + std::to_string(degats) + " PV");
+							}
 						}
 						if(targetPlayer[p]->getHp()>0){
 							for(size_t i=0; i<effect.size();i++){

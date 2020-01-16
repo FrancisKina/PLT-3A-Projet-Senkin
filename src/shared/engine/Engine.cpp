@@ -87,6 +87,7 @@ void Engine::executeCommand(Command* command){
 			players[i]->setX(-1);
 			players[i]->setY(-1);
 			cout << endl << players[i]->getName() <<  " est mort." << endl;
+			currentState.addTextInfo(players[i]->getName() + " EST MORT");
 			players.erase(players.begin()+i);
 		}
 	}
@@ -100,6 +101,7 @@ void Engine::executeCommand(Command* command){
 	//Fin de jeu
 	if (currentState.getPlayers().size() == 1){
 		cout << "#################### " << players[0]->getName() <<  " A GAGNE ####################" << endl;
+		currentState.addTextInfo(players[0]->getName() + " GAGNE LA PARTIE");
 	}
 	
 	if (record_enable){
@@ -141,6 +143,7 @@ void Engine::startGame (state::State& state){
 	//Placement du curseur le joueur qui joue
 	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
+	currentState.addTextInfo("TOUR DE " + currentState.getPlaying()->getName());
 	
 	//------------------------changment aléatoire d'état du terrain-----------------------
 
