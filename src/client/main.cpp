@@ -38,6 +38,7 @@ using namespace engine;
 using namespace ai;
 using namespace client;
 
+bool running = false;
 
 int main(int argc,char* argv[])
 {
@@ -382,6 +383,7 @@ int main(int argc,char* argv[])
 				window.display();
 			}
 		}
+		
 		/*rollback: retour arrière*/
 		else if(strcmp(argv[1],"rollback")==0){
 			
@@ -540,6 +542,7 @@ int main(int argc,char* argv[])
 				window.display();
 			}
 		}
+		
 		/*record: enregistre les commandes*/
 		else if(strcmp(argv[1],"record")==0){
 			
@@ -877,7 +880,7 @@ int main(int argc,char* argv[])
 			}
 		}
 		
-		else if(strcmp(argv[1], "network") == 0){
+		else if(strcmp(argv[1], "old_network") == 0){
 
 			string nom;
 			cout<<"Entrez votre nom de joueur : ";
@@ -976,8 +979,160 @@ int main(int argc,char* argv[])
 					}
 				}
 			}
+		}
+		
+		else if(strcmp(argv[1], "network") == 0){
+
+			string nom;
+			cout<<"Entrez votre nom de joueur : ";
+			cin>>nom;
+
+			sf::Http http("http://localhost/", 8080);
+			
+			sf::Http::Request request1;
+			request1.setMethod(sf::Http::Request::Post);
+			request1.setUri("/player");
+			request1.setHttpVersion(1, 0);
+			request1.setField("name","free");
+			string body="{\"req\" : \"POST\", \"name\":\"" + nom + "\", \"free\":true}"; 
+			request1.setBody(body);
+			
+			sf::Http::Response response1 = http.sendRequest(request1);
+			/*cout<< "status : "<<response1.getStatus()<<endl;
+			cout<<"HTTP version : "<<response1.getMajorHttpVersion()<< "." <<response1.getMinorHttpVersion()<<endl;
+			cout<<"Content-type header :"<<response1.getField("Content-Type")<<endl;
+			cout<<"body :"<<response1.getBody()<<endl;*/
+
+			Json::Reader jsonReader;
+			Json::Value rep1;
+        	if(jsonReader.parse(response1.getBody(),rep1)){
+				int idJoueur=rep1["id"].asInt();
+				cout<<"Vous avez rejoint la partie avec succès!"<<endl;
+				cout<<"Votre ID est : "<<idJoueur<<endl;
+				cout<<""<<endl;
+
+				cout<< "Liste des joueurs présents dans la partie :"<<endl;
+				for(int j=1; j<=idJoueur; j++){
+				
+					sf::Http::Request request2;
+					request2.setMethod(sf::Http::Request::Get);
+					string uri="/player/"+ to_string(j);
+					
+					request2.setUri(uri);
+					request2.setHttpVersion(1, 0);
+					request2.setField("name","free");
+
+					sf::Http::Response response2 = http.sendRequest(request2);
+					Json::Reader jsonReader2;
+		    		Json::Value rep2;
+				
+					if (jsonReader.parse(response2.getBody(), rep2)){	
+						string nom=rep2["name"].asString();
+						cout<<"	-"<<nom<<endl;		
+						/*cout<< "status : "<<response2.getStatus()<<endl;
+						cout<<"HTTP version : "<<response2.getMajorHttpVersion()<< "." <<response2.getMinorHttpVersion()<<endl;
+						cout<<"Content-type header :"<<response2.getField("Content-Type")<<endl;
+						cout<<"body :"<<response2.getBody()<<endl;*/
+					}
+				
+				}
+				cout<<"LA partie se lancera lorsqu'il y aura 2 joueuer"<<endl;
+				cout<<"Appuyez sur d puis sur entree pour vous retirer du serveur"<<endl;
+				
+					StateLayer statelayer;
+				while(getchar()!='d'){
+					int nombreJoueur=0;
+					//sleep(60);
+					while(nombreJoueur!=2){
+						nombreJoueur=0;
+						sleep(1);
+						for(int k=1; k<=15; k++){
+							sf::Http::Request request5;
+							request5.setMethod(sf::Http::Request::Get);
+							string uri="/player/"+ to_string(k);
+							request5.setUri(uri);
+							request5.setHttpVersion(1, 0);
+							request5.setField("name","free");
+							
+							sf::Http::Response response5 = http.sendRequest(request5);
+							
+							Json::Reader jsonReader5;
+							Json::Value rep5;
+							
+							if (jsonReader.parse(response5.getBody(), rep5)){
+								nombreJoueur++;
+								
+							}
+							cout<<"nombre joueur"<<nombreJoueur<<endl;
+						}
+
+					}
+				
+					
+					string url="http://localhost/";
+					int port=8080;
+					cout<<"appale de networkclient"<<endl;
+					NetworkClient client(url, port, idJoueur);
+					cout<<"client defini"<<endl;
+					engine::Engine& engine = client.getEngine();
+					state::State state = engine.getState();
+					//Initialisation de la liste des différents layers avec texture
+					statelayer.initLayers(state);
+					statelayer.initWindow(state);
+					state.registerObserver(&statelayer);
+						//Creation puis affichage de la fenêtre
+					sf::RenderWindow& window = statelayer.getWindow(); 
+					//window.setKeyRepeatEnabled(false);
+					cout<<"window created"<<endl;
+					while (window.isOpen()){
+						client.run();
+						sleep(2);
+						window.close();
+					}
+				}
+				cout<<"Hors boucle d"<<endl;
+				sf::Http::Request request3;
+				request3.setMethod(sf::Http::Request::Post);
+				string uri2="/player/"+ to_string(idJoueur);
+				request3.setUri(uri2);
+				request3.setHttpVersion(1, 0);
+				request3.setField("name","free");
+				string body3="D"; 
+				request3.setBody(body3);
+				http.sendRequest(request3);
+				cout<<""<<endl;
+				cout<<"Joueur "<< idJoueur << " supprimé."<<endl;
+				cout<<""<<endl;
+			
+				cout<< "Liste des joueurs restants : "<<endl;
+				for(int k=1; k<=15; k++){
+					
+					sf::Http::Request request4;
+					request4.setMethod(sf::Http::Request::Get);
+					string uri="/player/"+ to_string(k);
+					request4.setUri(uri);
+					request4.setHttpVersion(1, 0);
+					request4.setField("name","free");
+					
+					sf::Http::Response response4 = http.sendRequest(request4);
+					
+					Json::Reader jsonReader4;
+	    			Json::Value rep4;
+        			
+					
+					if (jsonReader.parse(response4.getBody(), rep4)){
+						string nom4=rep4["name"].asString();
+						cout<<"	-"<<nom4<<endl;
+						/*cout<< "status : "<<response4.getStatus()<<endl;
+						cout<<"HTTP version : "<<response4.getMajorHttpVersion()<< "." <<response4.getMinorHttpVersion()<<endl;
+						cout<<"Content-type header :"<<response4.getField("Content-Type")<<endl;
+						cout<<"body :"<<response4.getBody()<<endl;*/
+					}
+				}
+			}
+			
 			else{
-				cout<<"Aucune place de libre. Le nombre est limité à 2."<<endl;
+				cout<<"Aucune place de libre. Le nombre est limité à 8."<<endl;
 			}
 		}
 		
