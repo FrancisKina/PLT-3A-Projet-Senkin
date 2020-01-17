@@ -31,6 +31,10 @@ TileSet::TileSet(LayerId newIdLayer){
 		cellWidth=21;
 		cellHeight=24;
 		imageFile="res/font.png";
+	} else if (id==LAYERINFOSBACK){
+		cellWidth=40;
+		cellHeight=40;
+		imageFile="res/wood.png";
 	}
 	
 	textureTileset.loadFromFile(imageFile);

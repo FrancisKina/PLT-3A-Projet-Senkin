@@ -9,6 +9,37 @@ using namespace state;
 using namespace std;
 
 
+bool Layer::loadInfosBack(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
+	
+		texture = textureTileset;
+		
+      	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
+	   	quads.setPrimitiveType(sf::Quads);
+       	quads.resize(width * height * 4);
+		
+		// création de tous les quads
+		for(size_t i= 0; i<(state.getGrid().size()); i++){
+			for(size_t j= 0; j<state.getGrid()[0].size(); j++){
+				sf::Vertex* quad = &quads[(i * state.getGrid()[0].size()+ j) * 4];
+				
+				//Position des 4 coins du quad
+				quad[0].position = sf::Vector2f(tileSize * j * 4, tileSize * i * 4);
+				quad[1].position = sf::Vector2f(tileSize * (j + 1) * 4, tileSize * i * 4);
+				quad[2].position = sf::Vector2f(tileSize * (j + 1) * 4, tileSize * (i + 1) * 4);
+				quad[3].position = sf::Vector2f(tileSize * j * 4, tileSize * (i + 1) * 4);
+				
+				//Position de la texture
+				quad[0].texCoords = sf::Vector2f(0, textSize.y);
+				quad[1].texCoords = sf::Vector2f(textSize.x * 2, textSize.y);
+				quad[2].texCoords = sf::Vector2f(textSize.x * 2, textSize.y * 3);
+				quad[3].texCoords = sf::Vector2f(0, textSize.y * 3);
+			
+			}
+		}
+				
+		return true;				
+}
+
 bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
 	
 		texture = textureTileset;
@@ -35,7 +66,9 @@ bool Layer::loadField(state::State& state, sf::Texture& textureTileset, sf::Vect
 				quad[3].texCoords = sf::Vector2f(textSize.x * (state.getGrid()[i][j]->getFieldType() - 1), textSize.y);
 			
 			}
-		}			
+		}
+		
+				
 		return true;				
 }
 
@@ -105,7 +138,10 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				
 				//Position de la texture;
 				
-				if(state.getPlayers()[i] == state.getPlaying()) mov = clock()%3 + 1;
+				if(state.getPlayers()[i] == state.getPlaying()){
+					if (state.getCommandMode() == SKILLTARGET) mov = clock()%3 + 4;
+					else mov = clock()%3 + 1;
+				}
 				else mov = 2;
 				
 				int classId = state.getPlayers()[i]->getCharacter()->getClassId() - 1;		
@@ -131,10 +167,10 @@ bool Layer::loadPlayer(state::State& state, sf::Texture& textureTileset, sf::Vec
 				classId = player->getCharacter()->getClassId() - 1;
 			}
 		}	
-		quad[0].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
-		quad[1].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
-		quad[2].texCoords = sf::Vector2f(textSize.x * (2 + 9 * classId), state.getPlaying()->getDirection() * textSize.y);
-		quad[3].texCoords = sf::Vector2f(textSize.x * (2 - 1 + 9 * classId), state.getPlaying()->getDirection() * textSize.y);
+		quad[0].texCoords = sf::Vector2f(textSize.x * (mov - 1 + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
+		quad[1].texCoords = sf::Vector2f(textSize.x * (mov + 9 * classId), (state.getPlaying()->getDirection() - 1) * textSize.y);
+		quad[2].texCoords = sf::Vector2f(textSize.x * (mov + 9 * classId), state.getPlaying()->getDirection() * textSize.y);
+		quad[3].texCoords = sf::Vector2f(textSize.x * (mov - 1 + 9 * classId), state.getPlaying()->getDirection() * textSize.y);
 
 		return true;
 }
@@ -267,7 +303,7 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 						dy = -range;
 					}
 				
-					quad = &quads[8 + (range - skill->getRange().first + d) * 4];
+					quad = &quads[8 + ((range - skill->getRange().first) * 4 + d) * 4];
 					
 					//Position des 4 coins du quad (x, y)
 					quad[0].position = sf::Vector2f(tileSize * (state.getPlaying()->getX() + dx), tileSize * (state.getPlaying()->getY() + dy)); //Haut gauche
@@ -290,9 +326,9 @@ bool Layer::loadCursor(state::State& state, sf::Texture& textureTileset, sf::Vec
 bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vector2u textSize, unsigned int width, unsigned int height, int tileSize){
 
 		texture = textureTileset;
-		state:Player* player=state.getPlaying();
+		state::Player* player=state.getPlaying();
 		//info personnage
-		std::vector<std::string> infos(state.getGrid()[0].size()*2 , " ");
+		std::vector<std::string> infos((state.getGrid().size() + state.getTextInfo().size())*2 , " ");
 		for(state::Player* foe : state.getPlayers()){
 			if ((foe->getX() == state.getCursor()->getCursorX() && foe->getY() == state.getCursor()->getCursorY()) && foe!=state.getPlaying()){
 				player=foe;
@@ -346,13 +382,18 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 			infos[46] += "FIN DE TOUR ";
 		}
 		
+		//Texte Infos
+		for(int i = 0; i<(int)state.getTextInfo().size(); i++){
+			infos[state.getGrid().size()*2 + 1 + i * 2] = state.getTextInfo()[i];
+		}
+		
+		
 		//Nombre de caracteres a afficher
 		unsigned int quadsize = 0;
 		for(std::string info : infos){
 			quadsize+=info.size();
 		}
 		
-      	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
 	   	quads.setPrimitiveType(sf::Quads);
        	quads.resize(quadsize * 4);
 		
@@ -362,11 +403,19 @@ bool Layer::loadInfos(state::State& state, sf::Texture& textureTileset, sf::Vect
 			for(size_t j=0; j<infos[i].size(); j++){
 				sf::Vertex* quad = &quads[(quadsize+j) * 4];
 				
+				if (i <= (state.getGrid().size() * 2)){
 				//Position des 4 coins du quad
-				quad[0].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + j*0.5), tileSize*0.5 * i);
-				quad[1].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + (j + 1)*0.5), tileSize*0.5 * i);
-				quad[2].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + (j + 1)*0.5), tileSize*0.5 * (i + 1));
-				quad[3].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + j*0.5), tileSize*0.5 * (i + 1));
+					quad[0].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + j*0.5), tileSize*0.5 * i);
+					quad[1].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + (j + 1)*0.5), tileSize*0.5 * i);
+					quad[2].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + (j + 1)*0.5), tileSize*0.5 * (i + 1));
+					quad[3].position = sf::Vector2f(tileSize * (state.getGrid()[0].size() + j*0.5), tileSize*0.5 * (i + 1));
+				}
+				else{
+					quad[0].position = sf::Vector2f(tileSize * (1 + j*0.5), tileSize*0.5 * i);
+					quad[1].position = sf::Vector2f(tileSize * (1 + (j + 1)*0.5), tileSize*0.5 * i);
+					quad[2].position = sf::Vector2f(tileSize * (1 + (j + 1)*0.5), tileSize*0.5 * (i + 1));
+					quad[3].position = sf::Vector2f(tileSize * (1 + j*0.5), tileSize*0.5 * (i + 1));
+				}
 				
 				//Position de la texture
 				int textpos;

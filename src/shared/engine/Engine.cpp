@@ -87,6 +87,7 @@ void Engine::executeCommand(Command* command){
 			players[i]->setX(-1);
 			players[i]->setY(-1);
 			cout << endl << players[i]->getName() <<  " est mort." << endl;
+			currentState.addTextInfo(players[i]->getName() + " EST MORT");
 			players.erase(players.begin()+i);
 		}
 	}
@@ -100,6 +101,7 @@ void Engine::executeCommand(Command* command){
 	//Fin de jeu
 	if (currentState.getPlayers().size() == 1){
 		cout << "#################### " << players[0]->getName() <<  " A GAGNE ####################" << endl;
+		currentState.addTextInfo(players[0]->getName() + " GAGNE LA PARTIE");
 	}
 	
 	if (record_enable){
@@ -141,6 +143,7 @@ void Engine::startGame (state::State& state){
 	//Placement du curseur le joueur qui joue
 	currentState.getCursor()->setCursorX(currentState.getPlaying()->getX());
 	currentState.getCursor()->setCursorY(currentState.getPlaying()->getY());
+	currentState.addTextInfo("TOUR DE " + currentState.getPlaying()->getName());
 	
 	//------------------------changment aléatoire d'état du terrain-----------------------
 
@@ -231,6 +234,7 @@ void Engine::keyCommand (sf::Event event){
 				if(currentState.getCommandMode() == MOVEMENT){
 					executeCommand(new Move(std::make_pair (cursor->getCursorX(),cursor->getCursorY())));
 				}
+				
 			}
 			break;
 		//FLECHE BAS	
@@ -248,7 +252,7 @@ void Engine::keyCommand (sf::Event event){
 				else cursorinfo->setCursorY(23);	
 			}
 			else if (currentState.getCommandMode() == SKILL) {
-				if (cursorinfo->getCursorY() < 6+currentState.getPlaying()->getSkills().size()-1) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
+				if (cursorinfo->getCursorY() < 6+(int)currentState.getPlaying()->getSkills().size()-1) cursorinfo->setCursorY(cursorinfo->getCursorY() + 1);
 				else cursorinfo->setCursorY(6+currentState.getPlaying()->getSkills().size()-1);	
 			}
 			break;
@@ -309,6 +313,20 @@ void Engine::keyCommand (sf::Event event){
 			
 		default:
 			break;
+	}
+	
+	if (currentState.getCommandMode() == SKILLTARGET) {
+		int cursorx = currentState.getCursor()->getCursorX();
+		int cursory = currentState.getCursor()->getCursorY();
+		int x = currentState.getPlaying()->getX();
+		int y = currentState.getPlaying()->getY();
+		
+		//Direction du joueur
+		Player* player = currentState.getPlaying();
+		if (cursorx-x<0) player->setDirection(WEST);
+		else if (cursorx-x>0) player->setDirection(EAST);
+		else if (cursory-y<0) player->setDirection(NORTH);
+		else if (cursory-y>0) player->setDirection(SOUTH);
 	}
 	
 	//currentState.notifyObservers(currentState);

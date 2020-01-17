@@ -699,17 +699,15 @@ int main(int argc,char* argv[])
 					cout << "--> Debut de la lecture <--" << endl;
 					
 					//Ouverture du fichier en lecture
-					//std::ifstream commandes_txt(fichier_commandes);
-					if (file_id){//commandes_txt){
+					if (file_id){
 						Json::Value root;
 						Json::Reader reader;
-						if(!reader.parse(file_id,root)){//commandes_txt, root)){
+						if(!reader.parse(file_id,root)){
 							cout 	<< "Failed to parse commandes\n"
 									<< reader.getFormattedErrorMessages();
 							return 0;
 						}
 						// Fermeture du fichier en lecture
-						//commandes_txt.close();
 						file_id.close();
 						
 						cout << "Taille du tableau de commandes de "<< fichier_commandes << " : " << root["tabCmd"].size() << endl;
@@ -794,6 +792,7 @@ int main(int argc,char* argv[])
 		}
 		
 		else if(strcmp(argv[1],"thread")==0){
+			
 			Client client;
 			client.run();
 		}
